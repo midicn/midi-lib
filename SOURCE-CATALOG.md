@@ -12,12 +12,12 @@
 | 项 | 数量 |
 |---|---|
 | 考察源总数 | **36** |
-| 已收录源 | **17**（94,740 首） |
+| 已收录源 | **18**（104,380 首） |
 | 未收录源 | 19（含许可不符、待抓取、受限访问三类） |
 | **准入标准** | 许可必须**允许二次分发**（不允许的一律不收） |
 | 收录内容分级 | C1 可商用 · C2 不可商用 · C3 仅供研究/学习 |
 
-## 二、已收录源（17 个 · 94,740 首）
+## 二、已收录源（18 个 · 104,380 首）
 
 | # | 源 | 曲目数 | 内容 | 许可 | 级别 | 分区 | 官方地址 |
 |---|---|---:|---|---|---|---|---|
@@ -38,6 +38,7 @@
 | 15 | **Wikifonia 遗存（PD 子集）** | 446 | 传统/民歌 lead sheets | PD | C1 | `main` | 已停站（档案） |
 | 16 | **OpenGameArt** | 342 | 游戏原创音乐 | CC0 / CC BY 逐曲 | C1 | `main` | opengameart.org |
 | 17 | **MusicNet** | 330 | 古典室内乐 | CC BY 4.0 | C1 | `main` | musicnet.io |
+| 18 | **Lakh MIDI（过滤后）** | 9,640 | 古典与传统（已剔除流行/版权内容） | CC-BY-4.0 | **C3** | `study` | colinraffel.com/projects/lmd/ |
 
 ### 关于「中国民歌集成」（pending 未发布）
 
@@ -58,19 +59,34 @@
 | **IMSLP「Music files」部分** | 数千（部分） | 部分附件标「no redistribution」 | ❌ 逐曲筛选后仅收允许的（当前未执行） |
 | **NES Music Database** | 5,278 | 研究用途，再分发条款不明 | ❌ 保守不收 |
 
-### 3.2 待核实许可（核实通过即可收进 C3）
+### 3.2 许可未明确 → **我们不下载**（附链接，你可自取）⭐
 
-| 源 | 规模 | 待核实点 | 官方地址 |
+> **我们的原则**：许可文本未明确允许再分发的源，**即使数据质量很高、规模很大，我们也不下载收录**。
+> 原因：我们无法确认二次分发的合法性——这是我们的合规底线。
+>
+> **但这不阻碍你**：以下源全部**公开可访问**，你可以自行前往获取并自行判断授权。
+
+| 源 | 规模 | 我们考察到的许可状态 | 未收录原因 | 官方地址（你可自取） |
+|---|---:|---|---|---|
+| **KernScores (CCARH)** | 108,703 | 站点声明「for research and teaching」；许可专页 404/503；首页有「copyright restricted materials」登录区 | **许可未明确说明是否允许再分发**，且存在部分版权受限内容 | kern.ccarh.org |
+| **Josquin Research Project** | ~1,000 | 数据可直接下载（MIDI 接口公开），但站点**无任何许可声明** | 许可文本缺失，无法确认再分发授权 | josquin.stanford.edu |
+| **MuseData (CCARH)** | 924 | CCARH 站点无许可声明；原 Stanford 页面已 404 | 同上 | musedata.org / ccarh.org |
+| **Digital Tradition (Mudcat)** | 数万 | 站点条款未澄清 | 同上 | mudcat.org |
+| **MIDIWorld** | 数千 | 站方声称 public domain，但**无正式许可文本**可核实 | 声明不足以构成许可依据 | midiworld.com |
+| **sonatica.fm** | 11,000 | 站点许可条款不明确 | 同上 | sonatica.fm |
+| **piano-midi.de** | 332 | 站点许可不明确 | 同上 | piano-midi.de |
+
+**自取提示**：这些源的数据都是公开可访问的（多数提供直接下载或批量抓取界面）。如果你需要，
+建议：① 前往上述地址获取 ② 阅读其使用条款 ③ 若计划再分发，取得书面许可更稳妥。
+
+### 3.3 其他待核实源（含版权内容风险）
+
+| 源 | 规模 | 情况 | 官方地址 |
 |---|---:|---|---|
-| **KernScores (CCARH)** | 108,703（可精选） | 「for research and teaching」是否含研究性再分发 | kern.ccarh.org |
-| **Lakh MIDI Dataset** | **174,533** | 论文声明「for non-commercial research」是否含再分发 | colinraffel.com/projects/lmd/ |
-| **Digital Tradition (Mudcat)** | 数万 | 站点许可条款 | mudcat.org |
-| **MIDIWorld** | 数千 | 站方「public domain」声明的真实性 | midiworld.com |
-| **sonatica.fm** | 11,000 | 整库许可 | sonatica.fm |
-| **piano-midi.de** | 332 | 站点许可 | piano-midi.de |
-| **Internet Archive MIDI 集合** | 数万（需筛） | 逐集合许可（含版权内容） | archive.org |
+| **Lakh MIDI Dataset** | 178,561 | ✅ 数据集许可 **CC-BY 4.0**（允许再分发）——已收录，但须过滤：22.3% 曲目自带版权声明，路径显示主体为流行音乐 | colinraffel.com/projects/lmd/ |
+| **Internet Archive MIDI 集合** | 数万（需筛） | 逐集合许可不同（混有版权内容） | archive.org |
 
-### 3.3 许可清晰但尚未抓取（欢迎自取，或等我们后续批次）
+### 3.4 许可清晰但尚未抓取（欢迎自取，或等我们后续批次）
 
 | 源 | 规模 | 许可 | 官方地址 | 备注 |
 |---|---:|---|---|---|
@@ -118,14 +134,14 @@
 
 ## Overview
 
-We surveyed **36 public MIDI sources** and included **17** (94,740 tracks).
+We surveyed **36 public MIDI sources** and included **17** (104,380 tracks).
 This document discloses the full survey scope: what we included, what we excluded **and why**,
 plus direct links so you can obtain the rest yourself.
 
 **Admission rule**: only content whose license **permits redistribution** is included.
 Sources marked "personal use only" or "no redistribution" are excluded regardless of size.
 
-## Included sources (17 · 94,740 tracks)
+## Included sources (17 · 104,380 tracks)
 
 See the Chinese table above — columns: source, track count, content, license, tier (C1 commercial /
 C2 non-commercial / C3 research-and-study only), zone, official URL.
