@@ -1,0 +1,158 @@
+# SOURCE CATALOG · 源清单与许可对照全表
+
+> **中文** | [English](#english)
+>
+> 本文档完整披露 midicn-lib 的**源考察范围**：我们考察了 **36 个公开 MIDI 数据源**，
+> 收录 **17 个**（94,740 首），并说明每个未收录源的**具体原因**与**自行获取指引**。
+>
+> 目的：让使用者清楚知道——**我们做了什么、没做什么、以及你可以自己去做什么**。
+
+## 一、总览
+
+| 项 | 数量 |
+|---|---|
+| 考察源总数 | **36** |
+| 已收录源 | **17**（94,740 首） |
+| 未收录源 | 19（含许可不符、待抓取、受限访问三类） |
+| **准入标准** | 许可必须**允许二次分发**（不允许的一律不收） |
+| 收录内容分级 | C1 可商用 · C2 不可商用 · C3 仅供研究/学习 |
+
+## 二、已收录源（17 个 · 94,740 首）
+
+| # | 源 | 曲目数 | 内容 | 许可 | 级别 | 分区 | 官方地址 |
+|---|---|---:|---|---|---|---|---|
+| 1 | **ariamidi** | 32,522 | 古典钢琴转录 | CC BY-NC-SA 4.0 | C2 | `piano-special` | github.com/lucasnfe/aria-midi |
+| 2 | **TheSession.org** | 23,294 | 爱尔兰传统舞曲 | CC BY-SA 3.0 | C1 | `main` | thesession.org |
+| 3 | **Essen (EsAC)** | 10,448 | 世界民谣（欧洲/中国为主） | 站点开放声明 | C1 | `main` | kernscores.org（EsAC） |
+| 4 | **中国民歌集成** | 10,479 | 中国各省民歌 | ❓ **未确认** | — | `pending`（未发布） | 见下方说明 |
+| 5 | **Norbeck Abby** | 3,473 | 爱尔兰/瑞典传统 | 站点开放声明 | C1 | `main` | norbeck.nu/abc/ |
+| 6 | **music21 CoreCorpus** | 3,068 | 古典/民谣混合 | PD | C1 | `main` | web.mit.edu/music21/ |
+| 7 | **Mutopia Project** | 1,861 | 古典器乐（PD 乐谱） | 逐曲 PD/CC | C1 | `main` | mutopiaproject.org |
+| 8 | **ABCMisc 集合** | 1,579 | 克莱兹梅尔/巴尔干/民谣 | 站点开放声明 | C1 | `main` | abcnotation.com |
+| 9 | **OpenScore Lieder** | 1,440 | 艺术歌曲（含女性作曲家） | CC0-1.0 | C1 | `main` | github.com/OpenScore/Lieder |
+| 10 | **MAESTRO v3** | 1,276 | 钢琴演奏对齐 | CC BY-NC-SA 4.0 | C2 | `research`（可升级发布） | magenta.tensorflow.org |
+| 11 | **Groove MIDI** | 1,150 | 专业鼓手节奏型 | CC BY 4.0 | C1 | `main` | magenta.tensorflow.org |
+| 12 | **EMOPIA v2.2** | 1,071 | 流行钢琴+情绪标注 | CC BY-NC-SA 4.0 | C2 | `research`（可升级发布） | github.com/annahung31/EMOPIA |
+| 13 | **Nottingham ABC** | 1,037 | 英美民谣 | 站点开放声明 | C1 | `main` | ifdo.ca/~seymour/nottingham/ |
+| 14 | **MuseData (CCARH)** | 924 | 古典器乐 | CCARH 限制性声明 | ⏳ 待核 | `research` | web.stanford.edu/group/ccarh |
+| 15 | **Wikifonia 遗存（PD 子集）** | 446 | 传统/民歌 lead sheets | PD | C1 | `main` | 已停站（档案） |
+| 16 | **OpenGameArt** | 342 | 游戏原创音乐 | CC0 / CC BY 逐曲 | C1 | `main` | opengameart.org |
+| 17 | **MusicNet** | 330 | 古典室内乐 | CC BY 4.0 | C1 | `main` | musicnet.io |
+
+### 关于「中国民歌集成」（pending 未发布）
+
+- **规模**：10,479 首（含中文标题，是本库最具中文特色的部分）
+- **来源**：GitHub 上公开的《中国民间歌曲集成》数字化项目（14 卷，MIDI+MusicXML）
+- **问题**：集成作为**编选作品**可能受编者权保护（邻接权），且源仓库未明确声明许可
+- **我们的处置**：**已收录但不发布**（`pending` 区），待获得权利人明确授权后转为公开
+- **你可以做什么**：如果你需要这部分内容，**请自行从原仓库获取并自行判断授权**——
+  我们出于谨慎不做二次分发，但不会阻止你从原始来源获取
+
+## 三、未收录源（19 个 · 及原因）
+
+### 3.1 因许可不符合准入标准（不允许二次分发）❌
+
+| 源 | 规模 | 许可情况 | 结论 |
+|---|---:|---|---|
+| **Kunst der Fuge** | 19,300 | 站点声明「for personal use」 | ❌ 不允许再分发 → **不收** |
+| **IMSLP「Music files」部分** | 数千（部分） | 部分附件标「no redistribution」 | ❌ 逐曲筛选后仅收允许的（当前未执行） |
+| **NES Music Database** | 5,278 | 研究用途，再分发条款不明 | ❌ 保守不收 |
+
+### 3.2 待核实许可（核实通过即可收进 C3）
+
+| 源 | 规模 | 待核实点 | 官方地址 |
+|---|---:|---|---|
+| **KernScores (CCARH)** | 108,703（可精选） | 「for research and teaching」是否含研究性再分发 | kern.ccarh.org |
+| **Lakh MIDI Dataset** | **174,533** | 论文声明「for non-commercial research」是否含再分发 | colinraffel.com/projects/lmd/ |
+| **Digital Tradition (Mudcat)** | 数万 | 站点许可条款 | mudcat.org |
+| **MIDIWorld** | 数千 | 站方「public domain」声明的真实性 | midiworld.com |
+| **sonatica.fm** | 11,000 | 整库许可 | sonatica.fm |
+| **piano-midi.de** | 332 | 站点许可 | piano-midi.de |
+| **Internet Archive MIDI 集合** | 数万（需筛） | 逐集合许可（含版权内容） | archive.org |
+
+### 3.3 许可清晰但尚未抓取（欢迎自取，或等我们后续批次）
+
+| 源 | 规模 | 许可 | 官方地址 | 备注 |
+|---|---:|---|---|---|
+| **CPDL ChoralWiki** | ~25,000 | PD / CPDL License（类 CC BY-NC-SA） | cpdl.org | 逐曲抓取，站点限速约 1,000/天 |
+| **Gregobase**（格里高利圣咏） | ~6,000 | CC BY-SA | gregobase.selab.ne.jp | 官网导出 |
+| **Josquin Research Project** | ~1,000 | 开放 | josquin.stanford.edu | MusicXML 转换 |
+| **Hymnal Tune Dataset** | 1,756 | PD/开放 | hymnary.org | 直下 |
+| **Hymnary.org 赞美诗** | 数千 | PD 为主 | hymnary.org | 抓取 |
+| **abcnotation.com 集合** | 2 万+ | 逐集合（已收 ABCMisc 1,579） | abcnotation.com | 逐集合接入 |
+| **Weimar Jazz Database** | ~2,000 | 学术（需申请） | jazzomat.hfm-weimar.de | 官网申请 |
+| **OpenScore String Quartets 等** | 进行中 | CC0 | github.com/OpenScore | 项目进行中 |
+| **figshare 中国经典 MIDI** | 13 | CC BY 4.0 | figshare.com/articles/5436022 | 我们下载受阻（网络），**欢迎自取** |
+
+## 四、你可以自己去获取的内容（自取指引）
+
+以下源**许可清晰、允许自由获取**，你可以直接前往下载——我们的收录不构成排他性：
+
+| 源 | 地址 | 适合谁 |
+|---|---|---|
+| CPDL 合唱作品（2.5 万） | cpdl.org | 合唱团、教堂音乐、声乐研究者 |
+| KernScores（10.8 万） | kern.ccarh.org | 音乐学研究者（需核实条款） |
+| Lakh MIDI（17.4 万） | colinraffel.com/projects/lmd/ | 机器学习研究者（非商用） |
+| IMSLP 乐谱与 MIDI | imslp.org | 古典音乐学习者（注意逐曲许可） |
+| Gregobase 圣咏 | gregobase.selab.ne.jp | 格里高利圣咏研究 |
+| Internet Archive MIDI | archive.org | 历史录音与老 MIDI 收藏 |
+| TheSession 原始数据 | thesession.org/data | 爱尔兰音乐爱好者 |
+
+**自取时的合规提醒**：
+1. 每个源的使用条款以**该站原文**为准（我们只负责我们已收录部分的合规）
+2. 若许可要求署名/相同方式共享，请遵守
+3. 若标注「personal use / no redistribution」，请勿再分发
+4. 商业使用前请自行完成尽职调查
+
+## 五、我们的收录原则（透明公开）
+
+1. **准入硬门槛**：只收许可明确允许**二次分发**的内容
+2. **分级标注**：C1 可商用 / C2 不可商用 / C3 仅供研究学习（逐曲写入 `z` 字段）
+3. **宁缺毋滥**：许可不明或禁止再分发的源，**无论规模多大一律不收**（如 Kunst der Fuge 1.93 万、Lakh 17.4 万暂缓）
+4. **可复核**：全部判定依据存档于 `docs/LICENSE-AUDIT.md` 与 `docs/EXPANSION-PLAN-BATCH34.md`
+5. **可下架**：权利人如有异议，按 `LICENSE.md` §7 的 takedown 流程处理（7 个工作日内响应）
+
+---
+
+# English
+
+## Overview
+
+We surveyed **36 public MIDI sources** and included **17** (94,740 tracks).
+This document discloses the full survey scope: what we included, what we excluded **and why**,
+plus direct links so you can obtain the rest yourself.
+
+**Admission rule**: only content whose license **permits redistribution** is included.
+Sources marked "personal use only" or "no redistribution" are excluded regardless of size.
+
+## Included sources (17 · 94,740 tracks)
+
+See the Chinese table above — columns: source, track count, content, license, tier (C1 commercial /
+C2 non-commercial / C3 research-and-study only), zone, official URL.
+
+Notable: the Chinese Folk Collection (10,479 tracks) is **collected but not published**
+(pending copyright confirmation of the compilation's editorial rights).
+
+## Excluded sources (19)
+
+- **License does not permit redistribution** (excluded): Kunst der Fuge (19,300, "personal use"),
+  parts of IMSLP, NES Music Database (5,278)
+- **License under review** (C3 if confirmed): KernScores (108,703), Lakh MIDI (174,533),
+  Mudcat, MIDIWorld, sonatica.fm, piano-midi.de, Internet Archive MIDI collections
+- **License clear, not yet harvested** (self-service welcome): CPDL (25,000), Gregobase (6,000),
+  Josquin Research Project, Hymnal Tune Dataset, Hymnary, abcnotation collections,
+  Weimar Jazz Database, OpenScore String Quartets, figshare Chinese Classics (13)
+
+## Obtain it yourself
+
+CPDL · KernScores · Lakh MIDI · IMSLP · Gregobase · Internet Archive · TheSession —
+direct links are in the Chinese section (§4). Please follow each site's own terms;
+we are only responsible for the compliance of what *we* redistribute.
+
+## Our principles
+
+1. **Redistribution required** — no redistribution permission, no inclusion
+2. **Tiered labeling** — C1 / C2 / C3 written per-track into the `z` field
+3. **Better safe than sorry** — unclear or restrictive licenses are excluded even at large scale
+4. **Auditable** — every decision archived in `LICENSE-AUDIT.md` and `EXPANSION-PLAN-BATCH34.md`
+5. **Takedown-ready** — rights-holder notices handled within 7 business days (see LICENSE.md §7)
