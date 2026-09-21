@@ -3,7 +3,7 @@
 > **中文** | [English](#english)
 >
 > 本文档完整披露 midicn-lib 的**源考察范围**：我们考察了 **36 个公开 MIDI 数据源**，
-> 收录 **17 个**（94,740 首），并说明每个未收录源的**具体原因**与**自行获取指引**。
+> 收录 **19 个**（124,179 首），并说明每个未收录源的**具体原因**与**自行获取指引**。
 >
 > 目的：让使用者清楚知道——**我们做了什么、没做什么、以及你可以自己去做什么**。
 
@@ -12,42 +12,52 @@
 | 项 | 数量 |
 |---|---|
 | 考察源总数 | **36** |
-| 已收录源 | **18**（104,380 首） |
-| 未收录源 | 19（含许可不符、待抓取、受限访问三类） |
+| 已收录源 | **19**（124,179 首） |
+| 未收录源 | 17（含许可不符、待抓取、受限访问三类） |
 | **准入标准** | 许可必须**允许二次分发**（不允许的一律不收） |
 | 收录内容分级 | C1 可商用 · C2 不可商用 · C3 仅供研究/学习 |
 
-## 二、已收录源（18 个 · 104,380 首）
+## 二、已收录源（19 个 · 124,179 首）
 
-| # | 源 | 曲目数 | 内容 | 许可 | 级别 | 分区 | 官方地址 |
+| # | 源 | 曲目数 | 内容 | 许可 | 级别 | 分区 | 来源地址（实际采集处） |
 |---|---|---:|---|---|---|---|---|
-| 1 | **ariamidi** | 32,522 | 古典钢琴转录 | CC BY-NC-SA 4.0 | C2 | `piano-special` | github.com/lucasnfe/aria-midi |
-| 2 | **TheSession.org** | 23,294 | 爱尔兰传统舞曲 | CC BY-SA 3.0 | C1 | `main` | thesession.org |
-| 3 | **Essen (EsAC)** | 10,448 | 世界民谣（欧洲/中国为主） | 站点开放声明 | C1 | `main` | kernscores.org（EsAC） |
-| 4 | **中国民歌集成** | 10,479 | 中国各省民歌 | ❓ **未确认** | — | `pending`（未发布） | 见下方说明 |
-| 5 | **Norbeck Abby** | 3,473 | 爱尔兰/瑞典传统 | 站点开放声明 | C1 | `main` | norbeck.nu/abc/ |
-| 6 | **music21 CoreCorpus** | 3,068 | 古典/民谣混合 | PD | C1 | `main` | web.mit.edu/music21/ |
-| 7 | **Mutopia Project** | 1,861 | 古典器乐（PD 乐谱） | 逐曲 PD/CC | C1 | `main` | mutopiaproject.org |
-| 8 | **ABCMisc 集合** | 1,579 | 克莱兹梅尔/巴尔干/民谣 | 站点开放声明 | C1 | `main` | abcnotation.com |
-| 9 | **OpenScore Lieder** | 1,440 | 艺术歌曲（含女性作曲家） | CC0-1.0 | C1 | `main` | github.com/OpenScore/Lieder |
-| 10 | **MAESTRO v3** | 1,276 | 钢琴演奏对齐 | CC BY-NC-SA 4.0 | C2 | `research`（可升级发布） | magenta.tensorflow.org |
-| 11 | **Groove MIDI** | 1,150 | 专业鼓手节奏型 | CC BY 4.0 | C1 | `main` | magenta.tensorflow.org |
-| 12 | **EMOPIA v2.2** | 1,071 | 流行钢琴+情绪标注 | CC BY-NC-SA 4.0 | C2 | `research`（可升级发布） | github.com/annahung31/EMOPIA |
-| 13 | **Nottingham ABC** | 1,037 | 英美民谣 | 站点开放声明 | C1 | `main` | ifdo.ca/~seymour/nottingham/ |
-| 14 | **MuseData (CCARH)** | 924 | 古典器乐 | CCARH 限制性声明 | ⏳ 待核 | `research` | web.stanford.edu/group/ccarh |
-| 15 | **Wikifonia 遗存（PD 子集）** | 446 | 传统/民歌 lead sheets | PD | C1 | `main` | 已停站（档案） |
-| 16 | **OpenGameArt** | 342 | 游戏原创音乐 | CC0 / CC BY 逐曲 | C1 | `main` | opengameart.org |
-| 17 | **MusicNet** | 330 | 古典室内乐 | CC BY 4.0 | C1 | `main` | musicnet.io |
-| 18 | **Lakh MIDI（过滤后）** | 9,640 | 古典与传统（已剔除流行/版权内容） | CC-BY-4.0 | **C3** | `study` | colinraffel.com/projects/lmd/ |
+| 1 | **ariamidi** | 32,522 | 古典钢琴转录 | CC BY-NC-SA 4.0 | C2 | `piano-special` | github.com/loubbrad/aria-midi |
+| 2 | **TheSession.org** | 23,250 | 爱尔兰传统舞曲 | CC BY-SA 4.0 | C1 | `main` | github.com/adactio/TheSession-data |
+| 3 | **Cyber Hymnal** | 10,945 | 赞美诗（公有领域） | PD | C1 | `main` | hymntime.com/tch |
+| 4 | **中国民歌集成** | 10,473 | 中国各省民歌 | TRADITIONAL-STUDY | C3 研究/学习 | `study` | github.com/m-july/Anthology-of-Chinese-Folk-Songs |
+| 5 | **Essen (EsAC)** | 10,373 | 世界民谣（欧洲/中国为主） | 站点开放声明 | C1 | `main` | esac-data.org |
+| 6 | **GiantMIDI-Piano** | 10,112 | 古典钢琴转录（大规模） | CC BY 4.0 | C1 | `main` | github.com/bytedance/GiantMIDI-Piano |
+| 7 | **Lakh MIDI（过滤后）** | 9,640 | 古典与传统（已剔除流行/版权内容） | CC-BY-4.0 | **C3** | `study` | colinraffel.com/projects/lmd/ |
+| 8 | **Norbeck ABC** | 3,439 | 爱尔兰/瑞典传统 | 站点开放声明 | C1 | `main` | norbeck.nu/abc/ |
+| 9 | **music21 CoreCorpus** | 3,029 | 古典/民谣混合 | PD | C1 | `main` | github.com/cuthbertLab/music21 |
+| 10 | **Mutopia Project** | 1,860 | 古典器乐（PD 乐谱） | 逐曲 PD/CC | C1 | `main` | mutopiaproject.org |
+| 11 | **ABCMisc 集合** | 1,487 | 克莱兹梅尔/巴尔干/民谣 | 站点开放声明 | C1 | `main` | trillian.mit.edu/~jc/music/abc/ |
+| 12 | **OpenScore Lieder** | 1,438 | 艺术歌曲（含女性作曲家） | CC0-1.0 | C1 | `main` | github.com/OpenScore/Lieder |
+| 13 | **MAESTRO v3** | 1,276 | 钢琴演奏对齐 | CC BY-NC-SA 4.0 | C2 | `piano-special` | magenta.tensorflow.org/datasets/maestro |
+| 14 | **Groove MIDI** | 1,149 | 专业鼓手节奏型 | CC BY 4.0 | C1 | `main` | magenta.tensorflow.org/datasets/groove |
+| 15 | **EMOPIA v2.2** | 1,071 | 流行钢琴+情绪标注 | CC BY-NC-SA 4.0 | C2 | `piano-special` | zenodo.org/records/5257995 |
+| 16 | **Nottingham ABC** | 1,033 | 英美民谣 | 站点开放声明 | C1 | `main` | ifdo.ca/~seymour/nottingham/ |
+| 17 | **Wikifonia（PD 子集）** | 445 | 传统/民歌 lead sheets | PD | C1 | `main` | synthzone.com/files/Wikifonia/Wikifonia.zip |
+| 18 | **OpenGameArt** | 340 | 游戏原创音乐 | CC0 / CC BY 逐曲 | C1 | `main` | opengameart.org |
+| 19 | **MusicNet** | 297 | 古典室内乐 | CC BY 4.0 | C1 | `main` | zenodo.org/records/5120004 |
+|  | **合计** | **124,179** | | | | | |
 
-### 关于「中国民歌集成」（pending 未发布）
+> 上表「来源地址」为**我们实际取得数据的位置**（我们自己的采集台账 `（内部采集台账）`
+> 与各接入脚本 `tools/ingest_*.py` 可复核），不是泛泛的站点首页。
 
-- **规模**：10,479 首（含中文标题，是本库最具中文特色的部分）
-- **来源**：GitHub 上公开的《中国民间歌曲集成》数字化项目（14 卷，MIDI+MusicXML）
-- **问题**：集成作为**编选作品**可能受编者权保护（邻接权），且源仓库未明确声明许可
-- **我们的处置**：**已收录但不发布**（`pending` 区），待获得权利人明确授权后转为公开
-- **你可以做什么**：如果你需要这部分内容，**请自行从原仓库获取并自行判断授权**——
-  我们出于谨慎不做二次分发，但不会阻止你从原始来源获取
+### 关于「中国民歌集成」（v1.4 起已发布 · C3 研究/学习）
+
+- **规模**：**10,473 首**（含中文标题，是本库最具中文特色的部分）
+- **来源**：GitHub 上公开的《中国民间歌曲集成》数字化项目（14 卷，MIDI + MusicXML）
+  —— `github.com/m-july/Anthology-of-Chinese-Folk-Songs`
+- **许可判断**：
+  - 民歌**旋律本身**属传统民间文学艺术，作者不可考、流传久远，作为音乐作品通常已进入公有领域
+  - 但本批 MIDI 是依据《中国民间歌曲集成》的**记谱／整理稿**光学识别（OMR）而来，
+    该**整理与汇编成果受版权保护**（上游亦声明原始扫描图属受版权作品、不予公开）
+  - 因此定为 **`TRADITIONAL-STUDY`**：归 **C3 研究/学习**，限研究、教学、学习用途，
+    **禁止商业使用与公开表演**；使用必须显著标注上述数据集与底本
+- **我们的处置**：v1.4 起随 `study.zip` 发布；如权利方提出异议，7 个工作日内下架该批数据
+- **商用**：本库不提供商用授权，需自行向底本权利人取得许可
 
 ## 三、未收录源（19 个 · 及原因）
 
@@ -95,7 +105,7 @@
 | **Josquin Research Project** | ~1,000 | 开放 | josquin.stanford.edu | MusicXML 转换 |
 | **Hymnal Tune Dataset** | 1,756 | PD/开放 | hymnary.org | 直下 |
 | **Hymnary.org 赞美诗** | 数千 | PD 为主 | hymnary.org | 抓取 |
-| **abcnotation.com 集合** | 2 万+ | 逐集合（已收 ABCMisc 1,579） | abcnotation.com | 逐集合接入 |
+| **abcnotation.com 集合** | 2 万+ | 逐集合（本库 ABC Misc 1,487 首**并非**取自本站，而来自 John Chambers 曲集 `trillian.mit.edu/~jc/music/abc/`） | abcnotation.com | 逐集合接入（待办） |
 | **Weimar Jazz Database** | ~2,000 | 学术（需申请） | jazzomat.hfm-weimar.de | 官网申请 |
 | **OpenScore String Quartets 等** | 进行中 | CC0 | github.com/OpenScore | 项目进行中 |
 | **figshare 中国经典 MIDI** | 13 | CC BY 4.0 | figshare.com/articles/5436022 | 我们下载受阻（网络），**欢迎自取** |
@@ -134,20 +144,20 @@
 
 ## Overview
 
-We surveyed **36 public MIDI sources** and included **17** (104,380 tracks).
+We surveyed **36 public MIDI sources** and included **19** (124,179 tracks).
 This document discloses the full survey scope: what we included, what we excluded **and why**,
 plus direct links so you can obtain the rest yourself.
 
 **Admission rule**: only content whose license **permits redistribution** is included.
 Sources marked "personal use only" or "no redistribution" are excluded regardless of size.
 
-## Included sources (17 · 104,380 tracks)
+## Included sources (19 · 124,179 tracks)
 
 See the Chinese table above — columns: source, track count, content, license, tier (C1 commercial /
 C2 non-commercial / C3 research-and-study only), zone, official URL.
 
-Notable: the Chinese Folk Collection (10,479 tracks) is **collected but not published**
-(pending copyright confirmation of the compilation's editorial rights).
+Notable: the Chinese Folk Collection (10,473 tracks) is published from v1.4 under a
+**research/study-only (C3)** designation, because the compilation's editorial rights are protected.
 
 ## Excluded sources (19)
 
