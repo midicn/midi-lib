@@ -1,0 +1,616 @@
+{
+ "schema": 1,
+ "project": "midicn-lib",
+ "verified_on": "2026-09-21",
+ "policy": {
+  "address_rule": "每个来源只登记一个地址，且必须等于我们实际取得数据的位置（不写泛泛首页、不臆测官网）。",
+  "evidence_rule": "每条地址须有本地证据（文件自述/台账/校验值）或上游官方口径，全部列在 evidence/upstream 中。",
+  "tier_rule": "分区（C1 可商用 / C2 非商用 / C3 学习研究）必须与发布 catalog 的 z 字段一致。"
+ },
+ "sources": [
+  {
+   "id": "aria",
+   "address": "https://github.com/loubbrad/aria-midi",
+   "tier": "C2",
+   "catalog_tier": "C2",
+   "site_license": "CC BY-NC-SA 4.0",
+   "catalog_license": "CC-BY-NC-SA-4.0",
+   "count": 32522,
+   "how_we_got_it": "GitHub 仓库克隆（Unique 子集，32,522 首；仓库 README 自述 ICLR 2025 Bradshaw & Colton）",
+   "license_note": "CC BY-NC-SA 4.0（非商用 · 相同方式共享）→ C2",
+   "ingest": "tools/ingest_aria.py",
+   "evidence": [
+    {
+     "path": "sources/ariamidi/README.md",
+     "contains": "github.com/loubbrad/aria-midi"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/ariamidi",
+     "files": 32578,
+     "bytes": 513521859
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "thesession",
+   "address": "https://github.com/adactio/TheSession-data",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "CC BY-SA 4.0",
+   "catalog_license": "CC-BY-SA-4.0",
+   "count": 23250,
+   "how_we_got_it": "官方数据转储仓库整包（周更 CSV/JSON，含 tunes.csv / sets.csv / thesession.db），本地 ZIP 归档",
+   "license_note": "仓库 LICENSE.md 标 CC BY-SA 4.0 并附加「禁止用于大模型训练」条款 → 备注见下",
+   "ingest": "tools/ingest_abc.py",
+   "evidence": [
+    {
+     "path": "sources/thesession-data/README.mdown",
+     "contains": "The Session"
+    },
+    {
+     "path": "sources/thesession-data/.gitattributes",
+     "contains": "lfs"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/thesession-data",
+     "files": 24,
+     "bytes": 197221160
+    }
+   ],
+   "archives": [
+    {
+     "file": "thesession-data.zip",
+     "path": "sources/_downloads/thesession-data.zip",
+     "bytes": 50307527,
+     "md5": "e951ebb0faaf49c99e2c252d009bc1a3"
+    }
+   ],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "cyberhymnal",
+   "address": "https://www.hymntime.com/tch/",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "Public Domain",
+   "catalog_license": "PD",
+   "count": 10945,
+   "how_we_got_it": "hymntime.com/tch 的官方索引与 MIDI 整包（tch-idx / tch-mida 7z + 按字母分卷）",
+   "license_note": "公有领域（PD）→ C1",
+   "ingest": "tools/ingest_cyberhymnal.py",
+   "evidence": [
+    {
+     "path": "sources/cyberhymnal/idx/tch-idx.txt",
+     "contains": "The Cyber Hymnal"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/cyberhymnal",
+     "files": 13647,
+     "bytes": 38785037
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "chinafolk",
+   "address": "https://github.com/m-july/Anthology-of-Chinese-Folk-Songs",
+   "tier": "C3",
+   "catalog_tier": "C3",
+   "site_license": "传统音乐 · 学习研究",
+   "catalog_license": "TRADITIONAL-STUDY",
+   "count": 10473,
+   "how_we_got_it": "GitHub 公开的《中国民间歌曲集成》OMR 数字化项目整包（14 卷 MIDI，按省份分目录；本地 china-folk.zip 844,201,672 B）",
+   "license_note": "上游未声明许可 → 定为 TRADITIONAL-STUDY，C3 仅学习研究",
+   "ingest": "tools/ingest_chinafolk.py",
+   "evidence": [
+    {
+     "path": "（内部许可沟通草稿）",
+     "contains": "github.com/m-july/Anthology-of-Chinese-Folk-Songs"
+    },
+    {
+     "path": "sources/china-folk/lyrics-included/beijing",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/china-folk",
+     "files": 20960,
+     "bytes": 306305851
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "essen",
+   "address": "https://www.esac-data.org/",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "Public Domain / Open",
+   "catalog_license": "OPEN",
+   "count": 10373,
+   "how_we_got_it": "esac-data.org 的 EsAC 数据库（原生 .sm 编码与 .abc 转写成对，共 81 文件）",
+   "license_note": "站点开放声明 → C1；含少量受限条目（见来源页备注）",
+   "ingest": "tools/ingest_abc.py",
+   "evidence": [
+    {
+     "path": "sources/essen/esac/dva0.sm",
+     "contains": "REG["
+    },
+    {
+     "path": "sources/essen/esac/HAN1.abc",
+     "contains": "O: China"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/essen",
+     "files": 81,
+     "bytes": 7123616
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "giantmidi",
+   "address": "https://github.com/bytedance/GiantMIDI-Piano",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "CC BY 4.0",
+   "catalog_license": "CC-BY-4.0",
+   "count": 10112,
+   "how_we_got_it": "官方仓库 + disclaimer.md 指明的官方网盘（Google Drive / 百度网盘）下载 MIDI 整包 midis_v1.2.zip 192,678,627 B，与官方 README 所述「stable version (193 MB)」一致",
+   "license_note": "CC BY 4.0 → C1",
+   "ingest": "tools/ingest_giantmidi.py",
+   "evidence": [
+    {
+     "path": "sources/giantmidi/extracted/GiantMIDI-PIano/README.md",
+     "contains": "github.com/bytedance/GiantMIDI-Piano"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/giantmidi",
+     "files": 10860,
+     "bytes": 959929680
+    }
+   ],
+   "archives": [
+    {
+     "file": "GiantMIDI-PIano-20260919T005501Z-1-001.zip",
+     "path": "sources/giantmidi/GiantMIDI-PIano-20260919T005501Z-1-001.zip",
+     "bytes": 335559541,
+     "md5": "2743966fa349908fe5bc21503e897acb"
+    },
+    {
+     "file": "midis_v1.2.zip",
+     "path": "sources/giantmidi/extracted/GiantMIDI-PIano/midis_v1.2.zip",
+     "bytes": 192678627,
+     "md5": "aaece5750b0cfe30b6a3be5c7bb14f83"
+    },
+    {
+     "file": "surname_checked_midis_v1.2.zip",
+     "path": "sources/giantmidi/extracted/GiantMIDI-PIano/surname_checked_midis_v1.2.zip",
+     "bytes": 135604744,
+     "md5": "0bc634338b156cadababd99f8da03470"
+    }
+   ],
+   "verified_on": "2026-09-21",
+   "upstream": {
+    "kind": "upstream_stated",
+    "what": "size:midis_v1.2.zip",
+    "value": "192,678,627 B ≈ 193 MB",
+    "source": "GiantMIDI-Piano README「stable version of GiantMIDI-Piano (193 MB)」"
+   }
+  },
+  {
+   "id": "lakh",
+   "address": "https://colinraffel.com/projects/lmd/",
+   "tier": "C3",
+   "catalog_tier": "C3",
+   "site_license": "CC BY 4.0",
+   "catalog_license": "CC-BY-4.0",
+   "count": 9640,
+   "how_we_got_it": "官方下载主机 hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz（1,768,163,879 B）分卷下载后合并；入库前剔除含版权声明的曲目与流行/影视路径",
+   "license_note": "数据集 CC BY 4.0，但内容层过滤后定为 C3 学习研究（study）",
+   "ingest": "tools/ingest_lakh.py",
+   "evidence": [
+    {
+     "path": "tools/dl_lakh_multipart.py",
+     "contains": "hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/lakh",
+     "files": 11,
+     "bytes": 3562630374
+    }
+   ],
+   "archives": [
+    {
+     "file": "lmd_full.tar.gz",
+     "path": "sources/lakh/lmd_full.tar.gz",
+     "bytes": 1768163879,
+     "md5": "2536ce3fd2cede53ddaa264f731859ab"
+    }
+   ],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "norbeck",
+   "address": "https://norbeck.nu/abc/",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "Open / Free",
+   "catalog_license": "OPEN",
+   "count": 3439,
+   "how_we_got_it": "norbeck.nu/abc 的 ABC 曲集（文件头部即写明站点地址）",
+   "license_note": "作者无偿开放 → C1（保留署名）",
+   "ingest": "tools/ingest_abc.py",
+   "evidence": [
+    {
+     "path": "sources/norbeck/hnair0.abc",
+     "contains": "http://www.norbeck.nu/abc/"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/norbeck",
+     "files": 72,
+     "bytes": 1913922
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "m21",
+   "address": "https://github.com/cuthbertLab/music21",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "Public Domain",
+   "catalog_license": "PD",
+   "count": 3029,
+   "how_we_got_it": "随 music21 工具包分发的 CoreCorpus（site-packages/music21/corpus，3,219 文件 / 60.6MB），含 kern 与 MusicXML，由 ingest_music21.py 导出 MIDI",
+   "license_note": "语料内作品多为 PD → C1",
+   "ingest": "tools/ingest_music21.py",
+   "evidence": [
+    {
+     "path": "tools/ingest_music21.py",
+     "contains": "music21"
+    }
+   ],
+   "local": [
+    {
+     "dir": "(pip) /music21/corpus",
+     "files": 3219,
+     "bytes": 60575707
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "mutopia",
+   "address": "https://www.mutopiaproject.org/",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "Public Domain / CC（逐曲）",
+   "catalog_license": "MUTOPIA-MIXED",
+   "count": 1860,
+   "how_we_got_it": "fetch_mutopia.py 从 www.mutopiaproject.org/ftp/ 抓取 .ly 源码并转换",
+   "license_note": "逐曲 PD/CC → C1",
+   "ingest": "tools/ingest_mutopia.py",
+   "evidence": [
+    {
+     "path": "tools/fetch_mutopia.py",
+     "contains": "www.mutopiaproject.org/ftp/"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/mutopia",
+     "files": 3070,
+     "bytes": 30049831
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "abcmisc",
+   "address": "http://trillian.mit.edu/~jc/music/abc/",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "Open / Free",
+   "catalog_license": "OPEN",
+   "count": 1487,
+   "how_we_got_it": "trillian.mit.edu/~jc/music/abc/ 的 John Chambers 曲集（5 个 .abc：克莱兹梅尔/巴尔干/国际/以色列）",
+   "license_note": "站点开放声明 → C1",
+   "ingest": "tools/ingest_abc.py",
+   "evidence": [
+    {
+     "path": "sources/abc-misc/allklez.abc",
+     "contains": "trillian.mit.edu"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/abc-misc",
+     "files": 5,
+     "bytes": 1029992
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "openscore",
+   "address": "https://github.com/OpenScore/Lieder",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "CC0 1.0",
+   "catalog_license": "CC0-1.0",
+   "count": 1438,
+   "how_we_got_it": "GitHub OpenScore/Lieder 仓库整包（本地 openscore-lieder.zip 191,547,791 B），MuseScore 源转 MIDI",
+   "license_note": "CC0 1.0 → C1",
+   "ingest": "tools/ingest_openscore.py",
+   "evidence": [
+    {
+     "path": "sources/openscore-lieder/scores",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/openscore-lieder",
+     "files": 2814,
+     "bytes": 512268410
+    }
+   ],
+   "archives": [
+    {
+     "file": "openscore-lieder.zip",
+     "path": "sources/_downloads/openscore-lieder.zip",
+     "bytes": 191547791,
+     "md5": "029bb94357740e0ab60556a9d9da97c9"
+    }
+   ],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "maestro",
+   "address": "https://magenta.tensorflow.org/datasets/maestro",
+   "tier": "C2",
+   "catalog_tier": "C2",
+   "site_license": "CC BY-NC-SA 4.0",
+   "catalog_license": "CC-BY-NC-SA-4.0",
+   "count": 1276,
+   "how_we_got_it": "官方页面发布的 maestro-v3.0.0（MIDI 分卷 + CSV 元数据），本地 1,278 文件 / 84.5MB",
+   "license_note": "CC BY-NC-SA 4.0 → C2 非商用",
+   "ingest": "tools/ingest_mididir.py",
+   "evidence": [
+    {
+     "path": "tools/ingest_mididir.py",
+     "contains": "MAESTRO v3.0.0"
+    },
+    {
+     "path": "sources/maestro/maestro-v3.0.0",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/maestro",
+     "files": 1278,
+     "bytes": 84537305
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "groove",
+   "address": "https://magenta.tensorflow.org/datasets/groove",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "CC BY 4.0",
+   "catalog_license": "CC-BY-4.0",
+   "count": 1149,
+   "how_we_got_it": "官方页面发布的 Groove MIDI Dataset（含 info.csv 元数据），本地 1,150 文件",
+   "license_note": "CC BY 4.0 → C1",
+   "ingest": "tools/ingest_groove.py",
+   "evidence": [
+    {
+     "path": "tools/ingest_groove.py",
+     "contains": "Groove MIDI Dataset"
+    },
+    {
+     "path": "sources/groove/groove",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/groove",
+     "files": 1150,
+     "bytes": 5273095
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "emopia",
+   "address": "https://zenodo.org/records/5257995",
+   "tier": "C2",
+   "catalog_tier": "C2",
+   "site_license": "CC BY-NC-SA 4.0",
+   "catalog_license": "CC-BY-NC-SA-4.0",
+   "count": 1071,
+   "how_we_got_it": "Zenodo 记录 5257995（版本 2.2）发布的 EMOPIA_2.2 数据包；本地目录名即版本名",
+   "license_note": "CC BY-NC-SA 4.0 → C2 非商用（原站上曾误标 CC BY 4.0 / main，v11.4 已改正）",
+   "ingest": "tools/ingest_mididir.py",
+   "evidence": [
+    {
+     "path": "tools/ingest_mididir.py",
+     "contains": "EMOPIA_2.2"
+    },
+    {
+     "path": "sources/emopia/EMOPIA_2.2",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/emopia",
+     "files": 1084,
+     "bytes": 2101794
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "nottingham",
+   "address": "https://ifdo.ca/~seymour/nottingham/",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "Open / Free",
+   "catalog_license": "OPEN",
+   "count": 1033,
+   "how_we_got_it": "ifdo.ca/~seymour/nottingham/ 的 ABC 校订版（Seymour Shlien 修正缺失拍与反复）；目录内 nottingham.html 自述「最新版在此下载」",
+   "license_note": "站点开放声明 → C1（数据库由 Eric Foxley 建立）",
+   "ingest": "tools/ingest_abc.py",
+   "evidence": [
+    {
+     "path": "sources/nottingham/nottingham_database/nottingham.html",
+     "contains": "ifdo.ca/~seymour/nottingham/"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/nottingham",
+     "files": 16,
+     "bytes": 500515
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "wikifonia",
+   "address": "http://www.synthzone.com/files/Wikifonia/Wikifonia.zip",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "Public Domain（仅传统/民歌子集）",
+   "catalog_license": "PD",
+   "count": 445,
+   "how_we_got_it": "公开发布的 Wikifonia 整包 Wikifonia.zip（原站 wikifonia.org 已下线）",
+   "license_note": "仅保留传统/民歌子集 → PD；C1",
+   "ingest": "tools/ingest_wikifonia.py",
+   "evidence": [
+    {
+     "path": "（内部采集台账）",
+     "contains": "synthzone.com/files/Wikifonia/Wikifonia.zip"
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/wikifonia",
+     "files": 1,
+     "bytes": 35727800
+    }
+   ],
+   "archives": [
+    {
+     "file": "Wikifonia.zip",
+     "path": "sources/wikifonia/Wikifonia.zip",
+     "bytes": 35727800,
+     "md5": "d26e22562e67eb7d37535e96cc5eebba"
+    }
+   ],
+   "verified_on": "2026-09-21",
+   "upstream": {
+    "kind": "upstream_published",
+    "what": "md5:Wikifonia.zip",
+    "value": "d26e22562e67eb7d37535e96cc5eebba",
+    "source": "muspy 数据集注册表 muspy.datasets.wikifonia"
+   }
+  },
+  {
+   "id": "oga",
+   "address": "https://opengameart.org/",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "逐曲混合（CC0 / CC BY / CC BY-SA / GPL）",
+   "catalog_license": "GPL-3.0",
+   "count": 340,
+   "how_we_got_it": "fetch_oga.py 逐素材抓取 opengameart.org（逐 asset 许可记录在 tools/state/oga-progress.json）",
+   "license_note": "逐曲混合（CC0 / CC BY / CC BY-SA / GPL）→ C1，须逐素材署名",
+   "ingest": "tools/ingest_oga.py",
+   "evidence": [
+    {
+     "path": "tools/fetch_oga.py",
+     "contains": "opengameart.org"
+    },
+    {
+     "path": "sources/oga",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/oga",
+     "files": 342,
+     "bytes": 4238406
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  },
+  {
+   "id": "musicnet",
+   "address": "https://zenodo.org/records/5120004",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "CC BY 4.0",
+   "catalog_license": "CC-BY-4.0",
+   "count": 297,
+   "how_we_got_it": "Zenodo 记录 5120004 的 musicnet_midis.tar.gz + musicnet_metadata.csv，本地 331 文件",
+   "license_note": "CC BY 4.0 → C1",
+   "ingest": "tools/ingest_mididir.py",
+   "evidence": [
+    {
+     "path": "tools/ingest_mididir.py",
+     "contains": "sources/musicnet"
+    },
+    {
+     "path": "sources/musicnet/musicnet_metadata.csv",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/musicnet",
+     "files": 331,
+     "bytes": 10240303
+    }
+   ],
+   "archives": [],
+   "verified_on": "2026-09-21"
+  }
+ ]
+}
