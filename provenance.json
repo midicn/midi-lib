@@ -33,6 +33,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2025-04-08",
+    "basis": "earliest file mtime",
+    "evidence": "sources/ariamidi"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -44,7 +53,7 @@
    "catalog_license": "CC-BY-SA-4.0",
    "count": 23250,
    "how_we_got_it": "官方数据转储仓库整包（周更 CSV/JSON，含 tunes.csv / sets.csv / thesession.db），本地 ZIP 归档",
-   "license_note": "仓库 LICENSE.md 标 CC BY-SA 4.0 并附加「禁止用于大模型训练」条款 → 备注见下",
+   "license_note": "CC BY-SA 4.0 **+ 附加「禁止用于大语言模型」条款**：不得用大模型使用/改编/修改/处理该素材（含训练 LLM、借助 LLM 工具处理、并入 LLM 相关应用），仅无障碍方案有豁免 → C1（但受该附加条款约束）",
    "ingest": "tools/ingest_abc.py",
    "evidence": [
     {
@@ -71,6 +80,15 @@
      "md5": "e951ebb0faaf49c99e2c252d009bc1a3"
     }
    ],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "archive mtime",
+    "evidence": "thesession-data.zip"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -98,6 +116,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2004-02-12",
+    "basis": "earliest file mtime",
+    "evidence": "sources/cyberhymnal"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -129,6 +156,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/china-folk"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -160,6 +196,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/essen"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -206,6 +251,15 @@
      "md5": "0bc634338b156cadababd99f8da03470"
     }
    ],
+   "acquired": {
+    "date": "2026-09-19",
+    "basis": "archive mtime",
+    "evidence": "GiantMIDI-PIano-20260919T005501Z-1-001.zip"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21",
    "upstream": {
     "kind": "upstream_stated",
@@ -246,6 +300,15 @@
      "md5": "2536ce3fd2cede53ddaa264f731859ab"
     }
    ],
+   "acquired": {
+    "date": "2026-09-18",
+    "basis": "archive mtime",
+    "evidence": "lmd_full.tar.gz"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -273,6 +336,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/norbeck"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -300,6 +372,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": null,
+    "basis": "unknown",
+    "evidence": null
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -327,6 +408,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/mutopia"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -354,6 +444,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/abc-misc"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -388,6 +487,15 @@
      "md5": "029bb94357740e0ab60556a9d9da97c9"
     }
    ],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "archive mtime",
+    "evidence": "openscore-lieder.zip"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -419,6 +527,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/maestro"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -450,6 +567,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/groove"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -481,6 +607,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/emopia"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -508,6 +643,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/nottingham"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -542,6 +686,15 @@
      "md5": "d26e22562e67eb7d37535e96cc5eebba"
     }
    ],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "archive mtime",
+    "evidence": "Wikifonia.zip"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21",
    "upstream": {
     "kind": "upstream_published",
@@ -579,6 +732,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/oga"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -610,6 +772,15 @@
     }
    ],
    "archives": [],
+   "acquired": {
+    "date": "2026-09-17",
+    "basis": "earliest file mtime",
+    "evidence": "sources/musicnet"
+   },
+   "reverified": [
+    "2026-09-21"
+   ],
+   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   }
  ]

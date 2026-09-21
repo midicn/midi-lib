@@ -12,14 +12,15 @@
 
 ## 1. 总体结构
 
-midicn-lib 是 **17 个来源数据集**的系统性二次整理。我们**不重新授权任何 MIDI 文件**——每个文件遵循其原始来源的许可：
+midicn-lib 是 **19 个来源数据集**的系统性二次整理。我们**不重新授权任何 MIDI 文件**——每个文件遵循其原始来源的许可：
 
 1. **`meta/` 目录**（目录、索引、校验文件）与**全部整理文档、审计报告、工具脚本**：由 midicn 项目发布，采用 **CC0 1.0（公有领域贡献）**。你可以自由使用、修改、再分发，无需署名（但欢迎注明来源）。
 2. **MIDI 文件**：遵循各来源数据集的许可，**逐曲标注于 `l` 字段**（详见 `meta/catalog.json` 与 [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)）。
 3. **分区规则**：
    - `main/`——来源许可允许再分发（CC BY / CC BY-SA / 公有领域 / 开放声明）
    - `piano-special/`——**CC BY-NC-SA 4.0：仅限非商业目的**，使用时须署名并以相同方式共享
-   - `pending` 区与 `research` 区**未包含在本发布中**
+   - `study/`——**仅限学习与研究**（如 TRADITIONAL-STUDY、Lakh 过滤子集）：不得再分发、不得商用
+   - 未收录任何许可不明确或禁止再分发的来源（全量考察范围见 `SOURCE-CATALOG.md`）
 
 ## 2. 使用义务（按许可类型）
 
@@ -34,6 +35,31 @@ midicn-lib 是 **17 个来源数据集**的系统性二次整理。我们**不�
 | 开放声明 | 建议注明来源 | — | 视声明而定 | 见 LICENSE-AUDIT.md 各源说明 |
 
 **署名的最低要求**：在显著位置注明「来源：midicn-lib（github.com/midicn/midi-lib）」及对应原始数据集名称。对于网站播放场景，请在页面或「关于」页集中署名。
+
+### 2.1 TRADITIONAL-STUDY（传统民歌 · 仅研究/学习）
+
+适用于 `l = TRADITIONAL-STUDY` 的曲目（本版为中国民间歌曲集成 10,473 首）：
+
+- **旋律本身**：属传统民间文学艺术，作者不可考、流传久远，作为音乐作品通常已进入公有领域
+- **但转录底本受保护**：本批文件依据《中国民间歌曲集成》的记谱／整理稿光学识别而来，该整理与汇编成果受版权保护
+- **允许**：研究、教学、学习用途下的使用与共享
+- **禁止**：任何商业使用；公开表演／广播；录音制品；去除或篡改来源标注后分发
+- **必须**：显著标注来源为「中国民间歌曲集成（Anthology of Chinese Folk Songs，OMR 数据集，
+  github.com/m-july/Anthology-of-Chinese-Folk-Songs）」
+- **商用需另行授权**：若需商业使用，请自行向底本权利人取得许可，本站不提供该授权
+
+### 2.2 TheSession · 附加条款（禁止用于大语言模型）
+
+`thesession` 来源（23,250 首）在 **CC BY-SA 4.0** 授权之外**附加了「禁止用于大语言模型」条款**：
+
+- **禁止**：以大语言模型使用、改编、修改或处理该素材——包括但不限于**训练大模型**、
+  借助 **LLM 工具**处理、并入任何 **LLM 相关应用或系统**
+- **唯一豁免**：为残障人士（如视障者）提供**无障碍方案**所必需的使用
+- 依据：上游数据仓 `LICENSE.md` 的 *Prohibition on LLM Use* 一节（见本库 `PROVENANCE.md`）
+- 该条款与 CC BY-SA 4.0 的署名、相同方式共享义务**并行**，不因本库的格式转换而消失
+
+> 换言之：`thesession` 部分可以自由用于一般用途（含商业用途、须署名并相同方式共享），
+> **但不得投入大模型相关的训练或处理流程**。
 
 ## 3. 二次分发规则
 
@@ -66,9 +92,11 @@ midicn-lib 是 **17 个来源数据集**的系统性二次整理。我们**不�
 
 本数据集聚合了以下来源的数据（完整审计见 [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)）：
 
-ariamidi · TheSession.org · 中国民歌集成（未随本版发布）· Essenfolkdance (EsAC) · Norbeck Abby · Mutopia Project · ABCMisc · OpenScore Lieder Corpus · MAESTRO（未随本版发布）· Groove MIDI Dataset · EMOPIA（未随本版发布）· Nottingham ABC · MuseData（未随本版发布）· OpenGameArt.org · MusicNet · Wikifonia 档案（PD 子集）· music21 CoreCorpus
+ariamidi · TheSession.org · The Cyber Hymnal · 中国民间歌曲集成（OMR）· Essenfolkdance (EsAC) · GiantMIDI-Piano · Lakh MIDI（已过滤子集）· Norbeck Abby · music21 CoreCorpus · Mutopia Project · ABCMisc · OpenScore Lieder Corpus · MAESTRO v3 · Groove MIDI Dataset · EMOPIA v2.2 · Nottingham ABC · Wikifonia 档案（PD 子集）· OpenGameArt.org · MusicNet
 
-各来源的许可、依据链接与核实状态见 [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)。使用对应曲目时，请同时遵守来源数据集的署名要求。
+（19 个来源；MuseData/CCARH 因许可禁止分发而永久排除。）
+各来源的**实际采集地址、取得方式与校验值**见 [PROVENANCE.md](PROVENANCE.md)；
+许可与核实状态见 [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)。使用对应曲目时，请同时遵守来源数据集的署名要求。
 
 ## 7. 权利救济与移除流程（Takedown）
 
@@ -92,7 +120,7 @@ midicn 项目主要面向中文用户，数据整理工作在中国境内完成�
 
 ## 1. Overall Structure
 
-midicn-lib is a systematic re-curation of **17 source datasets**. We **do not re-license any MIDI
+midicn-lib is a systematic re-curation of **19 source datasets**. We **do not re-license any MIDI
 file** — every file follows the license of its original source:
 
 1. **The `meta/` directory** and **all curation documents, audit reports, and tool scripts**:
@@ -103,7 +131,9 @@ file** — every file follows the license of its original source:
 3. **Zoning**:
    - `main/` — source licenses permit redistribution (CC BY / CC BY-SA / public domain / open declarations)
    - `piano-special/` — **CC BY-NC-SA 4.0: non-commercial purposes only**, attribution + share-alike required
-   - `pending` and `research` zones are **not included** in this release
+   - `study/` — **study and research only** (e.g. TRADITIONAL-STUDY, the filtered Lakh subset):
+     no redistribution, no commercial use
+   - no source with unclear or redistribution-prohibiting terms is included (see `SOURCE-CATALOG.md`)
 
 ## 2. Obligations by License Type
 
@@ -121,6 +151,39 @@ license annotated in field `l`:
 **Minimum attribution**: prominently display "Source: midicn-lib (github.com/midicn/midi-lib)"
 plus the corresponding source dataset name. For websites, a consolidated credit on the page or
 an "About" page is acceptable.
+
+### 2.1 TRADITIONAL-STUDY (traditional folk · study only)
+
+Applies to tracks with `l = TRADITIONAL-STUDY` (in this release: 10,473 Chinese folk songs):
+
+- **The melodies** are traditional — anonymous, transmitted over generations, and generally in the
+  public domain as musical works
+- **But the source edition is protected**: these files were optically recognised from the notated /
+  edited edition published in the *Anthology of Chinese Folk Songs*; that editorial and compilation
+  work is protected
+- **Permitted**: use and sharing for research, teaching and study
+- **Prohibited**: any commercial use; public performance or broadcast; sound recordings; redistribution
+  with attribution removed or altered
+- **Required**: prominent attribution to "Anthology of Chinese Folk Songs (OMR dataset,
+  github.com/m-july/Anthology-of-Chinese-Folk-Songs)"
+- **Commercial use needs separate permission** from the underlying rights holders; this project grants none
+
+### 2.2 TheSession · Additional Term (prohibition on LLM use)
+
+The `thesession` source (23,250 tracks) carries an **additional "Prohibition on LLM Use"** on top of
+CC BY-SA 4.0:
+
+- **Prohibited**: using, adapting, modifying or processing the material with large language models —
+  including but not limited to **training LLMs**, processing it with **LLM tools**, or incorporating it
+  into any **LLM-related application or system**
+- **Sole exception**: use necessary to provide **accessibility solutions** for disabled individuals
+- Basis: the *Prohibition on LLM Use* section of the upstream data repository's `LICENSE.md`
+  (recorded in this library's `PROVENANCE.md`)
+- This term applies **in parallel** with the attribution and share-alike obligations of CC BY-SA 4.0
+  and is not removed by our format conversion
+
+> In short: the `thesession` portion may be used freely for ordinary purposes (including commercially,
+> with attribution and share-alike), **but must not be fed into LLM training or processing pipelines.**
 
 ## 3. Redistribution Rules
 
@@ -164,13 +227,15 @@ when citing the dataset (e.g. "data from midicn-lib") is fine.
 
 ## 6. Third-party Notices (NOTICE summary)
 
-This dataset aggregates data from: ariamidi · TheSession.org · Chinese Folk Collection (not in this
-release) · Essenfolkdance (EsAC) · Norbeck Abby · Mutopia Project · ABCMisc · OpenScore Lieder
-Corpus · MAESTRO (not distributed) · Groove MIDI Dataset · EMOPIA (not distributed) ·
-Nottingham ABC · MuseData (not distributed) · OpenGameArt.org · MusicNet · Wikifonia archive (PD
-subset) · music21 CoreCorpus.
+This dataset aggregates data from 19 sources: ariamidi · TheSession.org · The Cyber Hymnal ·
+Anthology of Chinese Folk Songs (OMR) · Essenfolkdance (EsAC) · GiantMIDI-Piano · Lakh MIDI
+(filtered subset) · Norbeck Abby · music21 CoreCorpus · Mutopia Project · ABCMisc ·
+OpenScore Lieder Corpus · MAESTRO v3 · Groove MIDI Dataset · EMOPIA v2.2 · Nottingham ABC ·
+Wikifonia archive (PD subset) · OpenGameArt.org · MusicNet.
 
-Per-source licenses, evidence links and verification status: [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md).
+(MuseData/CCARH is permanently excluded: its licence forbids redistribution.)
+Each source's **actual acquisition address, method and checksums**: [PROVENANCE.md](PROVENANCE.md).
+Per-source licenses and verification status: [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md).
 When using tracks from a source, also comply with that source dataset's attribution requirements.
 
 ## 7. Takedown Process

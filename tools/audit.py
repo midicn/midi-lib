@@ -33,8 +33,8 @@ OUT = ROOT / "docs" / "AUDIT-REPORT.md"
 FIELDS = ["id", "source", "src_path", "title", "composer_slug", "composer_name",
           "opus", "no", "genre", "form", "key", "period", "region", "instrument",
           "license", "zone", "midi", "fingerprint", "extra"]
-OPTIONAL_FIELDS = {"duplicate_of"}
-ZONES = {"main", "piano-special", "research", "pending", "hold"}
+OPTIONAL_FIELDS = {"duplicate_of", "verify_flag"}
+ZONES = {"main", "piano-special", "research", "pending", "hold", "study", "internal-research", "internal-private"}
 PERIODS = {"medieval", "renaissance", "baroque", "classical", "romantic",
            "impressionist", "modern", "contemporary", "traditional"}
 NC_LIC = re.compile(r"NC|UNSPECIFIED|RESTRICTED", re.I)

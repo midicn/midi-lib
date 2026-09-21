@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime
 import hashlib
 import json
 import os
@@ -93,16 +94,20 @@ def dominant(pairs, sid, default='?'):
 
 
 # ─────────────────────────── 复核 ───────────────────────────
-def verify(reg: dict, root: Path | None, do_hash: bool, do_online: bool) -> int:
+def verify(reg: dict, root: Path | None, do_hash: bool, do_online: bool, reg_path: Path | None = None) -> int:
     ok = bad = soft = 0
+
+    warns: list[str] = []
 
     def line(state, name, detail=''):
         nonlocal ok, bad, soft
-        mark = {'OK': '  ✓', 'FAIL': '  ✗', 'SKIP': '  ·'}[state]
+        mark = {'OK': '  ✓', 'FAIL': '  ✗', 'SKIP': '  ·', 'WARN': '  !'}[state]
         if state == 'OK':
             ok += 1
         elif state == 'FAIL':
             bad += 1
+        elif state == 'WARN':
+            warns.append(f'{name} — {detail}')
         else:
             soft += 1
         print(f'{mark} {name}' + (f' — {detail}' if detail else ''))
@@ -209,13 +214,201 @@ def verify(reg: dict, root: Path | None, do_hash: bool, do_online: bool) -> int:
             line(reach, f'{sid:13s} 可达性', f'HTTP {code}'
                  + ('（站点对脚本限流，浏览器可访问）' if str(code) in ('403', '406') else ''))
 
+    # ⑦ 复核到期提醒（时间维度：180 天为一个复核周期）
+    today = datetime.date.today()
+    due = [s['id'] for s in reg['sources']
+           if s.get('next_review_due') and s['next_review_due'] < today.isoformat()]
+    if due:
+        line('WARN', '复核到期', f'{len(due)} 个来源已过复核期（{today}）：{" ".join(due[:8])}'
+                               f'{" …" if len(due) > 8 else ""} → 重新核验后更新 reverified / next_review_due')
+    else:
+        nxt = min((s['next_review_due'] for s in reg['sources'] if s.get('next_review_due')), default='—')
+        line('OK', '复核周期', f'均在有效期内（最近到期 {nxt}）')
+
     print('-' * 96)
-    print(f'结果：通过 {ok} · 失败 {bad} · 跳过/提示 {soft}')
+    # ⑧ 台账文档新鲜度（防止注册表改了、文档没重生成）
+    if reg_path:
+        doc = reg_path.parent / 'PROVENANCE.md'
+        if doc.exists():
+            same = doc.read_text(encoding='utf-8') == render_text(reg)
+            line('OK' if same else 'FAIL', '台账文档与注册表同步',
+                 'PROVENANCE.md 与注册表一致' if same else '内容不一致 → 运行 tools/provenance.py --render')
+        else:
+            line('SKIP', '台账文档与注册表同步', f'未找到 {doc}')
+
+    print('-' * 96)
+    print(f'结果：通过 {ok} · 失败 {bad} · 提醒 {len(warns)} · 跳过/提示 {soft}')
+    for w in warns:
+        print(f'  ! 提醒：{w}')
     return 1 if bad else 0
 
 
+# ─────────────────────────── 生成站内页 ───────────────────────────
+PAGE_TPL = """<!DOCTYPE html>
+<html lang="zh" data-lang="zh" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>来源台账 · midicn-lib</title>
+<meta name="description" content="midicn-lib 来源台账：每个来源的实际采集地址、取得方式、证据文件、整包校验值与核验日期。">
+<link rel="canonical" href="https://lib.midicn.com/provenance.html">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header><div class="hbar">
+  <a class="brand" href="./">midicn<span>-lib</span></a>
+  <nav class="nav">
+    <a href="./" data-zh="音乐库" data-en="Library">音乐库</a>
+    <a href="download.html" data-zh="数据下载" data-en="Download">数据下载</a>
+    <a href="sources.html" data-zh="数据来源" data-en="Sources">数据来源</a>
+    <a href="licenses.html" data-zh="许可与法律" data-en="Licence">许可与法律</a>
+  </nav>
+  <span class="spacer"></span>
+  <button class="iconbtn langbtn" id="lang">EN</button>
+</div></header>
+
+<main class="doc wide">
+  <p class="meta" data-zh="档案 · 来源台账" data-en="ARCHIVE · PROVENANCE">档案 · 来源台账</p>
+  <h1 data-zh="来源台账" data-en="Provenance ledger">来源台账</h1>
+  <p class="lede" data-zh="本页回答一个问题：来源页上写的那个「原始地址」，凭什么说它是我们真正取得数据的地方？每个来源都给出地址、取得方式、本地证据文件、整包校验值与核验日期。"
+     data-en="This page answers one question: what makes the address shown on the Sources page the place we actually obtained the data from? For every source: the address, how it was obtained, the local evidence file, package checksums and the verification date.">本页回答一个问题：来源页上写的那个「原始地址」，凭什么说它是我们真正取得数据的地方？每个来源都给出地址、取得方式、本地证据文件、整包校验值与核验日期。</p>
+  <p class="meta"><span data-zh="机器可读版 provenance.json · 复核脚本 tools/provenance.py · " data-en="Machine-readable provenance.json · verifier tools/provenance.py · ">机器可读版 provenance.json · 复核脚本 tools/provenance.py · </span><a href="https://github.com/midicn/midi-lib/blob/main/docs/PROVENANCE.md" target="_blank" rel="noopener">GitHub · PROVENANCE.md</a></p>
+
+  __RULES__
+
+  <div class="stitle"><h2 data-zh="总表" data-en="Summary">总表</h2>
+    <span class="spacer"></span><span class="meta">__COUNT__</span></div>
+  <div class="panel"><div class="panel-bd"><dl class="dl">__TABLE__</dl></div></div>
+
+  <div class="stitle"><h2 data-zh="逐源明细" data-en="Per source">逐源明细</h2></div>
+  <div id="list">__CARDS__</div>
+
+  <div class="stitle"><h2 data-zh="复核周期与变更纪律" data-en="Review cycle">复核周期与变更纪律</h2></div>
+  <div class="panel"><div class="panel-bd" data-zh="__DISC_ZH__" data-en="__DISC_EN__">__DISC_ZH__</div></div>
+</main>
+
+<footer><div class="wrap">
+  <div class="fbar">
+    <b>midicn-lib</b>
+    <nav class="fnav">
+      <a href="./" data-zh="音乐库" data-en="Library">音乐库</a>
+      <a href="download.html" data-zh="数据下载" data-en="Download">数据下载</a>
+      <a href="sources.html" data-zh="数据来源" data-en="Sources">数据来源</a>
+      <a href="provenance.html" data-zh="来源台账" data-en="Provenance">来源台账</a>
+      <a href="licenses.html" data-zh="许可与法律" data-en="Licence">许可与法律</a>
+      <a href="https://github.com/midicn/midi-lib" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <span class="flic">__FNAME__</span>
+  </div>
+  <div class="fnote"><span id="footNote">__FOOTNOTE__</span><span id="footLegal">__FOOTLEGAL__</span></div>
+</div></footer>
+
+<style>
+.pc{margin-bottom:var(--s4)}
+.pc .panel-hd{gap:var(--s3)}
+.pc .addr{word-break:break-all;font-family:var(--mono);font-size:var(--fs-12)}
+.pc .dl dt{min-width:74px}
+</style>
+<script>
+(function(){
+  var KEY='midicn-lang';
+  function store(k,v){try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){return null}}
+  var LANG = store(KEY) || 'zh';
+  function apply(){
+    document.documentElement.lang = LANG==='zh'?'zh':'en';
+    document.querySelectorAll('[data-zh]').forEach(function(el){
+      var v = el.getAttribute('data-'+LANG); if (v!=null) el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-ph-zh]').forEach(function(el){
+      var v = el.getAttribute('data-ph-'+LANG); if (v!=null) el.setAttribute('placeholder', v);
+    });
+    var b=document.getElementById('lang'); if(b) b.textContent = LANG==='zh'?'EN':'中文';
+  }
+  var btn=document.getElementById('lang');
+  if(btn) btn.onclick=function(){ LANG = LANG==='zh'?'en':'zh'; store(KEY,LANG); apply(); };
+  apply();
+})();
+</script>
+</body>
+</html>
+"""
+
+
+def render_page(reg: dict, dest: Path, foot_lic: str = '', foot_note: str = '', foot_legal: str = '') -> None:
+    S = sorted(reg['sources'], key=lambda x: -x['count'])
+    esc = lambda t: (str(t).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
+    rows = []
+    for s in S:
+        rows.append(f'<dt>{esc(s["id"])} · {s["tier"]} · {s["count"]:,}</dt>'
+                    f'<dd class="addr"><a href="{esc(s["address"])}" target="_blank" rel="noopener">{esc(s["address"])}</a></dd>')
+    cards = []
+    for s in S:
+        ev = '；'.join((e['path'] + (f'（含 `{e["contains"]}`）' if e.get('contains') else ''))
+                       for e in s['evidence'])
+        loc = '；'.join(f'{l["dir"]} · {l["files"]:,} 文件 / {l["bytes"]/1e6:.1f}MB' for l in s['local'])
+        arch = ''.join(
+            f'<dt>整包校验</dt><dd>{esc(a["file"])} · {a["bytes"]:,} 字节 · MD5 <span class="addr">{a["md5"]}</span></dd>'
+            for a in s['archives'])
+        up = ''
+        if s.get('upstream'):
+            u = s['upstream']
+            up = f'<dt>上游口径</dt><dd>{esc(u["what"])} = <span class="addr">{esc(u["value"])}</span> —— {esc(u["source"])}</dd>'
+        acq = s.get('acquired') or {}
+        acq_txt = ''
+        if acq.get('date'):
+            acq_txt = (f'<dt>取得时点</dt><dd>{esc(acq["date"])}（依据：{esc(acq.get("basis","?"))}'
+                       + (f' · {esc(acq.get("evidence"))}' if acq.get('evidence') else '') + '）</dd>')
+        cards.append(
+            '<div class="panel pc">'
+            '<div class="panel-hd"><b style="font-size:var(--fs-16)">' + esc(s['id']) + '</b>'
+            '<span class="lic ' + ('c1' if s['tier'] == 'C1' else 'c2' if s['tier'] == 'C2' else 'c3') + '">'
+            + s['tier'] + '</span>'
+            '<span style="margin-left:auto"></span>'
+            '<span class="meta">' + f'{s["count"]:,}' + ' 首</span></div>'
+            '<div class="panel-bd"><dl class="dl">'
+            f'<dt>原始地址</dt><dd class="addr"><a href="{esc(s["address"])}" target="_blank" rel="noopener">{esc(s["address"])}</a></dd>'
+            f'<dt>取得方式</dt><dd>{esc(s["how_we_got_it"])}</dd>'
+            f'<dt>入库脚本</dt><dd class="addr">{esc(s["ingest"])}</dd>'
+            f'<dt>本地证据</dt><dd class="addr">{esc(ev) or "—"}</dd>'
+            f'<dt>本地规模</dt><dd class="addr">{esc(loc) or "—"}</dd>'
+            f'{arch}{up}{acq_txt}'
+            f'<dt>许可</dt><dd>{esc(s["site_license"])}（{s["tier"]}）—— {esc(s["license_note"])}</dd>'
+            f'<dt>核验</dt><dd>{esc(s["verified_on"])}'
+            + (f' · 下次复核不晚于 {esc(s["next_review_due"])}' if s.get('next_review_due') else '') + '</dd>'
+            '</dl></div></div>')
+    rules = ('<div class="panel"><div class="panel-bd">'
+             '<p><b>三条规则</b></p>'
+             '<p>① <b>地址唯一且真实</b>——每个来源只登记一个地址，等于我们实际取得数据的位置；'
+             '不写泛泛的站点首页，不写凭印象猜的官网，更不写与数据无关的站点。</p>'
+             '<p>② <b>档位必须与数据一致</b>——C1 可商用 / C2 非商用 / C3 学习研究，逐曲写入目录的 <code>z</code> 字段；'
+             '来源页标注与数据不一致即视为缺陷。</p>'
+             '<p>③ <b>可复核</b>——每条地址都有本地证据（数据自述 / 采集台账 / 校验值）与核验日期，'
+             '并附可执行的复核脚本；校验值分三级，本地快照绝不冒充上游官方值。</p>'
+             '</div></div>')
+    disc_zh = ('台账设 180 天复核周期：到期时复核脚本会给出提醒，届时重新核验各地址（含整包哈希与可达性），'
+               '并把新日期追加进时间线。「永久可复核」的含义是：不是核验一次就永远成立，'
+               '而是永远有一条可复跑的核验路径加一个到期提醒。<br>'
+               '改任何来源地址前，必须先取得证据再改；拿不到证据就不要改，也不要写。')
+    disc_en = ('The ledger runs on a 180-day review cycle: when due, the verifier raises a reminder and every '
+               'address is re-checked (package hashes and reachability), with the new date appended to the timeline. '
+               '"Permanently verifiable" means there is always a re-runnable verification path plus a due reminder, '
+               'not that a single check holds forever.<br>'
+               'Never change a source address without evidence first — if there is no evidence, do not change it.')
+    html = (PAGE_TPL
+            .replace('__RULES__', rules)
+            .replace('__COUNT__', f'{len(S)} 个来源 · 合计 {sum(x["count"] for x in S):,} 首 · 核验 {reg["verified_on"]}')
+            .replace('__TABLE__', ''.join(rows))
+            .replace('__CARDS__', ''.join(cards))
+            .replace('__DISC_ZH__', disc_zh).replace('__DISC_EN__', disc_en)
+            .replace('__FNAME__', esc(foot_lic or f'ver {reg["verified_on"]}'))
+            .replace('__FOOTNOTE__', esc(foot_note or '台正本为中文，English summary 见数据仓 docs/PROVENANCE.md'))
+            .replace('__FOOTLEGAL__', esc(foot_legal or '代码 MIT · 元数据 CC BY 4.0 · 素材依各来源许可')))
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(html, encoding='utf-8')
+
+
 # ─────────────────────────── 生成文档 ───────────────────────────
-def render(reg: dict, out_md: Path) -> None:
+def render_text(reg: dict) -> str:
     S = reg['sources']
     L = []
     L.append('# PROVENANCE · 来源台账（每个原始地址的取得与核验记录）')
@@ -264,7 +457,12 @@ def render(reg: dict, out_md: Path) -> None:
             u = s['upstream']
             L.append(f'- **上游官方口径**：{u["what"]} = `{u["value"]}` —— 来源：{u["source"]}')
         L.append(f'- **许可**：{s["site_license"]}（catalog 标识 `{s["catalog_license"]}`）—— {s["license_note"]}')
-        L.append(f'- **核验日期**：{s["verified_on"]}')
+        acq = s.get('acquired') or {}
+        if acq.get('date'):
+            L.append(f'- **取得时点**：{acq["date"]}（依据：{acq.get("basis","?")}'
+                     + (f' · {acq.get("evidence")}' if acq.get('evidence') else '') + '）')
+        L.append(f'- **复核时间线**：核验于 {s["verified_on"]}'
+                 + (f'；下次复核不晚于 {s["next_review_due"]}' if s.get('next_review_due') else ''))
         L.append('')
     L.append('## 四、如何自行复核')
     L.append('')
@@ -281,7 +479,13 @@ def render(reg: dict, out_md: Path) -> None:
     L.append('#      192,678,627 字节一致')
     L.append('```')
     L.append('')
-    L.append('## 五、变更纪律')
+    L.append('## 五、复核周期')
+    L.append('')
+    L.append('台账设**180 天复核周期**：`next_review_due` 到期时，`tools/provenance.py` 会给出提醒，')
+    L.append('届时重新核验各地址（重跑 `--hash` / `--online`），并把新日期追加进 `reverified`、顺延 `next_review_due`。')
+    L.append('「永久可复核」的含义是：**不是核验一次就永远成立，而是永远有一条可复跑的核验路径 + 一个到期提醒。**')
+    L.append('')
+    L.append('## 六、变更纪律')
     L.append('')
     L.append('- **改任何来源地址前**：先按本台账的办法取得证据（文件自述 / 采集台账 / 上游官方口径），')
     L.append('  再改 `assets/archive.js` 与本文件，并更新核验日期。**拿不到证据就不要改，也不要写。**')
@@ -304,7 +508,12 @@ def render(reg: dict, out_md: Path) -> None:
              'in the published catalog; (3) every address must be backed by evidence. '
              'Re-verify with `python tools/provenance.py [--hash] [--online]`.')
     L.append('')
-    out_md.write_text('\n'.join(L) + '\n', encoding='utf-8')
+    return '\n'.join(L) + '\n'
+
+
+def render(reg: dict, out_md: Path) -> None:
+    out_md.parent.mkdir(parents=True, exist_ok=True)
+    out_md.write_text(render_text(reg), encoding='utf-8')
 
 
 def main(argv):
@@ -314,6 +523,8 @@ def main(argv):
     ap.add_argument('--hash', action='store_true', help='复核整包 MD5 与字节数')
     ap.add_argument('--online', action='store_true', help='探测各地址当前可达性')
     ap.add_argument('--render', action='store_true', help='生成 docs/PROVENANCE.md')
+    ap.add_argument('--mirror', help='--render 时同时写入的另一目录（如数据仓 docs/）')
+    ap.add_argument('--page', help='生成站内台账页（如 release/site-repo/provenance.html）')
     args = ap.parse_args(argv[1:])
 
     root = find_root(args.root)
@@ -326,12 +537,19 @@ def main(argv):
     print(f'台账：{reg_path}（{len(reg["sources"])} 条）')
 
     if args.render:
-        for dest in [reg_path.parent / 'PROVENANCE.md']:
+        dests = [reg_path.parent / 'PROVENANCE.md']
+        if args.mirror:
+            dests.append(Path(args.mirror) / 'PROVENANCE.md')
+        for dest in dests:
             render(reg, dest)
             print('已生成', dest, f'({dest.stat().st_size/1024:.1f}KB)')
+        if args.page:
+            page = (root / args.page) if root else Path(args.page)
+            render_page(reg, page)
+            print('已生成站内页', page, f'({page.stat().st_size/1024:.1f}KB)')
         return 0
 
-    return verify(reg, root, args.hash, args.online)
+    return verify(reg, root, args.hash, args.online, reg_path)
 
 
 if __name__ == '__main__':

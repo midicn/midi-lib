@@ -47,9 +47,9 @@
 
 ### 关于「中国民歌集成」（v1.4 起已发布 · C3 研究/学习）
 
-- **规模**：**10,473 首**（含中文标题，是本库最具中文特色的部分）
+- **规模**：**10,473 首**（已去除 6 组内容完全相同的重复；含中文标题，是本库最具中文特色的部分）
 - **来源**：GitHub 上公开的《中国民间歌曲集成》数字化项目（14 卷，MIDI + MusicXML）
-  —— `github.com/m-july/Anthology-of-Chinese-Folk-Songs`
+  —— `github.com/m-july/Anthology-of-Chinese-Folk-Songs`（论文 arXiv:2512.14758 的数据集）
 - **许可判断**：
   - 民歌**旋律本身**属传统民间文学艺术，作者不可考、流传久远，作为音乐作品通常已进入公有领域
   - 但本批 MIDI 是依据《中国民间歌曲集成》的**记谱／整理稿**光学识别（OMR）而来，
@@ -182,3 +182,14 @@ we are only responsible for the compliance of what *we* redistribute.
 3. **Better safe than sorry** — unclear or restrictive licenses are excluded even at large scale
 4. **Auditable** — every decision archived in `LICENSE-AUDIT.md` and `EXPANSION-PLAN-BATCH34.md`
 5. **Takedown-ready** — rights-holder notices handled within 7 business days (see LICENSE.md §7)
+
+### 关于 GiantMIDI-Piano（v1.5 起发布 · C1 可商用）
+
+- **规模**：**10,112 首**（原始 10,855 首，剔除 742 个内容完全相同的转录）
+- **来源**：`github.com/bytedance/GiantMIDI-Piano`（论文 Kong et al., "GiantMIDI-Piano: A large-scale
+  MIDI dataset for classical piano music", arXiv:2010.07061）
+- **内容**：以高精度钢琴转谱系统从公开演奏录音转录的古典钢琴独奏（2,704 位作曲家，共 1,237 小时；
+  90% 现场演奏 + 10% 序列输入），含力度与踏板信息
+- **许可**：**CC BY 4.0**（仓库 README「License」段明示）；其 `disclaimer.md` 仅为标准免责
+  （as-is / 不担保 / 不担责），不含任何使用限制 → 按我们的分级归 **C1 可商用**，使用需署名
+- **质量**：入库时以 mido 逐文件重算时长与音符数（覆盖 100%）；按作曲家生卒年推断音乐时期

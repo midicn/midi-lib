@@ -1,89 +1,169 @@
-# DATASET-CARD · midicn-lib v1.0 数据卡
+---
+license: mixed (per-track `license` field; see LICENSE-AUDIT.md · meta package CC0-1.0)
+language: [zh, en, mul]
+tags: [music, midi, symbolic-music, classical, folk, world-music, hymns, public-domain, creative-commons]
+pretty_name: MIDI Lib CN (midicn-lib)
+size_categories: [100K<n<1M]
+task_categories: [text-to-music, audio-classification, other]
+configs:
+  - name: main
+    description: 可商用曲目（C1）
+  - name: piano-special
+    description: 非商用钢琴演奏（C2）
+  - name: study
+    description: 学习研究专用（C3）
+  - name: meta
+    description: 全库统一元数据与索引（CC0-1.0）
+---
 
-> 104,380 条记录 · 18 个来源数据集 · 统一 21 字段 Schema · 五级质量标记 · 全程可溯源
+# DATASET CARD · midicn-lib
+
+> **124,179** 首曲目 · **19** 个公开来源 · **14** 个分类 · 逐首标注来源与许可档位 · 全程可溯源
 >
-> 本数据卡描述 midicn-lib 的内容、来源、质量验证与使用限制。
+> 本卡描述数据集的**内容、来源、字段、质量与实际使用限制**。
+> 每个来源地址的取得方式与校验值见 [`PROVENANCE.md`](PROVENANCE.md)（含可执行复核脚本）。
+>
+> 门户：<https://lib.midicn.com> · 代码仓库：<https://github.com/midicn/midi-lib-site>
 
 ## 一、数据集概述
 
-midicn-lib 是对 17 个公开 MIDI 数据集的系统性二次整理：
+midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整理，产出**统一目录、统一字段、逐首标注许可**的开放曲库：
 
-- **统一 Schema**：全部记录转换为 21 字段结构（19 必需 + 2 可选），跨源字段语义一致
-- **质量验证**：结构层 10 项 + 深度层 12 项终审全通过；音乐内容统计级验证全量执行
-- **许可分区**：按可商用性将数据分为 main / piano-special / pending / research 四区
-- **可溯源**：每条记录保留原始数据集路径（`src_path`），17 源许可审计公开
+- **统一目录**：全部曲目规范命名为 `{source}-{序号}.mid`，按「使用方式」分为三包（见下）
+- **统一字段**：20 个字段跨源语义一致（见 §四），并提供作曲家 / 时期 / 地域 / 来源四套索引
+- **逐首许可**：每首曲目携带 `z`（档位：main / piano-special / study）与 `l`（许可标识）字段
+- **可溯源**：每首曲目保留上游原始路径与作品级标识；来源侧证据与校验值见 `PROVENANCE.md`
+- **可下架**：权利人如有异议，按 `LICENSE.md` §7 的 takedown 流程处理（7 个工作日内响应）
 
-## 二、规模与来源明细
+## 二、分包与规模
 
-| 源 id | 来源数据集 | 曲目数 | 内容 | 许可 | 分区 |
-|---|---|---:|---|---|---|
-| `aria` | ariamidi | 32,522 | 古典钢琴（自动转录） | CC BY-NC-SA-4.0 | piano-special |
-| `thesession` | TheSession.org | 23,294 | 爱尔兰传统舞曲/歌谣 | CC BY-SA-4.0 | main |
-| `chinafolk` | 中国民歌集成 | 10,479 | 中国各省民歌 | UNSPECIFIED（待确认） | pending |
-| `essen` | Essenfolkdance (EsAC) | 10,448 | 世界民谣（欧洲/中国为主） | 开放声明 | main |
-| `norbeck` | Norbeck Abby | 3,473 | 爱尔兰/瑞典传统曲调 | 开放声明 | main |
-| `mutopia` | Mutopia Project | 1,861 | 古典器乐（PD 乐谱生成） | 各曲不同（PD 为主） | main |
-| `abcmisc` | ABC 标准曲集 | 1,579 | 克莱兹梅尔/巴尔干/民谣 | 开放声明 | main |
-| `openscore` | OpenScore Lieder Corpus | 1,440 | 艺术歌曲（含女性作曲家） | CC0-1.0 | main |
-| `maestro` | MAESTRO v3 | 1,276 | 钢琴演奏对齐转录 | CC BY-NC-SA-4.0 | research |
-| `groove` | Groove MIDI Dataset | 1,150 | 专业鼓手节奏型 | CC BY-4.0 | main |
-| `emopia` | EMOPIA v2.2 | 1,071 | 流行钢琴+情绪象限 | CC BY-NC-SA-4.0 | research |
-| `nottingham` | Nottingham ABC | 1,037 | 英美民谣 | 开放声明 | main |
-| `musedata` | MuseData (CCARH) | 924 | 古典器乐 | CCARH 限制 | research |
-| `oga` | OpenGameArt.org | 342 | 游戏原创音乐 | CC0/CC-BY 逐曲 | main |
-| `musicnet` | MusicNet | 330 | 古典室内乐 | CC BY-4.0 | main |
-| `wikifonia` | Wikifonia 遗存（PD 子集） | 446 | 传统/民歌 lead sheets | PD | main |
-| `m21` | music21 CoreCorpus | 3,068 | 古典/民谣混合 | PD | main |
+以「使用方式」分包（不是按风格分包），下载时只需取你需要的那一档：
 
-## 三、分区说明（zone）
+| 分包 | 含义 | 档位 | 曲目数 | 打包文件 |
+|---|---|---|---:|---|
+| `main` | 许可允许商业使用 | **C1 可商用** | 69,197 | `midicn-lib-<VER>-main.zip` |
+| `piano-special` | 仅限非商业用途 | **C2 非商用** | 34,869 | `midicn-lib-<VER>-piano-special.zip` |
+| `study` | 仅限学习与研究 | **C3 学习研究** | 20,113 | `midicn-lib-<VER>-study.zip` |
+| `meta` | 目录 / 索引 / 字段说明 / 文档 | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
+| **合计** | | | **124,179** | 另附 19 个**按来源**分包 |
 
-| 分区 | 数量 | 使用权限 |
+许可分布（按曲目计）：
+
+| 许可标识 | 曲目数 | 主要来源 |
 |---|---:|---|
-| `main` | 48,140 | ✅ 可商用（许可已逐曲标注） |
-| `piano-special` | 32,522 | ⚠️ 仅非商用（CC BY-NC-SA） |
-| `pending` | 10,473 | ❌ 未随本版发布（中国集成，待许可确认） |
-| `research` | 3,269 | ❌ 未随本版发布（NC 学术用途） |
+| `CC-BY-NC-SA-4.0` | 34,869 | aria 32,522 · maestro 1,276 · emopia 1,071 |
+| `CC-BY-SA-4.0` | 23,289 | thesession 23,250 · oga 39 |
+| `CC-BY-4.0` | 21,212 | giantmidi 10,112 · lakh 9,640 · groove 1,149 · musicnet 297 · oga 14 |
+| `OPEN`（站点开放声明） | 16,332 | essen 10,373 · norbeck 3,439 · abcmisc 1,487 · nottingham 1,033 |
+| `PD`（公有领域） | 14,419 | cyberhymnal 10,945 · m21 3,029 · wikifonia 445 |
+| `TRADITIONAL-STUDY` | 10,473 | chinafolk 10,473（C3） |
+| `MUTOPIA-MIXED`（逐曲） | 1,860 | mutopia 1,860 |
+| `CC0-1.0` | 1,704 | openscore 1,438 · oga 266 |
+| 其他逐曲混合（CC BY 3.0 / CC BY-SA 3.0 / GPL） | 21 | oga 21 |
 
-## 四、质量验证摘要
+## 三、来源（19 个）
 
-| 层 | 检查 | 结果 |
-|---|---|---|
-| 结构层 v1（10 项） | 文件完整性 / 路径唯一 / JSON / 字段 / 枚举 / 区划 / 去重标记 / 作曲家 / region / MIDI 头 | ✅ 全通过 |
-| 深度层 v2（12 项） | MIDI 事件级 / 音高 / id / 溯源 / name-slug / 重复保留 / 跨区优先 / period 锚点 / 值域 / 同义 / title / license 语义 | ✅ 全通过 |
-| **音乐内容层**（全量） | 调性相关（中位 0.826）· 动机重复（0.485）· 密度/音域/时长 | broken 102 已排除 · suspect 1,394 已标记 |
+地址均为**我们实际取得数据的位置**；取得方式、证据文件与校验值见 [`PROVENANCE.md`](PROVENANCE.md)。
 
-详细报告：`docs/AUDIT-REPORT.md`（v1）、`docs/AUDIT-REPORT-V2.md`（v2）、`midi_db/stats/music-verify-report.md`。
+| 源 id | 来源 | 曲目数 | 档位 | 原始地址 |
+|---|---|---:|---|---|
+| `aria` | Aria-MIDI（Unique 子集） | 32,522 | C2 | github.com/loubbrad/aria-midi |
+| `thesession` | The Session | 23,250 | C1 | github.com/adactio/TheSession-data |
+| `cyberhymnal` | The Cyber Hymnal | 10,945 | C1 | hymntime.com/tch |
+| `chinafolk` | 中国民间歌曲集成（OMR 数字化） | 10,473 | C3 | github.com/m-july/Anthology-of-Chinese-Folk-Songs |
+| `essen` | ESAC 欧洲民歌档案 | 10,373 | C1 | esac-data.org |
+| `giantmidi` | GiantMIDI-Piano | 10,112 | C1 | github.com/bytedance/GiantMIDI-Piano |
+| `lakh` | Lakh MIDI Dataset（已过滤） | 9,640 | C3 | colinraffel.com/projects/lmd/ |
+| `norbeck` | Norbeck ABC 曲集 | 3,439 | C1 | norbeck.nu/abc/ |
+| `m21` | music21 CoreCorpus | 3,029 | C1 | github.com/cuthbertLab/music21 |
+| `mutopia` | Mutopia Project | 1,860 | C1 | mutopiaproject.org |
+| `abcmisc` | ABC Misc（John Chambers 曲集） | 1,487 | C1 | trillian.mit.edu/~jc/music/abc/ |
+| `openscore` | OpenScore Lieder | 1,438 | C1 | github.com/OpenScore/Lieder |
+| `maestro` | MAESTRO v3 | 1,276 | C2 | magenta.tensorflow.org/datasets/maestro |
+| `groove` | Groove MIDI Dataset | 1,149 | C1 | magenta.tensorflow.org/datasets/groove |
+| `emopia` | EMOPIA v2.2 | 1,071 | C2 | zenodo.org/records/5257995 |
+| `nottingham` | Nottingham Music Database（校订版） | 1,033 | C1 | ifdo.ca/~seymour/nottingham/ |
+| `wikifonia` | Wikifonia（PD 子集） | 445 | C1 | synthzone.com/files/Wikifonia/Wikifonia.zip |
+| `oga` | OpenGameArt | 340 | C1 | opengameart.org |
+| `musicnet` | MusicNet | 297 | C1 | zenodo.org/records/5120004 |
+| **合计** | | **124,179** | | |
 
-## 五、字段说明
+> 考察但**未收录**的来源（许可不允许再分发等）及其原因，见 `SOURCE-CATALOG.md`。
 
-见 [schema.md](schema.md)。核心：`c/cn` 作曲家 · `t` 标题 · `g` 流派 · `p` 时期 · `r` 地域 · `z` 分区 · `l` 许可 · `v` 质量标记 · `f` 文件路径。
+## 四、字段（`meta/catalog.json`，20 字段）
 
-## 六、局限（诚实披露）
+| 字段 | 含义 | 覆盖 |
+|---|---|---:|
+| `id` | 唯一标识（`{source}-{6 位序号}`） | 100% |
+| `t` | 标题（无标题者由作曲家 + 编号合成，保证可分辨 100%） | 90.0% |
+| `c` / `cn` | 作曲家 slug / 显示名 | 100% |
+| `g` | 风格（genre） | 95.4% |
+| `i` | 乐器 | 95.4% |
+| `p` | 时期 | 88.1% |
+| `form` | 曲式 | 46.0% |
+| `opus` / `no` | 作品号 / 编号（依各作曲家编号体系） | 26.0% / 26.4% |
+| `yr` | 年代 | 11.7% |
+| `r` / `ctry` | 地域 / 国家 | 25.4% / 17.4% |
+| `du` / `nn` | 时长（秒）/ 音符数 | **100%** |
+| `z` | 档位（`main` / `piano-special` / `study`） | 100% |
+| `l` | 许可标识 | 100% |
+| `v` | 质量标记 | 100% |
+| `f` | 相对文件路径 | 100% |
+| `diff` | 难度（钢琴类） | 部分 |
 
-1. **转录准确性**：MIDI 来自原始数据集的既有转录，本库完成统计级验证（可发现损坏/乱码），但**逐音符与原乐谱比对**未执行
-2. **元数据**：信任原始数据集；ariamidi 无曲名（title 覆盖率 65.7% 的主因）
-3. **链式许可**：核实了各数据集自身的许可声明，但无法穿透验证上游转录者的授权链
-4. **中国集成**：10,473 首许可未确认，未包含在本版
-5. **长尾署名**：2,094 个仅出现 1–2 次的作曲家署名未逐一考证
+字段完整度按「空字段优于模糊占位」原则统计——**未知一律留空，不做猜测性填充**。
+四套索引：`index-by-composer.json` · `index-by-period.json` · `index-by-region.json` · `index-by-source.json`。
 
-## 七、引用（BibTeX）
+## 五、许可与使用
+
+- 逐首许可记录在 `l` 字段；档位汇总见 §二；审计依据见 `LICENSE-AUDIT.md`
+- **`main`（C1）**：允许商业使用，须按各来源要求署名
+- **`piano-special`（C2）**：仅限非商业用途（CC BY-NC-SA 4.0），商用需另行获得授权
+- **`study`（C3）**：仅限学习与研究，不得再分发、不得商用
+  - `chinafolk` 的中国民歌：旋律为传统民间音乐，但本批 MIDI 来自《中国民间歌曲集成》记谱稿的光学识别，
+    整理与汇编成果受版权保护 → 归 C3，使用须显著标注数据集与底本
+  - `lakh`：数据集本身 CC BY 4.0，但内容层已剔除含版权声明与流行/影视路径的曲目，**保守归 C3**
+- ⚠️ **`thesession` 的特别条款**：其数据仓 `LICENSE.md` 在 CC BY-SA 4.0 授权基础上
+  **附加「禁止用于大语言模型」条款**——不得用大模型使用、改编、修改或处理该素材
+  （训练大模型、借助 LLM 工具处理、并入 LLM 相关应用均属禁止），
+  仅「为残障人士提供无障碍方案」有豁免。**使用 `thesession` 部分时请遵守此条款。**
+- `meta` 包（目录 / 索引 / 字段说明 / 文档）由本库制作，以 **CC0-1.0** 释出，可自由使用
+- 本库**不含**受版权保护的流行歌 / 影视 / 游戏音乐转录
+
+## 六、局限与已知问题
+
+- 元数据源自各上游数据集：作曲家拼写存在变体（归并表见 `meta` 包）；编号体系依各作曲家而异（BWV/K./D./S./Hob. 等）
+- 部分 ABC → MIDI 为机械转换，**力度与速度不代表原曲演绎意图**
+- `yr`（年代）与 `ctry`（国家）覆盖偏低：上游多数无此字段，按「宁缺勿错」留空
+- 少数来源以「本地快照」方式留证（上游未公布校验值），见 `PROVENANCE.md` 的校验值分级说明
+
+## 七、引用
+
+见 `CITATION.bib`。使用 `piano-special` 包须同时引用 Aria-MIDI 原文：
 
 ```bibtex
-@dataset{midicn_lib_2026,
-  title     = {midicn-lib: A Curated Multi-Source MIDI Library},
-  author    = {midicn.com},
-  year      = {2026},
-  version   = {v1.0},
-  url       = {https://github.com/midicn/midi-lib},
-  note      = {104,380 tracks from 18 public datasets, unified schema,
-               quality-verified and license-zoned}
+@inproceedings{bradshawaria,
+  title={Aria-MIDI: A Dataset of Piano MIDI Files for Symbolic Music Modeling},
+  author={Bradshaw, Louis and Colton, Simon},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2025}
 }
 ```
 
-同时请引用你实际使用的来源数据集（第二节表格）。
+---
 
-## 八、维护
+## English (summary)
 
-- 项目主页：midicn.com
-- 问题反馈：GitHub Issues
-- 数据更新：按「审计→修复→重审计」流程，所有变更保留审计轨迹
+midicn-lib is a curated aggregation of **19 public MIDI / notation datasets** — **124,179 tracks**,
+normalised into one catalogue with 20 consistent fields and **per-track** licence tagging.
+
+Splits are by **usage tier**, not by genre: `main` (69,197 · commercial use allowed),
+`piano-special` (34,869 · non-commercial only, CC BY-NC-SA 4.0),
+`study` (20,113 · study/research only) and `meta` (catalogue, indexes, docs · CC0-1.0).
+Nineteen additional per-source packages are published alongside.
+
+Every track keeps its upstream path and licence tag; each source's **actual acquisition address**,
+method and checksum are recorded in [`PROVENANCE.md`](PROVENANCE.md).
+Note the special term on **The Session** data: its licence adds a **prohibition on LLM use**
+(no training, processing or incorporating the material via large language models, with an
+accessibility-only exception) on top of CC BY-SA 4.0.
