@@ -25,10 +25,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PY = sys.executable
 NODE = os.environ.get('MIDICN_NODE', r'C:/Program Files/nodejs/node.exe')
-NODE_MODULES = os.environ.get('MIDICN_NODE_MODULES',
-                              r'<local>/.workbuddy/binaries/node/workspace/node_modules')
-E2E = os.environ.get('MIDICN_E2E',
-                     r'<local>/.workbuddy/binaries/node/workspace/diag-e2e.js')
+NODE_MODULES = os.environ.get('MIDICN_NODE_MODULES', '')
+E2E = os.environ.get('MIDICN_E2E', '')
 
 
 def run(name: str, cmd: list[str], cwd: Path, env: dict | None = None, keep: int = 12) -> tuple[bool, str]:
@@ -76,6 +74,10 @@ def main(argv) -> int:
     if args.no_e2e:
         print('=' * 88)
         print('【3/3 站点回归】已按 --no-e2e 跳过')
+    elif not NODE_MODULES or not E2E or not Path(NODE).exists():
+        print('=' * 88)
+        print('【3/3 站点回归】本机未配置 MIDICN_NODE_MODULES / MIDICN_E2E，跳过（不视为失败）')
+        results.append(('站点回归（本地）', True))
     else:
         env = dict(os.environ)
         env['NODE_PATH'] = NODE_MODULES

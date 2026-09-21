@@ -84,8 +84,9 @@ def cmd_check(cfg: dict) -> int:
     if t:
         src_dir, dst_dir = ROOT / t['src'], ROOT / t['dest']
         if src_dir.exists() and dst_dir.exists():
+            excl = set(cfg.get('tools_exclude', []))
             for f in sorted(src_dir.iterdir()):
-                if not f.is_file() or f.name.startswith('__'):
+                if not f.is_file() or f.name.startswith('__') or f.name in excl:
                     continue
                 d = dst_dir / f.name
                 if not d.exists():
@@ -129,8 +130,9 @@ def cmd_apply(cfg: dict) -> int:
     if t:
         src_dir, dst_dir = ROOT / t['src'], ROOT / t['dest']
         dst_dir.mkdir(parents=True, exist_ok=True)
+        excl = set(cfg.get('tools_exclude', []))
         for f in sorted(src_dir.iterdir()):
-            if not f.is_file() or f.name.startswith('__'):
+            if not f.is_file() or f.name.startswith('__') or f.name in excl:
                 continue
             d = dst_dir / f.name
             if not (d.exists() and md5(d) == md5(f)):
