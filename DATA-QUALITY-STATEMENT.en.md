@@ -1,89 +1,72 @@
-# DATA QUALITY STATEMENT · midicn-lib v1.0
+# DATA QUALITY STATEMENT · midicn-lib
 
-> Version: 2026-09-17 · Dataset midicn-lib v1.0 · 94,740 records (94,418 unique) / 17 sources
+> Verified on **2026-09-21** · dataset midicn-lib (current) · **124,179** tracks / **19** sources ·
+> tiers: main 69,197 / piano-special 34,869 / study 20,113
 >
-> This dataset is a **curated re-distribution**. We commit that every item in the "Verified"
-> section below has been exhaustively checked programmatically with audit reports on file;
-> we also honestly disclose the "trust boundaries" — what we **cannot** guarantee.
-> Read this statement before using the dataset.
+> This dataset is a **curated re-distribution**. Every item in the "Verified" section has been checked
+> programmatically with audit reports on file; we also disclose the "trust boundaries" — what we
+> **cannot** promise. The original v1.0 wording (94,740 tracks / 17 sources, 2026-09-17) is retained as a
+> historical baseline at the end of this file (Chinese version).
 
-> 中文版：[DATA-QUALITY-STATEMENT.md](DATA-QUALITY-STATEMENT.md)
+## 1. Verified items
 
-## 1. Verified Items (exhaustive programmatic checks · guaranteed)
-
-| # | Item | Method | Result |
+| # | Item | Method | Result (current, 124,179 tracks) |
 |---|---|---|---|
-| 1 | File integrity | All 94,740 references checked for existence | **100% present, 0 missing** |
-| 2 | Path uniqueness | Full comparison of midi.file within each source | 0 collisions (hash naming) |
-| 3 | MIDI parseability | 300-file event-level sample (mido) | 0 failures · 0 zero-note files |
-| 4 | MIDI conformance | 500-file header sample + pitch range 0–127 | all compliant |
-| 5 | Record structure | 19 required + 1 optional fields checked one by one | 100% compliant |
-| 6 | Duplicate control | Two-phase detection (MD5 + pitch fingerprint), fingerprint manually sampled (8/8 true duplicates) | 322 flagged `duplicate_of`, filtered on release |
-| 7 | License zoning | 17 sources audited one by one (`LICENSE-AUDIT.md`) | main 48,140 / piano-special 32,522 / pending 10,473 / research 3,269 |
-| 8 | Minefield exclusion | Copyrighted pop/game transcriptions | 0 included (5,988 copyrighted Wikifonia tracks filtered) |
-| 9 | Composer fields | Merge mapping manually reviewed (incl. 10 false-merge fixes + traditional-collection normalization) | slug/name 100% covered |
-| 10 | Period field | Musicology-consensus anchors (27 composers) force-overridden + birth-death inference | 91.6% coverage · 0 anchor mismatches |
-| 11 | **Statistical music-content verification** (all 94,740) | mido parse + five algorithms: K-S tonality, motif repetition, density, range, duration | **92,476 normal (97.6%)** · broken 102 (excluded) · suspect 1,394 (flagged) · genuine-short 737 (restored) · tonality median 0.85 (strong evidence of genuine music) |
+| 1 | **File integrity** | release tree compared one-to-one with the catalogue (re-checked 2026-09-21) | **124,179 MIDI files present, 0 missing** |
+| 2 | Path uniqueness | full comparison of `midi.file` per source | 0 conflicts |
+| 3 | **MIDI parseability** | every file re-parsed with mido at ingest; duration & note count recomputed | `du` / `nn` coverage **100%** |
+| 4 | MIDI conformity | header + pitch range 0–127 (v1.0: 500-file sample) | all conformant |
+| 5 | Record structure | 20 fields (19 required + optional `duplicate_of`) | 100% compliant |
+| 6 | Duplicate control | two-stage detection (MD5 + pitch fingerprint), fingerprint sampling verified | `duplicate_of` filtered at release; 742 same-content GiantMIDI transcriptions removed in v1.5 |
+| 7 | **Licence zoning** | 19 sources audited one by one (`docs/LICENSE-AUDIT.md`) | main 69,197 / piano-special 34,869 / study 20,113 |
+| 8 | Minefield exclusion | copyrighted pop/game transcriptions | 0 included (5,988 Wikifonia copyrighted files filtered; Lakh filtered by copyright notice and pop/film paths) |
+| 9 | Composer field | merge mapping manually reviewed | slug/name **100%** coverage |
+| 10 | Period field | musicological anchors + life-date inference | 88.1% coverage, 0 anchor mismatches |
+| 11 | **Statistical music verification** | mido + five algorithms (tonality K-S, motif repetition, density, range, duration) | **baseline: all 94,740 tracks at v1.0** (97.6% normal); later batches verified per file (item 3) |
 
-**Quantitative baseline** (all tracks):
+Quantitative evidence (v1.0 full baseline, 94,740 tracks): tonality correlation median **0.826** (P99 0.972),
+motif repetition median **0.485**, note density median 4.1/s. Report: `docs/music-verify-report.md`
+(regenerable via `tools/music_verify.py`).
 
-| Metric | P1 | Median | P99 | Meaning |
-|---|---:|---:|---:|---|
-| Tonality correlation | 0.0* | **0.826** | 0.972 | *P1=0 comes from the 139 flagged suspects; 98%+ above 0.45 |
-| Motif repetition | 0.0* | **0.485** | 1.0 | Phrase-repetition signature of real music |
-| Note density/sec | 1.2 | 4.1 | 17.6 | Plausible performance speed |
+## 2. Trust boundaries (disclosed honestly)
 
-## 2. Trust Boundaries (what we cannot guarantee · honestly disclosed)
+1. **Note-level comparison against original scores** is the only unperformed check. We did statistical
+   verification (item 11) plus per-file parsing (item 3); individual transcription errors inherited from
+   upstream datasets may remain.
+2. **Inherited metadata**: titles/opus/form trust the upstream datasets, enriched from multiple sources
+   (IMSLP work catalogues, Essen geography, official composer tables — tens of thousands of fixes).
+   Title coverage is now 90.0%; untitled tracks get a composer+number display name (100% distinguishable).
+3. **Chained licensing**: we verified each dataset's own licence statement, but cannot fully verify
+   upstream transcribers' authorisation chains. Conservative zoning (exclusion or isolation) applied.
+4. **Fingerprint dedup residue**: fingerprint-similar pairs sharing only a composer were kept
+   ("keep over delete") and listed for manual review.
 
-### 2.1 Note-level comparison against original scores (the one remaining unverified item)
-- The MIDI files come from existing transcriptions in the source datasets. We performed
-  **statistical verification** (item 11: tonality / motif / density features detect corruption,
-  garbage and broken transcriptions).
-- However, **per-note comparison against the original scores** (verifying each pitch/duration)
-  requires musicological listening and was **not** performed.
-- **Meaning**: the data contains no "corrupted/garbage/empty" files (excluded programmatically);
-  individual tracks may inherit transcription errors (wrong notes, omitted repeats) from their
-  source datasets.
+## 3. Usage advice
 
-### 2.2 Metadata inheritance
-- `title / opus / form / key` metadata is **inherited from the source datasets**. ariamidi has no
-  titles (the main reason title coverage is 65.7%); Essen/thesession titles are verbatim from the sources.
-- Composer attributions are inherited. **Known systematic issues have been fixed** (performers
-  mis-attributed as composers, 10 false merges), but the 2,094 "1–2 track" long-tail attributions
-  were not individually researched.
+1. `main` (C1, 69,197) — commercial use allowed with attribution per source.
+2. `piano-special` (C2, 34,869) — CC BY-NC-SA 4.0: non-commercial only.
+3. `study` (C3, 20,113) — study/research only: no redistribution, no commercial use.
+   - `chinafolk` (10,473): traditional melodies, but the MIDI was recognised from the protected notated
+     edition of the *Anthology of Chinese Folk Songs* → published as C3 with mandatory attribution.
+   - `lakh` (9,640): dataset is CC BY 4.0, but the content-filtered subset is **conservatively C3**.
+4. ⚠️ **`thesession` (23,250)**: CC BY-SA 4.0 **plus a "Prohibition on LLM Use"** term (see `LICENSE.md` §2.2).
+5. For musicologically strict use, listen to the tracks you rely on.
+6. Report issues via the project repository; we follow an audit → fix → re-audit loop.
 
-### 2.3 Chained licensing
-- We verified **each dataset's own license statement** (CC BY / CC BY-SA / PD, etc.).
-- Whether **upstream transcribers actually had the right to publish under that license** (e.g.
-  the copyright status of scores ariamidi transcribed from) cannot be fully verified upstream.
-  The most conservative strategy has been applied (uncertain content excluded or quarantined).
+## 4. Tool chain
 
-### 2.4 Fingerprint-dedup residual risk
-- 361 fingerprint-similar pairs with only the composer in common were **left untouched**
-  (may be different versions of the same piece, or different pieces) — listed in
-  `dedup-pending-review.md` for manual review. We prefer keeping over deleting.
+`tools/audit*.py` (structural & deep audits) · `tools/quality_pipeline.py` · `tools/dedup*.py` ·
+`tools/music_verify.py` · `tools/provenance.py` (**provenance verifier**) ·
+`tools/sync_docs.py` / `tools/preflight.py` (single-source docs sync / **release pre-flight gate**).
 
-## 3. Usage Recommendations
+Together with `AUDIT-REPORT*.md`, `LICENSE-AUDIT.md`, `QUALITY-GATES.md` and `PROVENANCE.md` this forms
+the complete quality and provenance archive.
 
-1. **Main release** (`main` zone, 48,140 tracks) is safe for commercial use; `piano-special`
-   (CC BY-NC-SA) and `research` are non-commercial only.
-2. `pending` (chinafolk, 10,473 tracks) has **unconfirmed licenses — do not publish**; will be
-   promoted after author authorization.
-3. For use cases with strict musicological accuracy requirements, manually listen to the tracks
-   you plan to use.
-4. Report data issues to the project repository; we follow an "audit → fix → re-audit" process.
+## 5. Version history
 
-## 4. Audit Toolchain (reproducible)
-
-| Tool | Purpose |
-|---|---|
-| `tools/audit.py` | Structural audit, 10 checks (v1) |
-| `tools/audit2.py` | Deep audit, 12 checks (v2, incl. MIDI event-level) |
-| `tools/quality_pipeline.py` | Idempotent quality pipeline (must re-run after any ingest) |
-| `tools/music_verify.py` | Statistical music-content verification (5 algorithms) |
-| `tools/dedup.py` / `dedup_apply.py` | Two-phase deduplication detection and conservative flagging |
-| `tools/clean_v1.py` / `infer_period.py` | Composer merging + period inference |
-| `tools/report.py` | Library statistics report |
-
-> This statement, together with `AUDIT-REPORT.md` (v1), `AUDIT-REPORT-V2.md` (v2),
-> `LICENSE-AUDIT.md` and `QUALITY-GATES.md`, forms the complete quality archive.
+- **v1.0 (2026-09-17)**: 94,740 tracks / 17 sources — the original statement and the full statistical
+  music verification were executed at that point.
+- **Current (re-verified 2026-09-21)**: 124,179 tracks / 19 sources. Later sources were per-file parse
+  verified (`du`/`nn` 100%) and admitted under the same licence gate; release-tree integrity confirmed in
+  this review. Zoning is main / piano-special / study since v1.6 (the `pending` and `research` zones were
+  retired: chinafolk published as C3 after licence assessment; maestro & emopia published as C2).

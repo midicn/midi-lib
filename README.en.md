@@ -1,121 +1,128 @@
-# midicn-lib v1.0 · MIDI Library (Curated Edition)
+# midicn-lib · Open MIDI Library (Curated Edition)
 
-> 94,740 records · 17 source datasets · Unified 21-field schema · Five-level quality flags · Full provenance
+> **124,179** tracks · **19** public sources · **14** categories · per-track licence tier · full provenance
 >
-> This library is a **systematic re-curation** of 17 public MIDI datasets: unified fields, quality
-> verification, license zoning, and index construction. We publish not only the audio files but the
-> **complete curation process and audit trail** — every step reproducible, traceable, and open to scrutiny.
+> Portal & player: <https://lib.midicn.com> · Downloads: <https://lib.midicn.com/download.html>
+> Provenance ledger (how each address was obtained, with checksums): <https://lib.midicn.com/provenance.html>
 
-> [中文版 README](README.md)
+This repository is the **data release repository** of midicn-lib: catalogue, indexes, field
+documentation, licence audit and the curation tool chain. The site source lives in
+[midicn/midi-lib-site](https://github.com/midicn/midi-lib-site).
 
-## 📦 Package Structure
+## 📦 Packages (split by usage tier, not by genre)
 
-| Directory | Contents | Count | License |
-|---|---|---:|---|
-| `main/` | Commercially usable: Irish folk, world folk, British folk, Klezmer/Balkan, classical (open), game, drum | ~48,140 | CC BY / CC BY-SA / PD |
-| `study/` | 古典与传统（**仅供研究/学习**）：Lakh MIDI 过滤后收录 | 9,640 | CC-BY-4.0 |
-| `piano-special/` | Classical piano (auto-transcribed) | 32,522 | CC BY-NC-SA (**non-commercial**) |
-| `meta/` | Full catalog `catalog.json` + 4 navigation indexes + MD5 checksums | — | CC0 |
-| `research/` | Research use (not distributed with this release) | — | — |
+| Directory | Meaning | Tier | Tracks | Download |
+|---|---|---|---:|---|
+| `main/` | licences permit commercial use | **C1** | 69,197 | `midicn-lib-<VER>-main.zip` |
+| `piano-special/` | non-commercial only | **C2** | 34,869 | `midicn-lib-<VER>-piano-special.zip` |
+| `study/` | study / research only | **C3** | 20,113 | `midicn-lib-<VER>-study.zip` |
+| `meta/` | catalogue / indexes / field docs / documents | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
+| **Total** | | | **124,179** | plus 19 per-source packages (`-source-<id>.zip`) |
 
-**Not included**:
-- Chinese folk collection (10,473 tracks) — pending license confirmation; will ship as a separate package
-- Broken files (102; parse failures / empty) — excluded after verification
-- Duplicated files (322; MD5 / pitch-fingerprint detection) — excluded after verification
+> Assets per release: [Releases](https://github.com/midicn/midi-lib/releases). The current version always
+> matches <https://lib.midicn.com/download.html>.
 
-## 🗂️ main/ Breakdown
+## 🗂️ Categories (14)
 
-| Subdirectory | Contents | Count | Sources |
-|---|---|---:|---|
-| `folk-ireland/` | Irish traditional dance tunes & songs | 26,689 | TheSession, Norbeck |
-| `folk-world/` | World folk songs (China, Germany, Nordic, …) | 10,818 | Essen, Wikifonia (PD) |
-| `klezmer-balkan/` | Klezmer & Balkan tunes | 1,487 | ABCMisc |
-| `folk-british/` | British & American folk | 1,033 | Nottingham |
-| `classical-open/` | Classical, open license (Renaissance–Romantic) | 6,624 | Mutopia, OpenScore, music21, MusicNet |
-| `game/` | Original game music | 340 | OpenGameArt |
-| `drum/` | Drum grooves & patterns | 1,149 | Groove MIDI |
+**`main/` (C1 · 69,197)** — `folk-ireland/` 26,689 · `hymn/` 10,945 · `folk-world/` 10,818 ·
+`piano-performance/` 10,112 · `classical-open/` 6,624 · `klezmer-balkan/` 1,487 · `maestro/` 1,276 ·
+`drum/` 1,149 · `emopia/` 1,071 · `folk-british/` 1,033 · `game/` 340
 
-## 🚀 Quick Start
+**`piano-special/` (C2 · 34,869)** — `piano/` 32,522 · `maestro/` 1,276 · `emopia/` 1,071
+
+**`study/` (C3 · 20,113)** — `folk-china/` 10,473 · `classical-traditional/` 9,640
+
+## 🚀 Quick start
 
 ```python
 import json
-catalog = json.load(open("meta/catalog.json"))["tracks"]
-
-main_only = [t for t in catalog if t["z"] == "main"]            # commercial only
-bach      = [t for t in catalog if t["c"] == "bach"]            # by composer
-romantic  = [t for t in catalog if t["p"] == "romantic"]        # by period
-games     = [t for t in catalog if t["g"] == "game"]            # by genre
-clean     = [t for t in catalog if not t["v"]]                  # fully verified only
+cat = json.load(open('meta/catalog.json', encoding='utf-8'))
+# 20 fields per record (see schema.md)
+# handy: id / t title / c composer / z tier / l licence / f path / du seconds / nn notes
+piano = [r for r in cat['tracks'] if r['z'] == 'piano-special']
 ```
 
-The four index files in `meta/` (`index-by-composer.json`, `index-by-region.json`,
-`index-by-period.json`, `index-by-source.json`) map keys to track-id lists and can be used
-directly for front-end navigation without loading the full catalog.
+Indexes in `meta/`: `index-by-composer.json` · `index-by-period.json` · `index-by-region.json` ·
+`index-by-source.json` · `MD5SUMS.txt` (per-file checksums).
 
-## 🏷️ Field Reference (full definitions in [schema.md](schema.md))
+## 🏷️ Fields
 
-Each track carries 21 fields (19 required + 2 optional). Key fields:
+20 fields (`id,t,c,cn,g,p,r,i,z,l,v,f,opus,no,form,ctry,diff,yr,du,nn`) — full definitions in
+[`schema.md`](schema.md). Coverage: composer **100%** · duration/note count **100%** · title 90.0% ·
+genre/instrument 95.4% · period 88.1% · form 46.0% · opus 26.0%.
+**Empty beats a vague placeholder** — unknown values are left blank.
 
-| Field | Meaning |
-|---|---|
-| `c` / `cn` | Composer slug / display name (traditional tunes are unified to `traditional`) |
-| `t` | Title (Chinese folk titles preserved in Chinese) |
-| `g` / `p` / `r` / `i` | Genre / musical period / region / instrument |
-| `z` | Zone: `main` commercial · `piano-special` non-commercial |
-| `l` | License (per-track annotation) |
-| `v` | Quality flag: `broken` excluded · `suspect` feature anomaly, review advised · `verified-short` genuine short piece · `extreme-range` extreme pitch range |
-| `f` | File path (unified `{id}.mid` naming) |
-| `duplicate_of` | If a duplicate, points to the retained record (excluded from this release) |
+## ✅ Quality
 
-## ✅ Quality Assurance (see [DATA-QUALITY-STATEMENT.en.md](DATA-QUALITY-STATEMENT.en.md))
+File integrity, structural compliance, per-file duration/note recount, duplicate control, licence zoning
+and minefield exclusion — each verified programmatically and backed by audit reports; trust boundaries
+(e.g. no note-by-note human listening) are disclosed honestly. See
+[`DATA-QUALITY-STATEMENT.md`](DATA-QUALITY-STATEMENT.md).
 
-Every item below is exhaustively verified programmatically; audit reports ship with this release:
+## 📜 Licence
 
-1. **File integrity**: all 94,740 references verified, zero missing
-2. **Path uniqueness**: zero collisions within each source
-3. **MIDI parseability**: 300-file event-level sample, zero failures
-4. **Statistical music-content verification** (all 94,740): tonality correlation median **0.826**, motif-repetition median **0.485** — strong evidence of genuine musical content; corrupted/garbage files excluded
-5. **Duplicate control**: two-phase detection (MD5 + pitch fingerprint); 322 high-confidence duplicates flagged and excluded
-6. **License audit**: 17 sources reviewed one by one; zero copyrighted pop/game transcriptions included
-7. **Composer fields**: merge mapping manually reviewed, zero false merges
+- Per-track licence in field `l`; tier (C1 / C2 / C3) in field `z`
+- Full legal terms: [`LICENSE.md`](LICENSE.md) · attributions: [`NOTICE.md`](NOTICE.md) ·
+  audit: [`docs/LICENSE-AUDIT.md`](docs/LICENSE-AUDIT.md)
+- ⚠️ **`thesession` additional term**: on top of CC BY-SA 4.0, **use with large language models is
+  prohibited** (LLM training, LLM-tool processing, or incorporation into LLM-related applications;
+  accessibility use is the only exception)
+- The `meta/` directory, curation documents and tool chain are released under **CC0-1.0**
 
-**Honestly disclosed trust boundaries** (Statement §2): note-level comparison against original scores not performed; metadata inherited from source datasets; chained licensing cannot be fully verified upstream.
-
-## 📜 License
-
-Licenses differ per source — **consult [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md) before use**:
-
-- `main/`: per-track license in field `l` — predominantly CC BY / CC BY-SA / public domain
-- `piano-special/`: **CC BY-NC-SA 4.0 — non-commercial use only**, attribution required
-- Cite the whole dataset using the BibTeX below
-
-## 📖 Citation (BibTeX)
+## 📖 Citation
 
 ```bibtex
-@dataset{midicn_lib_2026,
-  title     = {midicn-lib: A Curated Multi-Source MIDI Library},
-  author    = {midicn.com},
-  year      = {2026},
-  version   = {v1.0},
-  url       = {https://github.com/midicn/midi-lib},
-  note      = {104,380 tracks from 18 public datasets, unified schema,
-               quality-verified and license-zoned}
+@misc{midicnlib,
+  title  = {midicn-lib: an open MIDI library with per-track licence tagging},
+  author = {midicn project},
+  year   = {2026},
+  url    = {https://lib.midicn.com},
+  note   = {124,179 tracks aggregated from 19 public datasets, unified catalogue,
+            per-track licence tiers. Access version: see the Releases page.}
 }
 ```
 
-## 🙏 Source Datasets (17)
+Using `piano-special/` requires additionally citing the Aria-MIDI paper
+(see [`DATASET-CARD.md`](DATASET-CARD.md) §7).
 
-ariamidi · TheSession · Chinese Folk Collection · Essenfolkdance · Norbeck · Mutopia ·
-ABCMisc · OpenScore Lieder Corpus · MAESTRO · Groove MIDI · EMOPIA · Nottingham ·
-MuseData · OpenGameArt · MusicNet · Wikifonia (PD subset) · music21 corpus
+## 🙏 Sources (19)
 
-Full provenance and license audit: [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md). Per-source counts: [DATASET-CARD.md](DATASET-CARD.md).
+**Addresses are the places we actually obtained the data from** — method, evidence and checksums in
+[PROVENANCE.md](PROVENANCE.md) (on-site version: <https://lib.midicn.com/provenance.html>).
 
-## 🛠️ Curation Toolchain (fully open source, reproducible)
+| Source | Tracks | Tier | Acquisition address |
+|---|---:|---|---|
+| Aria-MIDI (Unique subset) | 32,522 | C2 | github.com/loubbrad/aria-midi |
+| The Session | 23,250 | C1 | github.com/adactio/TheSession-data |
+| The Cyber Hymnal | 10,945 | C1 | hymntime.com/tch |
+| Anthology of Chinese Folk Songs (OMR) | 10,473 | C3 | github.com/m-july/Anthology-of-Chinese-Folk-Songs |
+| ESAC folk-song archive | 10,373 | C1 | esac-data.org |
+| GiantMIDI-Piano | 10,112 | C1 | github.com/bytedance/GiantMIDI-Piano |
+| Lakh MIDI Dataset (filtered) | 9,640 | C3 | colinraffel.com/projects/lmd/ |
+| Norbeck ABC collections | 3,439 | C1 | norbeck.nu/abc/ |
+| music21 CoreCorpus | 3,029 | C1 | github.com/cuthbertLab/music21 |
+| Mutopia Project | 1,860 | C1 | mutopiaproject.org |
+| ABC Misc (John Chambers) | 1,487 | C1 | trillian.mit.edu/~jc/music/abc/ |
+| OpenScore Lieder | 1,438 | C1 | github.com/OpenScore/Lieder |
+| MAESTRO v3 | 1,276 | C2 | magenta.tensorflow.org/datasets/maestro |
+| Groove MIDI Dataset | 1,149 | C1 | magenta.tensorflow.org/datasets/groove |
+| EMOPIA v2.2 | 1,071 | C2 | zenodo.org/records/5257995 |
+| Nottingham Music Database (corrected) | 1,033 | C1 | ifdo.ca/~seymour/nottingham/ |
+| Wikifonia (PD subset) | 445 | C1 | synthzone.com/files/Wikifonia/Wikifonia.zip |
+| OpenGameArt | 340 | C1 | opengameart.org |
+| MusicNet | 297 | C1 | zenodo.org/records/5120004 |
 
-All curation scripts ship with the repository (`tools/`):
-`quality_pipeline.py` (quality pipeline) · `music_verify.py` (music-content verification) ·
-`dedup.py` (deduplication) · `clean_v1.py` (composer merging) · `infer_period.py` (period inference) ·
-`audit.py` / `audit2.py` (final audits)
+Sources examined but **not included** (redistribution not permitted, etc.): [SOURCE-CATALOG.md](SOURCE-CATALOG.md).
 
-Anyone can re-run the entire pipeline on the original datasets and obtain results consistent with this release.
+## 🛠️ Tool chain (open source, reproducible)
+
+`tools/ingest_*.py` (19 ingesters) · `tools/build_release.py` (release tree + catalogue + indexes) ·
+`tools/enrich_*.py` (metadata enrichment) · `tools/dedup*.py` (two-stage dedup) ·
+`tools/music_verify.py` (statistical music verification) ·
+`tools/provenance.py` (**provenance verifier**) · `tools/sync_docs.py` (single-source docs sync) ·
+`tools/preflight.py` (**release pre-flight gate**).
+
+---
+
+**中文**：见 [README.md](README.md) · Dataset card: [DATASET-CARD.md](DATASET-CARD.md) ·
+Provenance: [PROVENANCE.md](PROVENANCE.md) · Licence: [LICENSE.md](LICENSE.md)

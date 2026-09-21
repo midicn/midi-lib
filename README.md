@@ -1,113 +1,153 @@
-# midicn-lib v1.0 · MIDI 音乐库（二次整理版）
+# midicn-lib · 开放 MIDI 音乐库（二次整理版）
 
-> 104,380 条记录 · 18 个来源数据集 · 统一 21 字段 Schema · 五级质量标记 · 全程可溯源
+> **124,179** 首曲目 · **19** 个公开来源 · **14** 个分类 · 逐首标注许可档位 · 全程可溯源
 >
-> 本库是对 17 个公开 MIDI 数据集的**系统性二次整理**：统一字段、质量验证、许可分区、索引构建。
-> 我们发布的不只是音频文件，还有**完整的整理过程与审计档案**——每一步都可复现、可追溯、可质疑。
+> 门户与在线试听：<https://lib.midicn.com> · 数据下载页：<https://lib.midicn.com/download.html>
+> 来源台账（每个地址的取得方式与校验值）：<https://lib.midicn.com/provenance.html>
 
-## 📦 包结构
+本仓库是 midicn-lib 的**数据发布仓**：目录、索引、字段说明、许可审计与整理工具链。
+站点源码在 [midicn/midi-lib-site](https://github.com/midicn/midi-lib-site)。
 
-| 目录 | 内容 | 数量 | 许可 |
-|---|---|---:|---|
-| `main/` | 可商用主库：爱尔兰民谣、世界民谣、英美民谣、克莱兹梅尔/巴尔干、古典开放许可、游戏音乐、鼓点 | 48,468 | CC BY / CC BY-SA / PD 等 |
-| `study/` | 古典与传统（**仅供研究/学习**）：Lakh MIDI 过滤后收录 | 9,640 | CC-BY-4.0 |
-| `piano-special/` | 古典钢琴特区（自动转录，**非商用**） | 32,522 | CC BY-NC-SA（**非商用**） |
-| `meta/` | 全量目录 `catalog.json` + 4 轴索引 + MD5 校验 | — | CC0 |
-| `research/` | 研究用（不随本发布分发） | — | — |
+## 📦 包结构（按「使用方式」分包，而不是按风格）
 
-**未包含**：
-- 中国民歌集成（10,473 首）——许可待确认，确认后将作为独立包发布
-- 损坏文件（102 首，解析失败/零音符）——验证后排除
-- 重复文件（322 首，MD5/指纹检测）——验证后排除
+| 目录 | 含义 | 档位 | 曲目数 | 下载 |
+|---|---|---|---:|---|
+| `main/` | 许可允许商业使用 | **C1 可商用** | 69,197 | `midicn-lib-<VER>-main.zip` |
+| `piano-special/` | 仅限非商业用途 | **C2 非商用** | 34,869 | `midicn-lib-<VER>-piano-special.zip` |
+| `study/` | 仅限学习与研究 | **C3 学习研究** | 20,113 | `midicn-lib-<VER>-study.zip` |
+| `meta/` | 目录 / 索引 / 字段说明 / 文档 | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
+| **合计** | | | **124,179** | 另附 19 个**按来源**分包（`-source-<id>.zip`） |
 
-## 🗂️ main/ 分类明细
+> 各版本资产见 [Releases](https://github.com/midicn/midi-lib/releases)。当前版本与下载页一致（以
+> <https://lib.midicn.com/download.html> 为准）。
 
-| 子目录 | 内容 | 数量 | 主要来源 |
-|---|---|---:|---|
-| `folk-ireland/` | 爱尔兰传统舞曲与歌谣 | 26,689 | TheSession, Norbeck |
-| `folk-world/` | 世界民谣（含中国、德国、北欧等） | 10,818 | Essen, Wikifonia(PD) |
-| `klezmer-balkan/` | 克莱兹梅尔与巴尔干曲调 | 1,487 | ABCMisc |
-| `folk-british/` | 英美民谣 | 1,033 | Nottingham |
-| `classical-open/` | 古典开放许可（文艺复兴-浪漫） | 6,624 | Mutopia, OpenScore, music21, MusicNet |
-| `game/` | 游戏原创音乐 | 340 | OpenGameArt |
-| `drum/` | 鼓点节奏型 | 1,149 | Groove MIDI |
+## 🗂️ 分类明细（14 个分类）
+
+**`main/`（C1 · 69,197 首）**
+
+| 分类 | 曲目 | 来源 |
+|---|---:|---|
+| `folk-ireland/` | 26,689 | thesession 23,250 · norbeck 3,439 |
+| `hymn/` | 10,945 | cyberhymnal |
+| `folk-world/` | 10,818 | essen |
+| `piano-performance/` | 10,112 | giantmidi |
+| `classical-open/` | 6,624 | mutopia 1,860 · openscore 1,438 · m21 3,029 · musicnet 297 |
+| `klezmer-balkan/` | 1,487 | abcmisc |
+| `maestro/` | 1,276 | maestro |
+| `drum/` | 1,149 | groove |
+| `emopia/` | 1,071 | emopia |
+| `folk-british/` | 1,033 | nottingham |
+| `game/` | 340 | oga |
+
+**`piano-special/`（C2 · 34,869 首）**
+
+| 分类 | 曲目 | 来源 |
+|---|---:|---|
+| `piano/` | 32,522 | aria |
+| `maestro/` | 1,276 | maestro |
+| `emopia/` | 1,071 | emopia |
+
+**`study/`（C3 · 20,113 首）**
+
+| 分类 | 曲目 | 来源 |
+|---|---:|---|
+| `folk-china/` | 10,473 | chinafolk（中国民间歌曲集成 · OMR） |
+| `classical-traditional/` | 9,640 | lakh（已过滤子集） |
 
 ## 🚀 快速使用
 
 ```python
 import json
-catalog = json.load(open("meta/catalog.json"))["tracks"]
-
-main_only = [t for t in catalog if t["z"] == "main"]            # 只要可商用
-bach     = [t for t in catalog if t["c"] == "bach"]             # 按作曲家
-romantic = [t for t in catalog if t["p"] == "romantic"]         # 按时期
-china    = [t for t in catalog if t["r"] and "中国" in t["r"]]   # 按地域
-games    = [t for t in catalog if t["g"] == "game"]             # 按流派
-clean    = [t for t in catalog if not t["v"]]                   # 只要全验证通过的
+cat = json.load(open('meta/catalog.json', encoding='utf-8'))
+# 每行一条记录，20 个字段（见 schema.md）
+# 常用：id / t 标题 / c 作曲家 / z 档位 / l 许可 / f 相对路径 / du 时长(秒) / nn 音符数
+piano = [r for r in cat['tracks'] if r['z'] == 'piano-special']
 ```
 
-`meta/` 下的 4 个索引文件（`index-by-composer.json` / `index-by-region.json` / `index-by-period.json` / `index-by-source.json`）为「键 → 曲目 id 列表」的映射，可直接用于网站前端导航，无需加载全量目录。
+配套索引（`meta/`）：`index-by-composer.json` · `index-by-period.json` ·
+`index-by-region.json` · `index-by-source.json` · `MD5SUMS.txt`（逐文件校验）。
 
-## 🏷️ 字段说明（完整定义见 [schema.md](schema.md)）
+## 🏷️ 字段说明
 
-每首曲目 21 个字段（19 必需 + 2 可选），核心字段：
+20 个字段（`id,t,c,cn,g,p,r,i,z,l,v,f,opus,no,form,ctry,diff,yr,du,nn`），完整定义见
+[`schema.md`](schema.md)。覆盖度：作曲家 **100%** · 时长/音符数 **100%** · 标题 90.0% ·
+风格/乐器 95.4% · 时期 88.1% · 曲式 46.0% · 作品号 26.0%。
+**未知一律留空，不做猜测性填充。**
 
-| 字段 | 含义 |
-|---|---|
-| `c` / `cn` | 作曲家 slug / 显示名（传统曲调统一为 `traditional`） |
-| `t` | 标题（中国曲目保留中文名） |
-| `g` / `p` / `r` / `i` | 流派 / 音乐时期 / 地域 / 乐器 |
-| `z` | 分区：`main` 可商用 · `piano-special` 非商用 |
-| `l` | 许可（逐曲标注） |
-| `v` | 质量标记：`broken` 已排除 · `suspect` 特征异常建议核查 · `verified-short` 真实短曲 · `extreme-range` 音域极值 |
-| `f` | 文件路径（`{id}.mid` 统一命名） |
-| `duplicate_of` | 若为重复文件，指向保留者（本发布已排除这些记录） |
+## ✅ 质量承诺
 
-## ✅ 质量承诺（详见 [DATA-QUALITY-STATEMENT.md](DATA-QUALITY-STATEMENT.md)）
-
-以下每一项都经过程序化穷尽核验，审计报告随包公开：
-
-1. **文件完整性**：94,740 条记录逐一核验，缺失 0
-2. **路径唯一性**：同源路径零冲突
-3. **MIDI 可解析性**：抽样 300 首事件级解析，0 失败
-4. **音乐内容统计级验证**（全量 94,740 首）：调性相关系数中位 **0.826**、动机重复率中位 **0.485**——真实音乐强证据；损坏/乱码文件已排除
-5. **重复控制**：MD5 + 音高指纹两阶段检测，高置信重复 322 条已标记排除
-6. **许可审计**：17 源逐源审计，雷区零收录（受版权保护的流行/游戏转录 0 首入库）
-7. **作曲家字段**：归并映射经人工逐条审查，零误伤
-
-**诚实披露的信任边界**（详见质量声明第二节）：与原乐谱的逐音符比对未执行；元数据信任原始数据集；链式许可无法穿透验证。
+文件完整性、结构合规、逐文件时长/音符数重算、重复控制、许可分区与雷区排除——
+每一项都程序化穷尽核验并有审计报告支撑；同时**诚实列出信任边界**（如未做逐音符人工核听）。
+详见 [`DATA-QUALITY-STATEMENT.md`](DATA-QUALITY-STATEMENT.md)。
 
 ## 📜 许可
 
-各源许可不同，**使用前务必查阅** [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)：
-
-- `main/`：逐曲标注许可（`l` 字段），以 CC BY / CC BY-SA / 公有领域为主
-- `piano-special/`：**CC BY-NC-SA 4.0——禁止商用**，署名后可非商用使用
-- 全库整体引用请使用下方 BibTeX
+- **逐曲标注**于 `l` 字段；档位（C1 可商用 / C2 非商用 / C3 学习研究）见 `z` 字段
+- 完整法律条款（使用义务 / 二次分发 / 免责 / 下架流程）：[`LICENSE.md`](LICENSE.md)
+- 逐源归属：[`NOTICE.md`](NOTICE.md) · 许可审计：[`docs/LICENSE-AUDIT.md`](docs/LICENSE-AUDIT.md)
+- ⚠️ **`thesession` 附加条款**：在 CC BY-SA 4.0 之外**禁止用于大语言模型**（训练 / LLM 工具处理 /
+  并入 LLM 应用均不允许；仅无障碍方案豁免）
+- `meta/` 目录、整理文档与工具链以 **CC0-1.0** 释出
 
 ## 📖 引用格式（BibTeX）
 
 ```bibtex
-@dataset{midicn_lib_2026,
-  title     = {midicn-lib: A Curated Multi-Source MIDI Library},
-  author    = {midicn.com},
+@misc{midicnlib,
+  title     = {midicn-lib: an open MIDI library with per-track licence tagging},
+  author    = {midicn project},
   year      = {2026},
-  version   = {v1.0},
-  url       = {https://github.com/midicn/midi-lib},
-  note      = {104,380 tracks from 18 public datasets, unified schema,
-               quality-verified and license-zoned}
+  url       = {https://lib.midicn.com},
+  note      = {124,179 tracks aggregated from 19 public datasets, unified catalogue,
+               per-track licence tiers. Access version: see the Releases page.}
 }
 ```
 
-## 🙏 来源数据集（17 个）
+使用 `piano-special/` 包须同时引用 Aria-MIDI 原文（见 [`DATASET-CARD.md`](DATASET-CARD.md) §七）。
 
-ariamidi · TheSession · 中国民歌集成 · Essenfolkdance · Norbeck · Mutopia · ABCMisc · OpenScore Lieder Corpus · MAESTRO · Groove MIDI · EMOPIA · Nottingham · MuseData · OpenGameArt · MusicNet · Wikifonia(PD 子集) · music21 corpus
+## 🙏 来源数据集（19 个）
 
-完整来源与许可审计见 [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)，各源曲目数见 [DATASET-CARD.md](DATASET-CARD.md)。
+**地址均为我们实际取得数据的位置**；取得方式、证据文件与校验值见
+[PROVENANCE.md](PROVENANCE.md)（另有站内版 <https://lib.midicn.com/provenance.html>）。
+
+| 源 | 曲目 | 档位 | 原始地址 |
+|---|---:|---|---|
+| Aria-MIDI（Unique 子集） | 32,522 | C2 | github.com/loubbrad/aria-midi |
+| The Session | 23,250 | C1 | github.com/adactio/TheSession-data |
+| The Cyber Hymnal | 10,945 | C1 | hymntime.com/tch |
+| 中国民间歌曲集成（OMR） | 10,473 | C3 | github.com/m-july/Anthology-of-Chinese-Folk-Songs |
+| ESAC 欧洲民歌档案 | 10,373 | C1 | esac-data.org |
+| GiantMIDI-Piano | 10,112 | C1 | github.com/bytedance/GiantMIDI-Piano |
+| Lakh MIDI Dataset（过滤） | 9,640 | C3 | colinraffel.com/projects/lmd/ |
+| Norbeck ABC 曲集 | 3,439 | C1 | norbeck.nu/abc/ |
+| music21 CoreCorpus | 3,029 | C1 | github.com/cuthbertLab/music21 |
+| Mutopia Project | 1,860 | C1 | mutopiaproject.org |
+| ABC Misc（John Chambers） | 1,487 | C1 | trillian.mit.edu/~jc/music/abc/ |
+| OpenScore Lieder | 1,438 | C1 | github.com/OpenScore/Lieder |
+| MAESTRO v3 | 1,276 | C2 | magenta.tensorflow.org/datasets/maestro |
+| Groove MIDI Dataset | 1,149 | C1 | magenta.tensorflow.org/datasets/groove |
+| EMOPIA v2.2 | 1,071 | C2 | zenodo.org/records/5257995 |
+| Nottingham Music Database（校订版） | 1,033 | C1 | ifdo.ca/~seymour/nottingham/ |
+| Wikifonia（PD 子集） | 445 | C1 | synthzone.com/files/Wikifonia/Wikifonia.zip |
+| OpenGameArt | 340 | C1 | opengameart.org |
+| MusicNet | 297 | C1 | zenodo.org/records/5120004 |
+
+考察但**未收录**的来源（许可不允许再分发等）与原因见
+[SOURCE-CATALOG.md](SOURCE-CATALOG.md)。
 
 ## 🛠️ 整理工具链（全部开源，可复现）
 
-清洗、验证、去重、审计的全部脚本随仓库发布（`tools/`）：
-`quality_pipeline.py`（质量管线）· `music_verify.py`（音乐内容验证）· `dedup.py`（去重）· `clean_v1.py`（作曲家归并）· `infer_period.py`（时期推断）· `audit.py` / `audit2.py`（终审）
+| 工具 | 作用 |
+|---|---|
+| `tools/ingest_*.py` | 各来源接入器（19 个，逐一可复现） |
+| `tools/build_release.py` | 发布目录树 + `meta/catalog.json` + 四套索引 + MD5SUMS |
+| `tools/enrich_*.py` | 元数据富化（IMSLP 作品目录 / Essen 地理 / Lakh 乐器等） |
+| `tools/dedup.py` / `dedup_apply.py` | 两阶段去重（MD5 + 音高指纹，保守标记） |
+| `tools/music_verify.py` | 音乐内容统计级验证（调性 / 动机 / 密度 / 音域 / 时长） |
+| `tools/provenance.py` | **来源台账复核器**（地址 ↔ 站点 ↔ 数据 ↔ 本地证据 ↔ 整包哈希） |
+| `tools/sync_docs.py` | 文档单一真源同步器（`docs/` → 各副本） |
+| `tools/preflight.py` | **发布前置检查**（文档同步 + 台账复核 + 站点回归，0 失败才可发布） |
 
-任何人可在原始数据集上重跑整个流程，得到与本库一致的产物。
+---
+
+**English**: see [README.en.md](README.en.md) · Dataset card: [DATASET-CARD.md](DATASET-CARD.md) ·
+Provenance ledger: [PROVENANCE.md](PROVENANCE.md) · Licence: [LICENSE.md](LICENSE.md)
