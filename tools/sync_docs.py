@@ -36,8 +36,32 @@ def md5(p: Path) -> str:
     return h.hexdigest()
 
 
+PUBLIC_FALLBACK = {
+  'note': '内置最小清单（仅公开组）。完整清单 tools/docs_manifest.json 属内部配置，不随公开仓分发。',
+  'groups': {
+    'public': {'desc': '对外公开文档', 'files': {
+      'README.md': 'docs/README.md', 'README.en.md': 'docs/README.en.md',
+      'LICENSE.md': 'docs/LICENSE.md', 'NOTICE.md': 'docs/NOTICE.md',
+      'DATASET-CARD.md': 'docs/DATASET-CARD.md', 'DATASET-CARD.en.md': 'docs/DATASET-CARD.en.md',
+      'DATA-QUALITY-STATEMENT.md': 'docs/DATA-QUALITY-STATEMENT.md',
+      'DATA-QUALITY-STATEMENT.en.md': 'docs/DATA-QUALITY-STATEMENT.en.md',
+      'DATA-STRUCTURE.md': 'docs/DATA-STRUCTURE.md', 'SOURCE-CATALOG.md': 'docs/SOURCE-CATALOG.md',
+      'schema.md': 'docs/schema.md', 'EXPANSION-PLAN-BATCH34.md': 'docs/EXPANSION-PLAN-BATCH34.md',
+      'CITATION.bib': 'docs/CITATION.bib'}},
+    'public_docs': {'desc': '审计与质量档案', 'files': {
+      'LICENSE-AUDIT.md': 'docs/LICENSE-AUDIT.md',
+      'AUDIT-REPORT.md': 'docs/AUDIT-REPORT.md', 'AUDIT-REPORT-V2.md': 'docs/AUDIT-REPORT-V2.md',
+      'AUDIT-REPORT-V3.md': 'docs/AUDIT-REPORT-V3.md', 'QUALITY-GATES.md': 'docs/QUALITY-GATES.md',
+      'music-verify-report.md': 'docs/music-verify-report.md'}},
+  },
+  'mirrors': {}, 'tools_exclude': [],
+}
+
+
 def load() -> dict:
-    return json.loads(MANIFEST.read_text(encoding='utf-8'))
+    if MANIFEST.exists():
+        return json.loads(MANIFEST.read_text(encoding='utf-8'))
+    return PUBLIC_FALLBACK      # 公开仓副本：无内部清单也能独立运行（仅公开组）
 
 
 def pairs(cfg: dict):
