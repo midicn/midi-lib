@@ -1,6 +1,6 @@
 {
- "version": "v1.19",
- "published": "2026-09-20",
+ "version": "v1.20",
+ "published": "2026-09-22",
  "assets": 23,
  "source": "github.com/midicn/midi-lib releases",
  "note": "全站版本单源：lib/mid 站部署工作流读取本文件决定 RELEASE_TAG；发版脚本在每次发版时更新本文件（v1.20 起纳入 meta 包）"
