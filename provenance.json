@@ -41,7 +41,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -88,7 +87,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -124,7 +122,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -164,7 +161,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -204,7 +200,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -259,7 +254,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21",
    "upstream": {
     "kind": "upstream_stated",
@@ -308,7 +302,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -344,7 +337,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -380,7 +372,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -416,7 +407,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -452,7 +442,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -495,7 +484,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -535,7 +523,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -575,7 +562,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -615,7 +601,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -651,7 +636,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -694,7 +678,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21",
    "upstream": {
     "kind": "upstream_published",
@@ -740,7 +723,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -780,7 +762,6 @@
    "reverified": [
     "2026-09-21"
    ],
-   "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
   },
   {
@@ -818,7 +799,6 @@
     "evidence": "sources/atepp/ATEPP-1.2.zip"
    },
    "reverified": "2026-09-22",
-   "next_review_due": "2027-03-21",
    "verified_on": "2026-09-22"
   },
   {
@@ -856,7 +836,6 @@
     "evidence": "sources/pdmx/mid.tar.gz"
    },
    "reverified": "2026-09-23",
-   "next_review_due": "2027-03-22",
    "verified_on": "2026-09-23"
   }
  ]

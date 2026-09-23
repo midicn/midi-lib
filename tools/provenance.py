@@ -221,16 +221,6 @@ def verify(reg: dict, root: Path | None, do_hash: bool, do_online: bool, reg_pat
             line(reach, f'{sid:13s} 可达性', f'HTTP {code}'
                  + ('（站点对脚本限流，浏览器可访问）' if str(code) in ('403', '406') else ''))
 
-    # ⑦ 复核到期提醒（时间维度：180 天为一个复核周期）
-    today = datetime.date.today()
-    due = [s['id'] for s in reg['sources']
-           if s.get('next_review_due') and s['next_review_due'] < today.isoformat()]
-    if due:
-        line('WARN', '复核到期', f'{len(due)} 个来源已过复核期（{today}）：{" ".join(due[:8])}'
-                               f'{" …" if len(due) > 8 else ""} → 重新核验后更新 reverified / next_review_due')
-    else:
-        nxt = min((s['next_review_due'] for s in reg['sources'] if s.get('next_review_due')), default='—')
-        line('OK', '复核周期', f'均在有效期内（最近到期 {nxt}）')
 
     print('-' * 96)
     # ⑧ 台账文档新鲜度（防止注册表改了、文档没重生成）
@@ -291,7 +281,7 @@ PAGE_TPL = """<!DOCTYPE html>
   <div class="stitle"><h2 data-zh="逐源明细" data-en="Per source">逐源明细</h2></div>
   <div id="list">__CARDS__</div>
 
-  <div class="stitle"><h2 data-zh="复核周期与变更纪律" data-en="Review cycle">复核周期与变更纪律</h2></div>
+  <div class="stitle"><h2 data-zh="可复核性与变更纪律" data-en="Verifiability">可复核性与变更纪律</h2></div>
   <div class="panel"><div class="panel-bd" data-zh="__DISC_ZH__" data-en="__DISC_EN__">__DISC_ZH__</div></div>
 </main>
 
@@ -384,7 +374,7 @@ def render_page(reg: dict, dest: Path, foot_lic: str = '', foot_note: str = '', 
             f'{arch}{up}{acq_txt}'
             f'<dt>许可</dt><dd>{esc(s["site_license"])}（{s["tier"]}）—— {esc(s["license_note"])}</dd>'
             f'<dt>核验</dt><dd>{esc(s["verified_on"])}'
-            + (f' · 下次复核不晚于 {esc(s["next_review_due"])}' if s.get('next_review_due') else '') + '</dd>'
+            '</dd>'
             '</dl></div></div>')
     rules = ('<div class="panel"><div class="panel-bd">'
              '<p><b>三条规则</b></p>'
@@ -395,14 +385,12 @@ def render_page(reg: dict, dest: Path, foot_lic: str = '', foot_note: str = '', 
              '<p>③ <b>可复核</b>——每条地址都有本地证据（数据自述 / 采集台账 / 校验值）与核验日期，'
              '并附可执行的复核脚本；校验值分三级，本地快照绝不冒充上游官方值。</p>'
              '</div></div>')
-    disc_zh = ('台账设 180 天复核周期：到期时复核脚本会给出提醒，届时重新核验各地址（含整包哈希与可达性），'
-               '并把新日期追加进时间线。「永久可复核」的含义是：不是核验一次就永远成立，'
-               '而是永远有一条可复跑的核验路径加一个到期提醒。<br>'
+    disc_zh = ('各来源地址的**核验日期**记录在每条目上；核验方法（整包哈希与可达性）可随时复跑。<br>'
+               '「可复核」的含义是：核验路径始终公开、可重复执行。<br>'
                '改任何来源地址前，必须先取得证据再改；拿不到证据就不要改，也不要写。')
-    disc_en = ('The ledger runs on a 180-day review cycle: when due, the verifier raises a reminder and every '
-               'address is re-checked (package hashes and reachability), with the new date appended to the timeline. '
-               '"Permanently verifiable" means there is always a re-runnable verification path plus a due reminder, '
-               'not that a single check holds forever.<br>'
+    disc_en = ('The verification date of each source address is recorded on its entry; the verification '
+               'method (archive hash and reachability) can be re-run at any time.<br>'
+               '“Verifiable” means the verification path stays public and repeatable.<br>'
                'Never change a source address without evidence first — if there is no evidence, do not change it.')
     html = (PAGE_TPL
             .replace('__RULES__', rules)
@@ -472,8 +460,7 @@ def render_text(reg: dict) -> str:
         if acq.get('date'):
             L.append(f'- **取得时点**：{acq["date"]}（依据：{acq.get("basis","?")}'
                      + (f' · {acq.get("evidence")}' if acq.get('evidence') else '') + '）')
-        L.append(f'- **复核时间线**：核验于 {s["verified_on"]}'
-                 + (f'；下次复核不晚于 {s["next_review_due"]}' if s.get('next_review_due') else ''))
+        L.append(f'- **核验日期**：{s["verified_on"]}')
         L.append('')
     L.append('## 四、如何自行复核')
     L.append('')
@@ -490,11 +477,10 @@ def render_text(reg: dict) -> str:
     L.append('#      192,678,627 字节一致')
     L.append('```')
     L.append('')
-    L.append('## 五、复核周期')
+    L.append('## 五、可复核性')
     L.append('')
-    L.append('台账设**180 天复核周期**：`next_review_due` 到期时，`tools/provenance.py` 会给出提醒，')
-    L.append('届时重新核验各地址（重跑 `--hash` / `--online`），并把新日期追加进 `reverified`、顺延 `next_review_due`。')
-    L.append('「永久可复核」的含义是：**不是核验一次就永远成立，而是永远有一条可复跑的核验路径 + 一个到期提醒。**')
+    L.append('各来源地址的**核验日期**记录在每条目上；核验方法（整包哈希与可达性）可随时复跑。')
+    L.append('「可复核」的含义是：**核验路径始终公开、可重复执行**。')
     L.append('')
     L.append('## 六、变更纪律')
     L.append('')

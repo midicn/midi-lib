@@ -51,7 +51,7 @@
 - **本地规模**：`sources/ariamidi` 32,578 文件 / 513.5MB
 - **许可**：CC BY-NC-SA 4.0（catalog 标识 `CC-BY-NC-SA-4.0`）—— CC BY-NC-SA 4.0（非商用 · 相同方式共享）→ C2
 - **取得时点**：2025-04-08（依据：earliest file mtime · sources/ariamidi）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### thesession
 
@@ -63,7 +63,7 @@
 - **整包校验**：`thesession-data.zip` 50,307,527 字节 · MD5 `e951ebb0faaf49c99e2c252d009bc1a3`（本地快照值，用于完整性复核）
 - **许可**：CC BY-SA 4.0（catalog 标识 `CC-BY-SA-4.0`）—— CC BY-SA 4.0 **+ 附加「禁止用于大语言模型」条款**：不得用大模型使用/改编/修改/处理该素材（含训练 LLM、借助 LLM 工具处理、并入 LLM 相关应用），仅无障碍方案有豁免 → C1（但受该附加条款约束）
 - **取得时点**：2026-09-17（依据：archive mtime · thesession-data.zip）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### cyberhymnal
 
@@ -74,7 +74,7 @@
 - **本地规模**：`sources/cyberhymnal` 13,647 文件 / 38.8MB
 - **许可**：Public Domain（catalog 标识 `PD`）—— 公有领域（PD）→ C1
 - **取得时点**：2004-02-12（依据：earliest file mtime · sources/cyberhymnal）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### chinafolk
 
@@ -85,7 +85,7 @@
 - **本地规模**：`sources/china-folk` 20,960 文件 / 306.3MB
 - **许可**：传统音乐 · 学习研究（catalog 标识 `TRADITIONAL-STUDY`）—— 上游未声明许可 → 定为 TRADITIONAL-STUDY，C3 仅学习研究
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/china-folk）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### essen
 
@@ -96,7 +96,7 @@
 - **本地规模**：`sources/essen` 81 文件 / 7.1MB
 - **许可**：Public Domain / Open（catalog 标识 `OPEN`）—— 站点开放声明 → C1；含少量受限条目（见来源页备注）
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/essen）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### giantmidi
 
@@ -111,7 +111,7 @@
 - **上游官方口径**：size:midis_v1.2.zip = `192,678,627 B ≈ 193 MB` —— 来源：GiantMIDI-Piano README「stable version of GiantMIDI-Piano (193 MB)」
 - **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— CC BY 4.0 → C1
 - **取得时点**：2026-09-19（依据：archive mtime · GiantMIDI-PIano-20260919T005501Z-1-001.zip）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### lakh
 
@@ -123,7 +123,7 @@
 - **整包校验**：`lmd_full.tar.gz` 1,768,163,879 字节 · MD5 `2536ce3fd2cede53ddaa264f731859ab`（本地快照值，用于完整性复核）
 - **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— 数据集 CC BY 4.0，但内容层过滤后定为 C3 学习研究（study）
 - **取得时点**：2026-09-18（依据：archive mtime · lmd_full.tar.gz）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### norbeck
 
@@ -134,7 +134,7 @@
 - **本地规模**：`sources/norbeck` 72 文件 / 1.9MB
 - **许可**：Open / Free（catalog 标识 `OPEN`）—— 作者无偿开放 → C1（保留署名）
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/norbeck）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### m21
 
@@ -144,7 +144,7 @@
 - **本地证据**：`tools/ingest_music21.py`（含 `music21`）
 - **本地规模**：`(pip) /music21/corpus` 3,219 文件 / 60.6MB
 - **许可**：Public Domain（catalog 标识 `PD`）—— 语料内作品多为 PD → C1
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### mutopia
 
@@ -155,7 +155,7 @@
 - **本地规模**：`sources/mutopia` 3,070 文件 / 30.0MB
 - **许可**：Public Domain / CC（逐曲）（catalog 标识 `MUTOPIA-MIXED`）—— 逐曲 PD/CC → C1
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/mutopia）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### abcmisc
 
@@ -166,7 +166,7 @@
 - **本地规模**：`sources/abc-misc` 5 文件 / 1.0MB
 - **许可**：Open / Free（catalog 标识 `OPEN`）—— 站点开放声明 → C1
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/abc-misc）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### openscore
 
@@ -178,7 +178,7 @@
 - **整包校验**：`openscore-lieder.zip` 191,547,791 字节 · MD5 `029bb94357740e0ab60556a9d9da97c9`（本地快照值，用于完整性复核）
 - **许可**：CC0 1.0（catalog 标识 `CC0-1.0`）—— CC0 1.0 → C1
 - **取得时点**：2026-09-17（依据：archive mtime · openscore-lieder.zip）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### maestro
 
@@ -189,7 +189,7 @@
 - **本地规模**：`sources/maestro` 1,278 文件 / 84.5MB
 - **许可**：CC BY-NC-SA 4.0（catalog 标识 `CC-BY-NC-SA-4.0`）—— CC BY-NC-SA 4.0 → C2 非商用
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/maestro）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### groove
 
@@ -200,7 +200,7 @@
 - **本地规模**：`sources/groove` 1,150 文件 / 5.3MB
 - **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— CC BY 4.0 → C1
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/groove）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### emopia
 
@@ -211,7 +211,7 @@
 - **本地规模**：`sources/emopia` 1,084 文件 / 2.1MB
 - **许可**：CC BY-NC-SA 4.0（catalog 标识 `CC-BY-NC-SA-4.0`）—— CC BY-NC-SA 4.0 → C2 非商用（原站上曾误标 CC BY 4.0 / main，v11.4 已改正）
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/emopia）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### nottingham
 
@@ -222,7 +222,7 @@
 - **本地规模**：`sources/nottingham` 16 文件 / 0.5MB
 - **许可**：Open / Free（catalog 标识 `OPEN`）—— 站点开放声明 → C1（数据库由 Eric Foxley 建立）
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/nottingham）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### wikifonia
 
@@ -235,7 +235,7 @@
 - **上游官方口径**：md5:Wikifonia.zip = `d26e22562e67eb7d37535e96cc5eebba` —— 来源：muspy 数据集注册表 muspy.datasets.wikifonia
 - **许可**：Public Domain（仅传统/民歌子集）（catalog 标识 `PD`）—— 仅保留传统/民歌子集 → PD；C1
 - **取得时点**：2026-09-17（依据：archive mtime · Wikifonia.zip）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### oga
 
@@ -246,7 +246,7 @@
 - **本地规模**：`sources/oga` 342 文件 / 4.2MB
 - **许可**：逐曲混合（CC0 / CC BY / CC BY-SA / GPL）（catalog 标识 `GPL-3.0`）—— 逐曲混合（CC0 / CC BY / CC BY-SA / GPL）→ C1，须逐素材署名
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/oga）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### musicnet
 
@@ -257,7 +257,7 @@
 - **本地规模**：`sources/musicnet` 331 文件 / 10.2MB
 - **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— CC BY 4.0 → C1
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/musicnet）
-- **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
+- **核验日期**：2026-09-21
 
 ### atepp
 
@@ -268,7 +268,7 @@
 - **本地规模**：`sources/atepp` 11,834 文件 / 520.5MB
 - **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— 数据集声明 CC BY 4.0（可商用、可再分发）。同一作品含多位钢琴家的演奏版本，逐曲以 version_type=performance 标记；演奏录音版权归各演奏者及其唱片方。
 - **取得时点**：2026-09-22（依据：用户协助下载（Google Drive 不通，经 HF 镜像 anusfoil/atepp-midi 获取） · sources/atepp/ATEPP-1.2.zip）
-- **复核时间线**：核验于 2026-09-22；下次复核不晚于 2027-03-21
+- **核验日期**：2026-09-22
 
 ### pdmx
 
@@ -279,7 +279,7 @@
 - **本地规模**：`sources/pdmx` 7,604 文件 / 2625.7MB
 - **许可**：CC0 / Public Domain（catalog 标识 `CC0-1.0`）—— 上游为 CC0 1.0 与公有领域混合；本库仅收录可确证公有领域的乐谱型子集，逐曲以 version_type=score 标记。
 - **取得时点**：2026-09-23（依据：用户协助下载（Zenodo 403，经用户放至本地） · sources/pdmx/mid.tar.gz）
-- **复核时间线**：核验于 2026-09-23；下次复核不晚于 2027-03-22
+- **核验日期**：2026-09-23
 
 ## 四、如何自行复核
 
@@ -296,11 +296,10 @@ python tools/provenance.py --online   # 追加各地址当前可达性
 #      192,678,627 字节一致
 ```
 
-## 五、复核周期
+## 五、可复核性
 
-台账设**180 天复核周期**：`next_review_due` 到期时，`tools/provenance.py` 会给出提醒，
-届时重新核验各地址（重跑 `--hash` / `--online`），并把新日期追加进 `reverified`、顺延 `next_review_due`。
-「永久可复核」的含义是：**不是核验一次就永远成立，而是永远有一条可复跑的核验路径 + 一个到期提醒。**
+各来源地址的**核验日期**记录在每条目上；核验方法（整包哈希与可达性）可随时复跑。
+「可复核」的含义是：**核验路径始终公开、可重复执行**。
 
 ## 六、变更纪律
 
