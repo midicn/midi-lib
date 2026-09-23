@@ -140,8 +140,8 @@
    "ingest": "tools/ingest_chinafolk.py",
    "evidence": [
     {
-     "path": "（内部台账，不随包分发）",
-     "contains": "github.com/m-july/Anthology-of-Chinese-Folk-Songs"
+     "contains": "github.com/m-july/Anthology-of-Chinese-Folk-Songs",
+     "note": "另有留存（不随包分发）"
     },
     {
      "path": "sources/china-folk/lyrics-included/beijing",
@@ -667,8 +667,8 @@
    "ingest": "tools/ingest_wikifonia.py",
    "evidence": [
     {
-     "path": "项目内部来源查证台账（不随发布包分发）",
-     "contains": "synthzone.com/files/Wikifonia/Wikifonia.zip"
+     "contains": "synthzone.com/files/Wikifonia/Wikifonia.zip",
+     "note": "另有留存（不随包分发）"
     }
    ],
    "local": [

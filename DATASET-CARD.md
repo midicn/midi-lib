@@ -172,7 +172,7 @@ accessibility-only exception) on top of CC BY-SA 4.0.
 
 ## v1.23 数据增强（2026-09-23）
 
-本轮新增 **2 个来源**（ATEPP 7,131 首演奏版 + PDMX 2,895 首乐谱型）与 **15 个字段**；
+v1.23 新增 **2 个来源**（ATEPP 7,131 首演奏版 + PDMX 2,895 首乐谱型）与 **15 个字段**；
 完整字段语义、覆盖率与标注规范见 `FIELD-DICTIONARY.md`。
 
 **新增字段**：`difficulty` 演奏难度 · `cn_zh` 作曲家中文名 · `birth`/`death` 生卒年 ·

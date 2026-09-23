@@ -127,7 +127,7 @@ ariamidi · TheSession.org · The Cyber Hymnal · 中国民间歌曲集成（OMR
 > **Lakh MIDI 过滤说明**：该来源（`l` = CC-BY-4.0，`z` = study）在入库时已剔除含版权声明、
 > 流行/影视/游戏路径，以及**经人工逐条复核确认仍在保护期内的 521 首**现代商业作品
 > （圣诞流行曲、影视/流行/游戏配乐、晚卒于公有领域线的作曲家作品）。台账见
-> 逐首处置记录留存于项目内部台账（不随发布包分发），并由 `tools/audit_license.py` 在每次发布前断言为 0。
+> 处置记录另有留存（不随发布包分发），并由 `tools/audit_license.py` 在每次发布前断言为 0。
 
 ## 7. 权利救济与移除流程（Takedown）
 
@@ -135,7 +135,7 @@ ariamidi · TheSession.org · The Cyber Hymnal · 中国民间歌曲集成（OMR
 
 1. 通过 GitHub Issues（github.com/midicn/midi-lib/issues）提交通知，注明：涉嫌侵权的曲目 id（`catalog.json` 中可查）、你的权利依据、联系方式；
 2. 我们将在收到有效通知后**及时**核实并采取必要措施（移除或隔离相关内容），并在后续版本中同步更新；
-   > 我们依通知所涉内容的具体情形判断处置的紧迫性，不另设固定时限；
+   > 我们依通知所涉内容的具体情形判断处置的紧迫性；
 3. 恶意或虚假的侵权通知由通知方自行承担法律责任。
 
 本数据集托管于 GitHub，同时受 GitHub 服务条款与 DMCA 政策约束（可通过 GitHub 官方 DMCA 流程提交移除请求）。

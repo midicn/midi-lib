@@ -119,7 +119,7 @@
 | **Josquin Research Project** | ~1,000 | 开放 | josquin.stanford.edu | MusicXML 转换 |
 | **Hymnal Tune Dataset** | 1,756 | PD/开放 | hymnary.org | 直下 |
 | **Hymnary.org 赞美诗** | 数千 | PD 为主 | hymnary.org | 抓取 |
-| **abcnotation.com 集合** | 2 万+ | 逐集合（本库 ABC Misc 1,487 首**并非**取自本站，而来自 John Chambers 曲集 `trillian.mit.edu/~jc/music/abc/`） | abcnotation.com | 逐集合接入（待办） |
+| **abcnotation.com 集合** | 2 万+ | 逐集合（本库 ABC Misc 1,487 首**并非**取自本站，而来自 John Chambers 曲集 `trillian.mit.edu/~jc/music/abc/`） | abcnotation.com | 暂未收录（可按需逐集合接入） |
 | ~~Weimar Jazz Database~~ | ~2,000 | ~~学术（需申请）~~ → **已于 2026-09-22 查证：版权受限，不收（见 3.1）** | jazzomat.hfm-weimar.de | 不再列入待抓取 |
 | **OpenScore String Quartets 等** | 进行中 | CC0 | github.com/OpenScore | 项目进行中 |
 | **figshare 中国经典 MIDI** | 13 | CC BY 4.0 | figshare.com/articles/5436022 | 我们下载受阻（网络），**欢迎自取** |
@@ -236,7 +236,7 @@ we are only responsible for the compliance of what *we* redistribute.
 
 ## v1.23 数据增强（2026-09-23）
 
-本轮新增 **2 个来源**（ATEPP 7,131 首演奏版 + PDMX 2,895 首乐谱型）与 **15 个字段**；
+v1.23 新增 **2 个来源**（ATEPP 7,131 首演奏版 + PDMX 2,895 首乐谱型）与 **15 个字段**；
 完整字段语义、覆盖率与标注规范见 `FIELD-DICTIONARY.md`。
 
 **新增字段**：`difficulty` 演奏难度 · `cn_zh` 作曲家中文名 · `birth`/`death` 生卒年 ·

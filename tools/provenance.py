@@ -30,6 +30,9 @@ import urllib.request
 from collections import Counter
 from pathlib import Path
 
+# 本脚本所在仓库根（lib.midicn.com）——供自动补跑外壳注入器使用
+ROOT_DIR = Path(__file__).resolve().parents[1]
+
 TIER_OF = {'main': 'C1', 'piano': 'C2', 'piano-special': 'C2', 'study': 'C3'}
 UA = 'Mozilla/5.0 (compatible; midicn-provenance-check/1.0)'
 
@@ -162,6 +165,10 @@ def verify(reg: dict, root: Path | None, do_hash: bool, do_online: bool, reg_pat
             if not root:
                 ev_fail.append('（无工作副本，跳过）')
                 break
+            if 'path' not in e:
+                # 证据为「另有留存」的非文件型说明（如内部处置台账，不随包分发）：
+                # 记入证据数但不做文件存在性检查 —— 公开台账里不应出现内部路径。
+                continue
             fp = root / e['path']
             if not fp.exists():
                 ev_fail.append(f'缺文件 {e["path"]}')
@@ -345,7 +352,8 @@ def render_page(reg: dict, dest: Path, foot_lic: str = '', foot_note: str = '', 
                     f'<dd class="addr"><a href="{esc(s["address"])}" target="_blank" rel="noopener">{esc(s["address"])}</a></dd>')
     cards = []
     for s in S:
-        ev = '；'.join((e['path'] + (f'（含 `{e["contains"]}`）' if e.get('contains') else ''))
+        ev = '；'.join(((e.get('path') or e.get('note', '另有留存'))
+                        + (f'（含 `{e["contains"]}`）' if e.get('contains') else ''))
                        for e in s['evidence'])
         loc = '；'.join(f'{l["dir"]} · {l["files"]:,} 文件 / {l["bytes"]/1e6:.1f}MB' for l in s['local'])
         arch = ''.join(
@@ -446,7 +454,8 @@ def render_text(reg: dict) -> str:
         L.append(f'- **取得方式**：{s["how_we_got_it"]}')
         L.append(f'- **入库脚本**：`{s["ingest"]}`')
         ev = '；'.join(
-            (f'`{e["path"]}`' + (f'（含 `{e["contains"]}`）' if e.get('contains') else ''))
+            ((f'`{e["path"]}`' if e.get('path') else e.get('note', '另有留存'))
+             + (f'（含 `{e["contains"]}`）' if e.get('contains') else ''))
             for e in s['evidence'])
         L.append(f'- **本地证据**：{ev or "—"}')
         loc = '；'.join(f'`{l["dir"]}` {l["files"]:,} 文件 / {l["bytes"]/1e6:.1f}MB' for l in s['local'])
@@ -527,6 +536,9 @@ def main(argv):
     ap.add_argument('--render', action='store_true', help='生成 docs/PROVENANCE.md')
     ap.add_argument('--mirror', help='--render 时同时写入的另一目录（如数据仓 docs/）')
     ap.add_argument('--page', help='生成站内台账页（如 release/site-repo/provenance.html）')
+    # ⚠️ 顺序约束：`render_page()` 会用本文件的模板**整页重写**目标文件，
+    #    因此**必须**在它之后再跑 tools/_apply_site_shell.py（页头/页脚/SEO 注入），
+    #    否则统一外壳会被冲掉（本地 e2e【12】会拦下，别忽略）。
     args = ap.parse_args(argv[1:])
 
     root = find_root(args.root)
@@ -549,6 +561,19 @@ def main(argv):
             page = (root / args.page) if root else Path(args.page)
             render_page(reg, page)
             print('已生成站内页', page, f'({page.stat().st_size/1024:.1f}KB)')
+
+            # ⚠️ render_page 会用本文件的模板**整页重写**目标文件，会冲掉统一页头/页脚/SEO。
+            #    因此渲染完成后**自动补跑**外壳注入器，避免「忘了顺序」造成线上掉外壳
+            #    （2026-09-23 因此踩过三次；本地 e2e【12】会拦下）。
+            shell = ROOT_DIR / 'tools' / '_apply_site_shell.py'
+            if shell.exists():
+                import subprocess as _sp
+                _r = _sp.run([sys.executable, str(shell)], capture_output=True, text=True)
+                if _r.returncode == 0:
+                    print('  已自动重注入统一外壳（页头/页脚/SEO）')
+                else:
+                    print('  ⚠ 外壳注入失败，请手动运行 tools/_apply_site_shell.py')
+                    print((_r.stdout or '')[-400:] + (_r.stderr or '')[-400:])
         return 0
 
     return verify(reg, root, args.hash, args.online, reg_path)
