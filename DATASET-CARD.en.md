@@ -39,7 +39,7 @@ collection with a **unified catalogue, unified fields and per-track licence tagg
   `l` (licence identifier)
 - **Provenance** — upstream path and work-level identifiers are kept per track; source-side evidence and
   checksums are recorded in `PROVENANCE.md`
-- **Takedown-ready** — rights-holder notices are handled per `LICENSE.md` §7 (within 7 business days)
+- **Takedown-ready** — rights-holder notices are handled per `LICENSE.md` §7 (acted upon promptly)
 
 ## 2. Splits and scale
 

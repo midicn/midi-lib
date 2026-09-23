@@ -134,7 +134,11 @@ ariamidi · TheSession.org · The Cyber Hymnal · 中国民间歌曲集成（OMR
 如你认为本数据集中的任何内容侵犯了你的权利（包括但不限于著作权、改编权）：
 
 1. 通过 GitHub Issues（github.com/midicn/midi-lib/issues）提交通知，注明：涉嫌侵权的曲目 id（`catalog.json` 中可查）、你的权利依据、联系方式；
-2. 我们将在**核实后 48 小时内**移除或隔离相关内容（**与站点的公开承诺一致**），并在后续版本中更新；
+2. 我们将在收到有效通知后**及时**核实并采取必要措施（移除或隔离相关内容），并在后续版本中同步更新；
+   > 时限口径：法律对「通知—删除」的要求本身即为「**立即**」（《信息网络传播权保护条例》第十五条）与
+   > 「**及时**」（《民法典》第一千一百九十五条），均**不设固定天数**；我们采用同一标准，
+   > 不自行承诺某一具体小时数或工作日数。影响必要措施紧迫性的因素（通知是否具体到曲目、
+   > 权利依据是否清晰等）由我们结合个案判断；
 3. 恶意或虚假的侵权通知由通知方自行承担法律责任。
 
 本数据集托管于 GitHub，同时受 GitHub 服务条款与 DMCA 政策约束（可通过 GitHub 官方 DMCA 流程提交移除请求）。
@@ -320,7 +324,7 @@ rights):
 
 1. File a notice via GitHub Issues (github.com/midicn/midi-lib/issues) including: the track id(s)
    (searchable in `catalog.json`), the basis of your claim, and your contact information;
-2. We will remove or quarantine the content within **48 hours** after verification
+2. We will **promptly** verify and take the necessary measures (remove or quarantine the content) after receiving a valid notice
 (self-consistent with the commitment published on the website);
 3. Knowingly false infringement notices are the sole responsibility of the notifier.
 

@@ -56,7 +56,7 @@
     该**整理与汇编成果受版权保护**（上游亦声明原始扫描图属受版权作品、不予公开）
   - 因此定为 **`TRADITIONAL-STUDY`**：归 **C3 研究/学习**，限研究、教学、学习用途，
     **禁止商业使用与公开表演**；使用必须显著标注上述数据集与底本
-- **我们的处置**：v1.4 起随 `study.zip` 发布；如权利方提出异议，7 个工作日内下架该批数据
+- **我们的处置**：v1.4 起随 `study.zip` 发布；如权利方提出异议，我们将及时下架该批数据
 - **商用**：本库不提供商用授权，需自行向底本权利人取得许可
 
 ## 三、未收录源（32 个 · 及原因）
@@ -153,7 +153,7 @@
 2. **分级标注**：C1 可商用 / C2 不可商用 / C3 仅供研究学习（逐曲写入 `z` 字段）
 3. **宁缺毋滥**：许可不明或禁止再分发的源，**无论规模多大一律不收**（如 Kunst der Fuge 1.93 万、Lakh 17.4 万暂缓）
 4. **可复核**：全部判定依据存档于 `docs/LICENSE-AUDIT.md` 与 `docs/EXPANSION-PLAN-BATCH34.md`
-5. **可下架**：权利人如有异议，按 `LICENSE.md` §7 的 takedown 流程处理（7 个工作日内响应）
+5. **可下架**：权利人如有异议，按 `LICENSE.md` §7 的 takedown 流程处理（及时核实并处理）
 
 ---
 
@@ -219,7 +219,7 @@ we are only responsible for the compliance of what *we* redistribute.
 2. **Tiered labeling** — C1 / C2 / C3 written per-track into the `z` field
 3. **Better safe than sorry** — unclear or restrictive licenses are excluded even at large scale
 4. **Auditable** — every decision archived in `LICENSE-AUDIT.md` and `EXPANSION-PLAN-BATCH34.md`
-5. **Takedown-ready** — rights-holder notices handled within 7 business days (see LICENSE.md §7)
+5. **Takedown-ready** — rights-holder notices acted upon promptly (see LICENSE.md §7)
 
 ### 关于 GiantMIDI-Piano（v1.5 起发布 · C1 可商用）
 

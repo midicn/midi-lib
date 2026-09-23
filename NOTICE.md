@@ -40,7 +40,7 @@
 - 但本批 MIDI 是依据**《中国民间歌曲集成》的记谱／整理稿**光学识别（OMR）而来，**该整理与汇编成果受版权保护**——
   上游数据集作者亦声明原始扫描图属受版权作品、不予公开。
 - 因此本库**不授予商用权利**：该批曲目归入 C3 研究/学习，限研究、教学、学习用途，**禁止商业使用与公开表演**。
-- 使用必须标注来源；如权利方提出异议，我们将在 48 小时内下架该批数据（与 `LICENSE.md` §7 及站点许可页一致）。
+- 使用必须标注来源；如权利方提出异议，我们将**及时**下架该批数据（与 `LICENSE.md` §7 及站点许可页一致）。
 - The melodies are traditional and generally public domain as musical works, but these files were recognised
   from a copyrighted notated edition. We therefore grant **no commercial rights**: research, teaching and
   study only; commercial use and public performance are prohibited. Attribution is required.
@@ -62,7 +62,7 @@
   许可人只能授权自己拥有的权利。故本库保守地把歌词整体限定为研究用途。
 - 中国民歌歌词库（`midi_db/lyrics/`，10,035 首）**不在发布包内**，仅站内检索展示。
 - If a lyric rights holder objects, the corresponding file or its lyric events will be removed
-  within 48 hours. The Chinese folk-lyrics library is **not shipped** in any package.
+  promptly. The Chinese folk-lyrics library is **not shipped** in any package.
 
 ---
 
