@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""OpenGameArt.org MIDI 抓取器（D3 · 批次 3）
+"""OpenGameArt.org MIDI 抓取器
 
 遍历搜索页（keys=midi）→ 逐个 asset 页 → 抓 .mid/.midi 文件 + 许可标签 → sources/oga/
 许可：逐 asset（CC0 / CC-BY / CC-BY-SA 等）→ 记录在 state，入库时按 asset 标注。

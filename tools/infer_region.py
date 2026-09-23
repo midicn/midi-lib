@@ -4,7 +4,7 @@
 
 三步：
   1) 归一化：无歧义国籍形容词 → 中文国名（German→德国 等；地区名如 Lothringen 保留不动）
-  2) 来源级：thesession→爱尔兰（TheSession 数据集即爱尔兰传统音乐库，与 norbeck 口径一致）·
+  2) 来源级：thesession→爱尔兰（TheSession 数据集即爱尔兰传统音乐库，与 norbeck 采用同一约定）·
      nottingham→英国（Nottingham ABC 曲集=英国民间舞蹈音乐）
   3) 作曲家映射：composer_slug → 中文国名。**只写 100% 确定的音乐史常识项**，
      不确定的（giantmidi 当代钢琴家、groove 鼓手、emopia unknown、oga 游戏作者）一律留空不猜。

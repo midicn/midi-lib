@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Mutopia Project 抓取器（D3 · 批次 1）
+"""Mutopia Project 抓取器
 
 递归遍历 http://www.mutopiaproject.org/ftp/ （作曲家/作品号/作品名/*.mid），
 下载全部 .mid 到 sources/mutopia/ 保留原目录结构。

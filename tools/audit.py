@@ -30,7 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TRACKS = ROOT / "midi_db" / "tracks"
 OUT = ROOT / "docs" / "AUDIT-REPORT.md"
 
-# 全量字段（v1.23：经 tools/_scan_fields.py 对 135,437 条实测，20 个字段 100% 出现）
+# 全量字段（v1.23：对 135,437 条实测，20 个字段 100% 出现）
 FIELDS = ["id", "source", "src_path", "title", "composer_slug", "composer_name",
           "opus", "no", "genre", "form", "key", "period", "region", "instrument",
           "license", "zone", "midi", "fingerprint", "extra", "pitch_range"]

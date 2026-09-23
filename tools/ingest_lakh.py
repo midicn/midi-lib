@@ -92,7 +92,7 @@ def _modern_dir_of(origs: list[str]) -> str | None:
 def drop_reason(origs: list[str]) -> str | None:
     """统一的路径级剔除判定：返回剔除理由，`None` 表示保留。
 
-    **ingest 主流程与 tools/_ingest_divergence.py 共用本函数**，确保
+    **ingest 主流程与分流诊断脚本共用本函数**，确保
     「冷重跑口径」与「实际入库口径」永远一致（此前两处各写一份，导致差异检查假警报）。
 
     四道信号，顺序即优先级：

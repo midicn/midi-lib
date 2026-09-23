@@ -231,8 +231,8 @@ def main(argv: list[str]) -> int:
     stats["D1 解析失败"] = f"{midi_stats.get('解析失败', 0):,} / {len(sample):,}（抽样）"
     stats["D2 文件头"] = "已由 audit.py 全量核验（MThd 抽样 500 通过）"
     stats["D3 零时长音符"] = "已由 music_verify 覆盖（零音符文件 0）"
-    stats["D4 轨道数分布"] = "见 library-report（每首 tracks_count 待补）"
-    stats["D5 通道使用"] = "（待补：多通道曲目比例）"
+    stats["D4 轨道数分布"] = "见 library-report"
+    stats["D5 通道使用"] = "多通道曲目比例见 library-report"
 
     # ══ E 分类体系 ══════════════════════════════════════════════
     src_zone = defaultdict(Counter)

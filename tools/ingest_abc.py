@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""通用 ABC → MIDI 接入器（批次 2 核心管线）
+"""通用 ABC → MIDI 接入器
 
 支持源（--source）：
   essen        EsAC 数据库（sources/essen/esac/*.abc，含 O: 地域）

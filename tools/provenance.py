@@ -564,15 +564,15 @@ def main(argv):
 
             # ⚠️ render_page 会用本文件的模板**整页重写**目标文件，会冲掉统一页头/页脚/SEO。
             #    因此渲染完成后**自动补跑**外壳注入器，避免「忘了顺序」造成线上掉外壳
-            #    （2026-09-23 因此踩过三次；本地 e2e【12】会拦下）。
-            shell = ROOT_DIR / 'tools' / '_apply_site_shell.py'
-            if shell.exists():
+            #    （本地 e2e 的「统一外壳」断言会拦下）。
+            _shells = sorted((ROOT_DIR / 'tools').glob('*site_shell*.py'))
+            if _shells:
                 import subprocess as _sp
-                _r = _sp.run([sys.executable, str(shell)], capture_output=True, text=True)
+                _r = _sp.run([sys.executable, str(_shells[0])], capture_output=True, text=True)
                 if _r.returncode == 0:
                     print('  已自动重注入统一外壳（页头/页脚/SEO）')
                 else:
-                    print('  ⚠ 外壳注入失败，请手动运行 tools/_apply_site_shell.py')
+                    print('  ⚠ 外壳注入器执行失败（页头/页脚/SEO 未注入），请检查该工具是否可运行')
                     print((_r.stdout or '')[-400:] + (_r.stderr or '')[-400:])
         return 0
 

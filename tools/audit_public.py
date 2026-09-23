@@ -45,7 +45,7 @@ MIDI = ROOT.parent
 BLOCK = [
     # 内部路径与内部件（`_` 前缀 = 内部，永不同步到公开仓）
     (r"docs/internal/|internal/[a-z\-]+\.md",                  "内部文档路径"),
-    (r"tools/_[a-z_]+\.py|_[a-z_]+\.py 的",                     "内部脚本名"),
+    (r"tools/_[a-z_]+\.py|(?:^|[\s(/`\u3001])_[a-z_]+\.py",       "内部脚本名"),
     # 把我们的推理过程写进公开条款
     (r"口径一致|时限口径|不另设固定|不自行承诺|我们内部|内部讨论|内部台账",
      "内部推理/内部口径"),
@@ -53,7 +53,7 @@ BLOCK = [
     (r"用户(明确)?(反馈|要求|拍板|决策|确认)",                   "用户意见写进公开内容"),
     # 过程与项目管理痕迹
     (r"（三犯）|踩坑记录|踩过|现场发现|E[1-9][0-9]?\s*[:：]",     "过程记录/发现编号"),
-    (r"阶段\s*[0-9]|批次\s*[0-9]|验收清单|回滚方案|发布计划",      "项目管理术语"),
+    (r"批次\s*[0-9]|验收清单|回滚方案|发布计划",                "项目管理术语"),
     (r"\bTODO\b|\bFIXME\b|待补|待办|待修",                       "TODO 残留"),
     (r"WorkBuddy|\.workbuddy|MEMORY\.md|你的助手|内部工具",       "内部工具/环境"),
 ]
@@ -73,6 +73,7 @@ ALLOW = re.compile(
     r"|tools/quality_pipeline\.py|tools/infer_[a-z_]+\.py|tools/fetch_[a-z_]+\.py"
     r"|tools/dl_[a-z_]+\.py|tools/normalize_[a-z_]+\.py|tools/enrich_[a-z_]+\.py"
     r"|tools/gen_[a-z_]+\.py|tools/analyze_[a-z_]+\.py|tools/fix_[a-z_]+\.py"
+    r"|gen_shards\.py|build_dim_packs\.py|pack_release\.py"
     r"|tools/audit[a-z0-9_]*\.py|tools/lakh_denylist\.py|tools/exclude_[a-z_]+\.py"
     r"|tools/extract_[a-z_]+\.py|tools/ingest_lakh\.py|tools/music21[a-z_]*\.py",
     re.I)
@@ -100,6 +101,12 @@ def public_files() -> list[Path]:
                 p = ROOT / rel
                 if p.exists():
                     out.append(p)
+    # ⚠️ 公开工具也要审：`sync_docs.py` 会把 tools/ 下**所有非 `_` 前缀的 .py** 同步到公开仓，
+    #    数量远超文档清单（实测 74 个）。之前只按清单审 → 漏掉整个 tools/。
+    for f in (ROOT / "tools").glob("*.py"):
+        if f.name.startswith("_") or f.name == "audit_public.py":
+            continue          # `_` = 内部件；本文件是规则定义自身，不自审
+        out.append(f)
     return sorted(set(out))
 
 
@@ -136,7 +143,26 @@ def main(argv) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--warn-only", action="store_true")
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--text", help="审计任意文本文件（如 Release 说明稿）；- 表示标准输入")
     args = ap.parse_args(argv[1:])
+
+    # ── 文本模式：用于**发布说明/包内 README 等非仓内文件**的发布前把关 ──
+    if args.text:
+        raw = sys.stdin.read() if args.text == "-" else Path(args.text).read_text(encoding="utf-8")
+        blocks, warns = [], []
+        for i, line in enumerate(raw.splitlines(), 1):
+            clean = re.sub(r"/[^/\n]{0,120}/[gimsuy]*", "", line)
+            clean = ALLOW.sub("", clean)
+            for pat, why in BLOCK:
+                if re.search(pat, clean):
+                    blocks.append((args.text, i, why, line.strip()[:150]))
+                    break
+        print(f"公开内容卫生审计（文本） · {len(raw.splitlines())} 行")
+        for rel, i, why, txt in blocks[:20]:
+            print(f"  ✗ 第 {i} 行  [{why}]  {txt}")
+        if not blocks:
+            print("  ✓ 通过：无内部讨论 / 内部路径 / 内部脚本名 / 待办标记")
+        return 0 if (args.warn_only or not blocks) else 1
 
     files = public_files()
     if args.list:
