@@ -13,7 +13,7 @@
 |---|---|
 | 考察源总数 | **36** |
 | 已收录源 | **21**（133,667 首） |
-| 未收录源 | 17（含许可不符、待抓取、受限访问三类） |
+| 未收录源 | 32（分四类：不可分发 10 · 许可未明确 13 · 待核实 2 · 待收录 7） |
 | **准入标准** | 许可必须**允许二次分发**（不允许的一律不收） |
 | 收录内容分级 | C1 可商用 · C2 不可商用 · C3 仅供研究/学习 |
 
@@ -59,7 +59,7 @@
 - **我们的处置**：v1.4 起随 `study.zip` 发布；如权利方提出异议，我们将及时下架该批数据
 - **商用**：本库不提供商用授权，需自行向底本权利人取得许可
 
-## 三、未收录源（32 个 · 及原因）
+## 三、未收录源（32 个 · 分四类 · 及原因）
 
 ### 3.1 因许可不符合准入标准（不允许二次分发）❌
 
@@ -176,7 +176,7 @@ C2 non-commercial / C3 research-and-study only), zone, official URL.
 Notable: the Chinese Folk Collection (10,473 tracks) is published from v1.4 under a
 **research/study-only (C3)** designation, because the compilation's editorial rights are protected.
 
-## Excluded sources (32)
+## Excluded sources (32, in four groups)
 
 - **License does not permit redistribution** (excluded): Kunst der Fuge (19,300, "personal use"),
   parts of IMSLP, NES Music Database (5,278)
