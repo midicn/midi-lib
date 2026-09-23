@@ -54,6 +54,21 @@ def main() -> int:
                 if p.is_file():
                     z.write(p, f"{top}/{pack}/{p.relative_to(src_dir).as_posix()}")
                     n += 1
+            # ⚠️ meta 包必须**同时带上发布根的文档**——否则用户下载数据包时拿不到
+            #    LICENSE.md / NOTICE.md / README / FIELD-DICTIONARY 等许可与说明
+            #    （此前只打 meta/ 子目录，7 个条目、无 LICENSE.md，是真实缺陷）。
+            if pack == "meta":
+                doc_exts = (".md", ".bib", ".json", ".txt")
+                for p in sorted(vdir.iterdir()):
+                    if p.is_file() and p.suffix.lower() in doc_exts:
+                        z.write(p, f"{top}/{p.name}")
+                        n += 1
+                ddir = vdir / "docs"
+                if ddir.exists():
+                    for p in sorted(ddir.rglob("*")):
+                        if p.is_file():
+                            z.write(p, f"{top}/docs/{p.relative_to(ddir).as_posix()}")
+                            n += 1
         size = out.stat().st_size
         print(f"[ok] {out.name}  {n:,} 文件  {size / 2**20:,.1f} MiB  sha256={sha256(out)[:16]}…")
 
