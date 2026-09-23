@@ -12,7 +12,7 @@
 
 ## 1. 总体结构
 
-midicn-lib 是 **19 个来源数据集**的系统性二次整理。我们**不重新授权任何 MIDI 文件**——每个文件遵循其原始来源的许可：
+midicn-lib 是 **21 个来源数据集**的系统性二次整理。我们**不重新授权任何 MIDI 文件**——每个文件遵循其原始来源的许可：
 
 1. **`meta/` 目录**（目录、索引、校验文件）与**全部整理文档、审计报告、工具脚本**：由 midicn 项目发布，采用 **CC0 1.0（公有领域贡献）**。你可以自由使用、修改、再分发，无需署名（但欢迎注明来源）。
 2. **MIDI 文件**：遵循各来源数据集的许可，**逐曲标注于 `l` 字段**（详见 `meta/catalog.json` 与 [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)）。
@@ -61,6 +61,32 @@ midicn-lib 是 **19 个来源数据集**的系统性二次整理。我们**不�
 > 换言之：`thesession` 部分可以自由用于一般用途（含商业用途、须署名并相同方式共享），
 > **但不得投入大模型相关的训练或处理流程**。
 
+### 2.3 内嵌歌词 · 独立权利层（仅研究/学习）
+
+部分曲目文件内含 **MIDI lyric meta-event（内嵌歌词文本）**。本版发布侧共 **2,778 首**带内嵌歌词，
+按来源分布：openscore 1,436（CC0）· m21 563（PD）· wikifonia 365（PD）· mutopia 250（PD）·
+lakh 136（C3）· cyberhymnal 28（PD）。
+
+**歌词是独立于曲目的另一层权利对象，单独适用以下规则：**
+
+- **不随曲目档位授予商用许可**：即使某曲目属 `main`（可商用），其**内嵌歌词文本**仍
+  **仅限研究、教学、学习**用途；不得将歌词文本单独用于商业用途、出版、录制或再分发。
+- **不主张权利**：本库对任何歌词文本**不主张著作权**，也不构成歌词权利人的授权表示。
+  歌词权利（如有）属于其原作者／词作者／出版商。
+- **为什么必须单列**：上游数据集对 **MIDI 文件本身**授予的许可（CC BY 4.0 / PD / CC0）
+  **不能自动延伸**到文件中可能由第三方写入的歌词文本——**许可人只能授权自己拥有的权利**，
+  「容器被授权」不等于「容器内第三方内容被授权」。因此本库**不作"歌词随文件一并授权"的主张**，
+  而是保守地把歌词整体限定为研究用途。
+- **风险实测分级**：2,778 首中约 **2,642 首**来自以公有领域内容为限的来源
+  （OpenScore Lieder 的歌词作者如歌德、海涅等；Mutopia 仅收 PD 作品；hymnal 为赞美诗），
+  其歌词本身即属公有领域，实质无风险；**风险集中在 lakh 的 136 首**（歌词多为 20 世纪
+  商业歌曲），该批曲目本身已定级 **C3（study）**，且其中在保护期内者已被剔除。
+- **歌词库**：中国民歌歌词（`midi_db/lyrics/`，10,035 首）**不在发布包内**，仅站内检索展示。
+- **被要求时**：若歌词权利人提出异议，按第 7 节流程移除对应文件或其中的歌词事件。
+
+> 实践含义：把本数据集当**乐谱／演奏数据**使用不受影响；若要**抽取并再使用歌词文本**，
+> 请仅限研究/学习，并自行清理权利。
+
 ## 3. 二次分发规则
 
 - 允许再分发本数据集的全部或部分内容，**前提是**：
@@ -92,18 +118,23 @@ midicn-lib 是 **19 个来源数据集**的系统性二次整理。我们**不�
 
 本数据集聚合了以下来源的数据（完整审计见 [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)）：
 
-ariamidi · TheSession.org · The Cyber Hymnal · 中国民间歌曲集成（OMR）· Essenfolkdance (EsAC) · GiantMIDI-Piano · Lakh MIDI（已过滤子集）· Norbeck Abby · music21 CoreCorpus · Mutopia Project · ABCMisc · OpenScore Lieder Corpus · MAESTRO v3 · Groove MIDI Dataset · EMOPIA v2.2 · Nottingham ABC · Wikifonia 档案（PD 子集）· OpenGameArt.org · MusicNet
+ariamidi · TheSession.org · The Cyber Hymnal · 中国民间歌曲集成（OMR）· Essenfolkdance (EsAC) · GiantMIDI-Piano · Lakh MIDI（已过滤子集）· Norbeck Abby · music21 CoreCorpus · Mutopia Project · ABCMisc · OpenScore Lieder Corpus · MAESTRO v3 · Groove MIDI Dataset · EMOPIA v2.2 · Nottingham ABC · Wikifonia 档案（PD 子集）· OpenGameArt.org · MusicNet · **ATEPP（钢琴演奏转录）· PDMX（公有领域钢琴乐谱）**
 
-（19 个来源；MuseData/CCARH 因许可禁止分发而永久排除。）
+（21 个来源；MuseData/CCARH 因许可禁止分发而永久排除。）
 各来源的**实际采集地址、取得方式与校验值**见 [PROVENANCE.md](PROVENANCE.md)；
 许可与核实状态见 [LICENSE-AUDIT.md](docs/LICENSE-AUDIT.md)。使用对应曲目时，请同时遵守来源数据集的署名要求。
+
+> **Lakh MIDI 过滤说明**：该来源（`l` = CC-BY-4.0，`z` = study）在入库时已剔除含版权声明、
+> 流行/影视/游戏路径，以及**经人工逐条复核确认仍在保护期内的 521 首**现代商业作品
+> （圣诞流行曲、影视/流行/游戏配乐、晚卒于公有领域线的作曲家作品）。台账见
+> `internal/lakh-review-2026-09-23.md`，并由 `tools/audit_license.py` 在每次发布前断言为 0。
 
 ## 7. 权利救济与移除流程（Takedown）
 
 如你认为本数据集中的任何内容侵犯了你的权利（包括但不限于著作权、改编权）：
 
 1. 通过 GitHub Issues（github.com/midicn/midi-lib/issues）提交通知，注明：涉嫌侵权的曲目 id（`catalog.json` 中可查）、你的权利依据、联系方式；
-2. 我们将在**核实后 7 个工作日内**移除或隔离相关内容，并在后续版本中更新；
+2. 我们将在**核实后 48 小时内**移除或隔离相关内容（**与站点的公开承诺一致**），并在后续版本中更新；
 3. 恶意或虚假的侵权通知由通知方自行承担法律责任。
 
 本数据集托管于 GitHub，同时受 GitHub 服务条款与 DMCA 政策约束（可通过 GitHub 官方 DMCA 流程提交移除请求）。
@@ -120,7 +151,7 @@ midicn 项目主要面向中文用户，数据整理工作在中国境内完成�
 
 ## 1. Overall Structure
 
-midicn-lib is a systematic re-curation of **19 source datasets**. We **do not re-license any MIDI
+midicn-lib is a systematic re-curation of **21 source datasets**. We **do not re-license any MIDI
 file** — every file follows the license of its original source:
 
 1. **The `meta/` directory** and **all curation documents, audit reports, and tool scripts**:
@@ -185,6 +216,40 @@ CC BY-SA 4.0:
 > In short: the `thesession` portion may be used freely for ordinary purposes (including commercially,
 > with attribution and share-alike), **but must not be fed into LLM training or processing pipelines.**
 
+### 2.3 Embedded Lyrics · Separate Rights Layer (study/research only)
+
+Some track files contain **MIDI lyric meta-events (embedded lyric text)**. This release has
+**2,778 tracks** carrying embedded lyrics, by source: openscore 1,436 (CC0) · m21 563 (PD) ·
+wikifonia 365 (PD) · mutopia 250 (PD) · lakh 136 (C3) · cyberhymnal 28 (PD).
+
+**Lyrics are a separate rights object from the track, and the following applies specifically to them:**
+
+- **No commercial grant inherited from the track's zone**: even where a track is `main`
+  (commercial use permitted), its **embedded lyric text** remains **study / teaching / learning
+  use only**. The lyric text may not be used commercially, published, recorded or redistributed
+  on its own.
+- **No rights claimed**: this library **claims no copyright** in any lyric text and grants no
+  rights in it. Any lyric rights belong to their respective authors, lyricists or publishers.
+- **Why a separate layer is required**: a license granted by an upstream dataset over the
+  **MIDI file itself** (CC BY 4.0 / PD / CC0) **does not automatically extend** to lyric text
+  that a third party may have written into that file — **a licensor can only license what it owns**;
+  "the container is licensed" is not "third-party content inside it is licensed". This library
+  therefore **makes no claim that lyrics are licensed along with the file**, and conservatively
+  restricts lyrics to study/research use.
+- **Measured risk tiers**: of the 2,778 tracks, about **2,642** come from PD-only sources
+  (OpenScore Lieder lyricists such as Goethe, Heine; Mutopia accepts PD works only; hymnals),
+  whose lyrics are themselves public domain and therefore carry no real risk. **The risk is
+  concentrated in 136 lakh tracks** (whose lyrics are mostly 20th-century commercial songs);
+  those tracks are themselves graded **C3 (study)**, and the in-copyright ones among them have
+  been removed.
+- **Lyrics library**: the Chinese folk-song lyrics (`midi_db/lyrics/`, 10,035 entries) are
+  **not included in any release package** and are shown on-site for search only.
+- **On request**: if a lyric rights holder objects, the corresponding file or its lyric events
+  will be removed under the process in Section 7.
+
+> Practical effect: using this dataset as **score / performance data** is unaffected; if you
+> **extract and reuse lyric text**, restrict it to study/research and clear the rights yourself.
+
 ## 3. Redistribution Rules
 
 Redistribution of all or part of this dataset is permitted **provided that**:
@@ -227,11 +292,21 @@ when citing the dataset (e.g. "data from midicn-lib") is fine.
 
 ## 6. Third-party Notices (NOTICE summary)
 
-This dataset aggregates data from 19 sources: ariamidi · TheSession.org · The Cyber Hymnal ·
+This dataset aggregates data from 21 sources: ariamidi · TheSession.org · The Cyber Hymnal ·
 Anthology of Chinese Folk Songs (OMR) · Essenfolkdance (EsAC) · GiantMIDI-Piano · Lakh MIDI
 (filtered subset) · Norbeck Abby · music21 CoreCorpus · Mutopia Project · ABCMisc ·
 OpenScore Lieder Corpus · MAESTRO v3 · Groove MIDI Dataset · EMOPIA v2.2 · Nottingham ABC ·
-Wikifonia archive (PD subset) · OpenGameArt.org · MusicNet.
+Wikifonia archive (PD subset) · OpenGameArt.org · MusicNet · **ATEPP (piano performance
+transcriptions) · PDMX (public-domain piano scores)**.
+
+(MuseData/CCARH is permanently excluded: its license prohibits any redistribution.)
+
+> **Lakh MIDI filtering note**: this source (`l` = CC-BY-4.0, `z` = study) was filtered at ingest
+> for copyright notices, pop/film/game paths, and additionally **521 commercially released works
+> still in copyright**, each confirmed by manual review (Christmas pop, film/pop/game scores,
+> and composers who died after the public-domain cut-off). The ledger is
+> `internal/lakh-review-2026-09-23.md`, and `tools/audit_license.py` asserts this count is zero
+> before every release.
 
 (MuseData/CCARH is permanently excluded: its licence forbids redistribution.)
 Each source's **actual acquisition address, method and checksums**: [PROVENANCE.md](PROVENANCE.md).
@@ -245,7 +320,8 @@ rights):
 
 1. File a notice via GitHub Issues (github.com/midicn/midi-lib/issues) including: the track id(s)
    (searchable in `catalog.json`), the basis of your claim, and your contact information;
-2. We will remove or quarantine the content within **7 business days** after verification;
+2. We will remove or quarantine the content within **48 hours** after verification
+(self-consistent with the commitment published on the website);
 3. Knowingly false infringement notices are the sole responsibility of the notifier.
 
 This dataset is hosted on GitHub and is also subject to GitHub's Terms of Service and DMCA policy

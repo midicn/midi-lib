@@ -35,10 +35,16 @@ ZONE = "study"          # C3 · 仅供研究/学习
 BUCKET = 1000
 
 # 保留：明确的古典/传统/宗教/学术类路径
+# ⚠ 2026-09-23 修正：**不得再用 christmas|carol 当"公有领域"代理**。
+#   「圣诞」≠「无版权」——LAKH 的 christmas/carol 路径混入大量 20 世纪商业音乐
+#   （White Christmas / Frosty / Rudolph / Last Christmas / 各类流行圣诞歌），
+#   这条规则实际放进了 356 首仍在保护期内的作品（真实侵权入口）。
+#   已由 tools/exclude_lakh_modern.py 全部剔除（台账 docs/internal/lakh-review-2026-09-23.md）。
+#   真正的传统颂歌另带 traditional / hymn / church 标记，仍会经这些词保留。
 KEEP_PAT = re.compile(
     r"classical|klassik|baroque|renaissance|medieval|"
     r"bach|mozart|beethoven|chopin|liszt|schubert|brahms|handel|vivaldi|haydn|"
-    r"hymn|church|choral|organ|sacred|gospel|christmas|carol|"
+    r"hymn|church|choral|organ|sacred|gospel|"
     r"traditional|trad[_ ]|folk|celtic|irish|scottish|"
     r"etude|sonata|symphony|concerto|nocturne|prelude|fugue|waltz|mazurka",
     re.I)
@@ -53,6 +59,65 @@ DROP_PAT = re.compile(
     r"rap|hip.?hop|techno|trance|house|dance|"
     r"disco|reggae|kpop|jpop|anime",
     re.I)
+
+# ── 版权剔除：与 tools/lakh_denylist.py 同源（单一真源，勿两处各写一份）──────
+# DROP 判定先于 KEEP，所以这里命中的现代作品**不会**再被 classical/hymn 等救回。
+# 词表缺失时必须直接失败，而不是静默放行（否则等于悄悄放弃版权防线）。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:
+    from lakh_denylist import ARTIST_RE as _MODERN_ARTIST_RE
+    from lakh_denylist import LATE_COMPOSER_RE as _LATE_NAME_RE
+    from lakh_denylist import MODERN_DIRS as _MODERN_DIRS
+    from lakh_denylist import dir_hit as _dir_hit
+    from lakh_denylist import MODERN_RE as _MODERN_WORK_RE
+except Exception as _exc:  # pragma: no cover
+    raise SystemExit(f"[lakh] 缺少版权词表 tools/lakh_denylist.py：{_exc}")
+
+def _modern_dir_of(origs: list[str]) -> str | None:
+    """任一原始路径的目录分量命中 MODERN_DIRS 即返回该目录名。
+
+    lakh 的目录名携带版权身份（`BachmanTurnerOverdrive/Hey You`、`ELVIS/Blue 2`、
+    `F/Fire Emblem…`、`C/Castlevania…`），是比标题更可靠的结构性信号。
+    **只认具名目录**——单字母桶 c/m/f/j/C/F/J/M 实测是混合桶（含大量古典与赞美诗）。
+    复用语料库里的 `dir_hit()`（扫描全部目录分量，兼容带/不带 `sources/lakh/` 前缀）。
+    """
+    for p in origs:
+        parts = p.replace("\\", "/").split("/")[:-1]
+        d = _dir_hit(parts)
+        if d:
+            return d
+    return None
+
+
+def drop_reason(origs: list[str]) -> str | None:
+    """统一的路径级剔除判定：返回剔除理由，`None` 表示保留。
+
+    **ingest 主流程与 tools/_ingest_divergence.py 共用本函数**，确保
+    「冷重跑口径」与「实际入库口径」永远一致（此前两处各写一份，导致差异检查假警报）。
+
+    四道信号，顺序即优先级：
+      ① DROP_PAT              流行/摇滚/影视/游戏/舞曲关键词
+      ② MODERN_RE / ARTIST_RE 现代作品名 / 艺人名（与清理器同源词表）
+      ③ _modern_dir_of()      一级目录是具名艺人 / 游戏 / 商业包
+      ④ _LATE_NAME_RE         卒年晚于 PD 线的作曲家人名
+    ①②④ 都在三个**分隔符变体**上判定（路径写 `White-Christmas`，词表按空格写）。
+    """
+    joined = " | ".join(origs)
+    probes = (
+        joined,
+        re.sub(r"[-_]+", " ", joined),
+        re.sub(r"[-_\s]+", "", joined),
+    )
+    if any(DROP_PAT.search(s) for s in probes):
+        return "流行/影视/游戏"
+    if any(rx.search(s) for rx in (_MODERN_WORK_RE, _MODERN_ARTIST_RE) for s in probes):
+        return "现代作品/艺人"
+    d = _modern_dir_of(origs)
+    if d:
+        return f"现代目录（{d}）"
+    if any(_LATE_NAME_RE.search(s) for s in probes):
+        return "晚卒作曲家"
+    return None
 
 COPYRIGHT_PAT = re.compile(r"©|\(c\)|copyright|all rights reserved|www\.|http", re.I)
 
@@ -105,9 +170,12 @@ def extract_and_filter(tar_path: Path, tmpdir: Path, limit: int | None) -> list[
             if not origs:
                 stats["drop_无路径记录"] += 1
                 continue
-            joined = " | ".join(origs)
-            if DROP_PAT.search(joined):
-                stats["drop_流行/影视/游戏"] += 1
+            why = drop_reason(origs)
+            if why:
+                stats[f"drop_{why}"] += 1
+                continue
+            if not KEEP_PAT.search(joined):
+                stats["drop_无古典传统标记"] += 1
                 continue
             if not KEEP_PAT.search(joined):
                 stats["drop_无古典传统标记"] += 1

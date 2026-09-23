@@ -18,7 +18,7 @@ configs:
 
 # DATASET CARD · midicn-lib
 
-> **124,179** 首曲目 · **19** 个公开来源 · **14** 个分类 · 逐首标注来源与许可档位 · 全程可溯源
+> **133,667** 首曲目 · **21** 个公开来源 · **14** 个分类 · 逐首标注来源与许可档位 · 全程可溯源
 >
 > 本卡描述数据集的**内容、来源、字段、质量与实际使用限制**。
 > 每个来源地址的取得方式与校验值见 [`PROVENANCE.md`](PROVENANCE.md)（含可执行复核脚本）。
@@ -27,7 +27,7 @@ configs:
 
 ## 一、数据集概述
 
-midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整理，产出**统一目录、统一字段、逐首标注许可**的开放曲库：
+midicn-lib 是对 **21 个公开 MIDI / 记谱数据集**的系统性二次整理，产出**统一目录、统一字段、逐首标注许可**的开放曲库：
 
 - **统一目录**：全部曲目规范命名为 `{source}-{序号}.mid`，按「使用方式」分为三包（见下）
 - **统一字段**：20 个字段跨源语义一致（见 §四），并提供作曲家 / 时期 / 地域 / 来源四套索引
@@ -41,11 +41,11 @@ midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整�
 
 | 分包 | 含义 | 档位 | 曲目数 | 打包文件 |
 |---|---|---|---:|---|
-| `main` | 许可允许商业使用 | **C1 可商用** | 69,197 | `midicn-lib-<VER>-main.zip` |
+| `main` | 许可允许商业使用 | **C1 可商用** | 79,216 | `midicn-lib-<VER>-main.zip` |
 | `piano-special` | 仅限非商业用途 | **C2 非商用** | 34,869 | `midicn-lib-<VER>-piano-special.zip` |
-| `study` | 仅限学习与研究 | **C3 学习研究** | 20,113 | `midicn-lib-<VER>-study.zip` |
+| `study` | 仅限学习与研究 | **C3 学习研究** | 19,582 | `midicn-lib-<VER>-study.zip` |
 | `meta` | 目录 / 索引 / 字段说明 / 文档 | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
-| **合计** | | | **124,179** | 另附 19 个**按来源**分包 |
+| **合计** | | | **133,667** | 另附 **400+ 个维度包**（zip.midicn.com） |
 
 许可分布（按曲目计）：
 
@@ -53,7 +53,7 @@ midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整�
 |---|---:|---|
 | `CC-BY-NC-SA-4.0` | 34,869 | aria 32,522 · maestro 1,276 · emopia 1,071 |
 | `CC-BY-SA-4.0` | 23,289 | thesession 23,250 · oga 39 |
-| `CC-BY-4.0` | 21,212 | giantmidi 10,112 · lakh 9,640 · groove 1,149 · musicnet 297 · oga 14 |
+| `CC-BY-4.0` | 21,200 | giantmidi 10,110 · lakh 9,630 · groove 1,149 · musicnet 297 · oga 14 |
 | `OPEN`（站点开放声明） | 16,332 | essen 10,373 · norbeck 3,439 · abcmisc 1,487 · nottingham 1,033 |
 | `PD`（公有领域） | 14,419 | cyberhymnal 10,945 · m21 3,029 · wikifonia 445 |
 | `TRADITIONAL-STUDY` | 10,473 | chinafolk 10,473（C3） |
@@ -72,8 +72,8 @@ midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整�
 | `cyberhymnal` | The Cyber Hymnal | 10,945 | C1 | hymntime.com/tch |
 | `chinafolk` | 中国民间歌曲集成（OMR 数字化） | 10,473 | C3 | github.com/m-july/Anthology-of-Chinese-Folk-Songs |
 | `essen` | ESAC 欧洲民歌档案 | 10,373 | C1 | esac-data.org |
-| `giantmidi` | GiantMIDI-Piano | 10,112 | C1 | github.com/bytedance/GiantMIDI-Piano |
-| `lakh` | Lakh MIDI Dataset（已过滤） | 9,640 | C3 | colinraffel.com/projects/lmd/ |
+| `giantmidi` | GiantMIDI-Piano | 10,110 | C1 | github.com/bytedance/GiantMIDI-Piano |
+| `lakh` | Lakh MIDI Dataset（已过滤） | 9,630 | C3 | colinraffel.com/projects/lmd/ |
 | `norbeck` | Norbeck ABC 曲集 | 3,439 | C1 | norbeck.nu/abc/ |
 | `m21` | music21 CoreCorpus | 3,029 | C1 | github.com/cuthbertLab/music21 |
 | `mutopia` | Mutopia Project | 1,860 | C1 | mutopiaproject.org |
@@ -86,7 +86,7 @@ midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整�
 | `wikifonia` | Wikifonia（PD 子集） | 445 | C1 | synthzone.com/files/Wikifonia/Wikifonia.zip |
 | `oga` | OpenGameArt | 340 | C1 | opengameart.org |
 | `musicnet` | MusicNet | 297 | C1 | zenodo.org/records/5120004 |
-| **合计** | | **124,179** | | |
+| **合计** | | **133,667** | | |
 
 > 考察但**未收录**的来源（许可不允许再分发等）及其原因，见 `SOURCE-CATALOG.md`。
 
@@ -99,11 +99,11 @@ midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整�
 | `c` / `cn` | 作曲家 slug / 显示名 | 100% |
 | `g` | 风格（genre） | 95.4% |
 | `i` | 乐器 | 95.4% |
-| `p` | 时期 | 88.1% |
-| `form` | 曲式 | 46.0% |
-| `opus` / `no` | 作品号 / 编号（依各作曲家编号体系） | 26.0% / 26.4% |
-| `yr` | 年代 | 11.7% |
-| `r` / `ctry` | 地域 / 国家 | 25.4% / 17.4% |
+| `p` | 时期 | 88.4% |
+| `form` | 曲式 | 46.8% |
+| `opus` / `no` | 作品号 / 编号（依各作曲家编号体系） | 30.2% / 29.7% |
+| `yr` | 年代（作品首次出版年份） | 16.0% |
+| `r` | 地域（国家 / 中国省级 / 地区） | 72.1% |
 | `du` / `nn` | 时长（秒）/ 音符数 | **100%** |
 | `z` | 档位（`main` / `piano-special` / `study`） | 100% |
 | `l` | 许可标识 | 100% |
@@ -154,12 +154,12 @@ midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整�
 
 ## English (summary)
 
-midicn-lib is a curated aggregation of **19 public MIDI / notation datasets** — **124,179 tracks**,
+midicn-lib is a curated aggregation of **21 public MIDI / notation datasets** — **133,667 tracks**,
 normalised into one catalogue with 20 consistent fields and **per-track** licence tagging.
 
-Splits are by **usage tier**, not by genre: `main` (69,197 · commercial use allowed),
+Splits are by **usage tier**, not by genre: `main` (79,216 · commercial use allowed),
 `piano-special` (34,869 · non-commercial only, CC BY-NC-SA 4.0),
-`study` (20,113 · study/research only) and `meta` (catalogue, indexes, docs · CC0-1.0).
+`study` (19,582 · study/research only) and `meta` (catalogue, indexes, docs · CC0-1.0).
 Nineteen additional per-source packages are published alongside.
 
 Every track keeps its upstream path and licence tag; each source's **actual acquisition address**,
@@ -167,3 +167,18 @@ method and checksum are recorded in [`PROVENANCE.md`](PROVENANCE.md).
 Note the special term on **The Session** data: its licence adds a **prohibition on LLM use**
 (no training, processing or incorporating the material via large language models, with an
 accessibility-only exception) on top of CC BY-SA 4.0.
+
+---
+
+## v1.23 数据增强（2026-09-23）
+
+本轮新增 **2 个来源**（ATEPP 7,131 首演奏版 + PDMX 2,895 首乐谱型）与 **15 个字段**；
+完整字段语义、覆盖率与标注规范见 `FIELD-DICTIONARY.md`。
+
+**新增字段**：`difficulty` 演奏难度 · `cn_zh` 作曲家中文名 · `birth`/`death` 生卒年 ·
+`instrument_gm` GM 标准乐器 · `velocity_avg`/`velocity_range` 演奏力度 · `notes_per_sec` 音符密度 ·
+`pitch_range` 音域 · `midi.tempo` 速度 · `midi.timesig` 拍号 · `version_type` 版本类型（score/performance）·
+`performer`/`album`（演奏版）· `topic`/`topics_zh` 题材 · 歌词库（10,035 首中国民歌，独立分片）
+
+**标注规范**：算法推断字段一律带 `*_src`（如 `key_src="inferred"`，附 `extra.key_corr` 置信度），可筛选；
+未知留空不猜（拍号推断因验证准确率 26.8% 已弃用）。

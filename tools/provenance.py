@@ -261,6 +261,7 @@ PAGE_TPL = """<!DOCTYPE html>
     <a href="./" data-zh="音乐库" data-en="Library">音乐库</a>
     <a href="download.html" data-zh="数据下载" data-en="Download">数据下载</a>
     <a href="sources.html" data-zh="数据来源" data-en="Sources">数据来源</a>
+    <a href="lyrics.html" data-zh="歌词检索" data-en="Lyrics">歌词检索</a>
     <a href="licenses.html" data-zh="许可与法律" data-en="Licence">许可与法律</a>
   </nav>
   <span class="spacer"></span>
@@ -295,6 +296,7 @@ PAGE_TPL = """<!DOCTYPE html>
       <a href="download.html" data-zh="数据下载" data-en="Download">数据下载</a>
       <a href="sources.html" data-zh="数据来源" data-en="Sources">数据来源</a>
       <a href="provenance.html" data-zh="来源台账" data-en="Provenance">来源台账</a>
+      <a href="lyrics.html" data-zh="歌词检索" data-en="Lyrics">歌词检索</a>
       <a href="licenses.html" data-zh="许可与法律" data-en="Licence">许可与法律</a>
       <a href="https://github.com/midicn/midi-lib" target="_blank" rel="noopener">GitHub</a>
     </nav>

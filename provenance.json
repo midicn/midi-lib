@@ -214,7 +214,7 @@
    "catalog_tier": "C1",
    "site_license": "CC BY 4.0",
    "catalog_license": "CC-BY-4.0",
-   "count": 10112,
+   "count": 10110,
    "how_we_got_it": "官方仓库 + disclaimer.md 指明的官方网盘（Google Drive / 百度网盘）下载 MIDI 整包 midis_v1.2.zip 192,678,627 B，与官方 README 所述「stable version (193 MB)」一致",
    "license_note": "CC BY 4.0 → C1",
    "ingest": "tools/ingest_giantmidi.py",
@@ -275,7 +275,7 @@
    "catalog_tier": "C3",
    "site_license": "CC BY 4.0",
    "catalog_license": "CC-BY-4.0",
-   "count": 9640,
+   "count": 9109,
    "how_we_got_it": "官方下载主机 hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz（1,768,163,879 B）分卷下载后合并；入库前剔除含版权声明的曲目与流行/影视路径",
    "license_note": "数据集 CC BY 4.0，但内容层过滤后定为 C3 学习研究（study）",
    "ingest": "tools/ingest_lakh.py",
@@ -354,7 +354,7 @@
    "catalog_tier": "C1",
    "site_license": "Public Domain",
    "catalog_license": "PD",
-   "count": 3029,
+   "count": 3028,
    "how_we_got_it": "随 music21 工具包分发的 CoreCorpus（site-packages/music21/corpus，3,219 文件 / 60.6MB），含 kern 与 MusicXML，由 ingest_music21.py 导出 MIDI",
    "license_note": "语料内作品多为 PD → C1",
    "ingest": "tools/ingest_music21.py",
@@ -710,7 +710,7 @@
    "catalog_tier": "C1",
    "site_license": "逐曲混合（CC0 / CC BY / CC BY-SA / GPL）",
    "catalog_license": "GPL-3.0",
-   "count": 340,
+   "count": 339,
    "how_we_got_it": "fetch_oga.py 逐素材抓取 opengameart.org（逐 asset 许可记录在 tools/state/oga-progress.json）",
    "license_note": "逐曲混合（CC0 / CC BY / CC BY-SA / GPL）→ C1，须逐素材署名",
    "ingest": "tools/ingest_oga.py",
@@ -782,6 +782,82 @@
    ],
    "next_review_due": "2027-03-20",
    "verified_on": "2026-09-21"
+  },
+  {
+   "id": "atepp",
+   "address": "https://github.com/tangjjbetsy/ATEPP",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "CC BY 4.0",
+   "catalog_license": "CC-BY-4.0",
+   "count": 7130,
+   "how_we_got_it": "用户协助下载官方 ATEPP-1.2.zip（Google Drive，213 MB，11,824 个 MIDI）后本地入库；另有 HuggingFace 镜像 anusfoil/atepp-midi 作为早期来源。筛选链：官方 metadata 匹配 → 有元数据 9,528 演奏 → 官方 quality 标记过滤（排除 2,397）→ 入库 7,131；构建期同源 MD5 去重再剔 1 首 → **发布 7,130**",
+   "license_note": "数据集声明 CC BY 4.0（可商用、可再分发）。同一作品含多位钢琴家的演奏版本，逐曲以 version_type=performance 标记；演奏录音版权归各演奏者及其唱片方。",
+   "ingest": "tools/ingest_atepp.py",
+   "evidence": [
+    {
+     "path": "sources/atepp/ATEPP-metadata-1.2.csv",
+     "contains": "track"
+    },
+    {
+     "path": "sources/atepp/ATEPP-metadata-1.2.csv",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/atepp",
+     "files": 11834,
+     "bytes": 520523446
+    }
+   ],
+   "archives": [],
+   "acquired": {
+    "date": "2026-09-22",
+    "basis": "用户协助下载（Google Drive 不通，经 HF 镜像 anusfoil/atepp-midi 获取）",
+    "evidence": "sources/atepp/ATEPP-1.2.zip"
+   },
+   "reverified": "2026-09-22",
+   "next_review_due": "2027-03-21",
+   "verified_on": "2026-09-22"
+  },
+  {
+   "id": "pdmx",
+   "address": "https://github.com/pnlong/PDMX",
+   "tier": "C1",
+   "catalog_tier": "C1",
+   "site_license": "CC0 / Public Domain",
+   "catalog_license": "CC0-1.0",
+   "count": 2893,
+   "how_we_got_it": "Zenodo mid.tar.gz（254,035 个渲染 MIDI，用户协助下载）+ PDMX v2 CSV 254,077 行（含 license_conflict）+ HF 镜像 JSON/metadata；筛选链：rated_deduplicated → no_license_conflict → 有作曲家 → genre 白名单（classical/folk/world/religious，排除现代类自标 CC0 不可信样本）",
+   "license_note": "上游为 CC0 1.0 与公有领域混合；本库仅收录可确证公有领域的乐谱型子集，逐曲以 version_type=score 标记。",
+   "ingest": "tools/ingest_pdmx.py",
+   "evidence": [
+    {
+     "path": "sources/pdmx/PDMX-v2.csv",
+     "contains": null
+    },
+    {
+     "path": "sources/pdmx/PDMX.csv",
+     "contains": null
+    }
+   ],
+   "local": [
+    {
+     "dir": "sources/pdmx",
+     "files": 7604,
+     "bytes": 2625749399
+    }
+   ],
+   "archives": [],
+   "acquired": {
+    "date": "2026-09-23",
+    "basis": "用户协助下载（Zenodo 403，经用户放至本地）",
+    "evidence": "sources/pdmx/mid.tar.gz"
+   },
+   "reverified": "2026-09-23",
+   "next_review_due": "2027-03-22",
+   "verified_on": "2026-09-23"
   }
  ]
 }

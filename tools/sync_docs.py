@@ -14,6 +14,8 @@
 设计
   · 一个文件只有一个真源，其余都是副本；副本永不手工编辑
   · --check 可接入发布前置检查（见 tools/preflight.py），防止「改了一处忘另一处」
+  · **`_` 前缀的脚本视为内部件，永不同步到公开仓**（一次性迁移脚本 / 诊断脚本）。
+    需要公开的审计器请用不带下划线的正式名字（如 `audit_license.py`、`audit_lyrics.py`）。
 """
 from __future__ import annotations
 
@@ -110,7 +112,8 @@ def cmd_check(cfg: dict) -> int:
         if src_dir.exists() and dst_dir.exists():
             excl = set(cfg.get('tools_exclude', []))
             for f in sorted(src_dir.iterdir()):
-                if not f.is_file() or f.name.startswith('__') or f.name in excl:
+                # `_` 前缀 = 内部件（一次性迁移/诊断脚本），不同步到公开仓
+                if not f.is_file() or f.name.startswith('_') or f.name in excl:
                     continue
                 d = dst_dir / f.name
                 if not d.exists():
@@ -120,7 +123,8 @@ def cmd_check(cfg: dict) -> int:
                     print(f'  ✗ 工具漂移  tools/{f.name}')
                     drift += 1
             extra = [f.name for f in sorted(dst_dir.iterdir())
-                     if f.is_file() and not (src_dir / f.name).exists() and not f.name.startswith('.')]
+                     if f.is_file() and not (src_dir / f.name).exists()
+                     and not f.name.startswith(('.', '_'))]
             if extra:
                 print(f'  · 副本独有工具（真源没有）: {extra}')
     total = sum(1 for _ in pairs(cfg))
@@ -156,7 +160,7 @@ def cmd_apply(cfg: dict) -> int:
         dst_dir.mkdir(parents=True, exist_ok=True)
         excl = set(cfg.get('tools_exclude', []))
         for f in sorted(src_dir.iterdir()):
-            if not f.is_file() or f.name.startswith('__') or f.name in excl:
+            if not f.is_file() or f.name.startswith('_') or f.name in excl:
                 continue
             d = dst_dir / f.name
             if not (d.exists() and md5(d) == md5(f)):
@@ -188,20 +192,28 @@ def cmd_adopt(cfg: dict) -> int:
 
 
 def cmd_release(cfg: dict, ver: str) -> int:
+    """把文档装配进 release/midicn-lib-<ver>/（root = public 组；docs/ = 其余对外组）"""
     dest = ROOT / 'release' / f'midicn-lib-{ver}'
     if not dest.exists():
         print(f'发布目录不存在：{dest}', file=sys.stderr)
         return 2
     n = 0
+    per_group: dict[str, int] = {}
     for gname, fname, src in pairs(cfg):
         if not src.exists():
+            continue
+        # ⚠️ `local` 组是「仅本地存档（不进任何公开仓）」——**绝不能进发布包**，
+        #    否则内部草稿（收采台账 / 网络笔记 / 许可草稿）会随发行一起分发出去。
+        #    （此前这里无判断，且末尾 print 引用了不存在的 groups['internal'] → KeyError）
+        if gname == 'local' or cfg['groups'][gname].get('release') is False:
             continue
         sub = dest if gname == 'public' else dest / 'docs'
         sub.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, sub / fname)
+        per_group[gname] = per_group.get(gname, 0) + 1
         n += 1
-    print(f'已把 {n} 个文档装配到 {dest}（根 {len(cfg["groups"]["public"]["files"])} · docs/ '
-          f'{len(cfg["groups"]["internal"]["files"])}）')
+    detail = ' · '.join(f'{k} {v}' for k, v in per_group.items()) or '无'
+    print(f'已把 {n} 个文档装配到 {dest}（{detail}；已跳过 local 组）')
     return 0
 
 

@@ -31,10 +31,16 @@ ROOT = Path(__file__).resolve().parents[1]
 TRACKS = ROOT / "midi_db" / "tracks"
 OUT = ROOT / "docs" / "AUDIT-REPORT-V2.md"
 
+# 全量字段（v1.23：经 tools/_scan_fields.py 实测，20 个字段 100% 出现）
 FIELDS = {"id", "source", "src_path", "title", "composer_slug", "composer_name",
           "opus", "no", "genre", "form", "key", "period", "region", "instrument",
-          "license", "zone", "midi", "fingerprint", "extra"}
-OPTIONAL = {"duplicate_of"}
+          "license", "zone", "midi", "fingerprint", "extra", "pitch_range"}
+OPTIONAL = {
+    "duplicate_of", "verify_flag",
+    "instrument_gm", "instruments_gm", "key_src", "birth", "death", "cn_zh",
+    "yr", "country", "region_src", "has_lyrics", "version_type",
+    "diff", "difficulty", "performer", "album", "lyrics_incomplete",
+}
 
 # 已知锚点：作曲家 -> 时期（抽查基准）
 PERIOD_ANCHORS = {
@@ -151,8 +157,13 @@ def main() -> int:
     pitch_bad = 0
     zero_notes = 0
     for r in sample:
-        p = ROOT / r["midi"]["file"]
-        if not p.exists():
+        # 新源（ATEPP / PDMX）midi.file 为空 → 回退 src_path
+        mf = (r.get("midi") or {}).get("file")
+        if not mf:
+            sp = (r.get("src_path") or "").replace("\\", "/")
+            mf = sp if sp else None
+        p = (ROOT / mf) if mf else None
+        if not p or not p.exists():
             continue
         try:
             mid = mido.MidiFile(str(p))

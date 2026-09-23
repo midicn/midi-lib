@@ -1,6 +1,6 @@
 # PROVENANCE · 来源台账（每个原始地址的取得与核验记录）
 
-> 核验日期 **2026-09-21** · 来源 **19** 个 · 合计 **124,179** 首 · 机器可读版 [`provenance.json`](provenance.json)
+> 核验日期 **2026-09-21** · 来源 **21** 个 · 合计 **133,667** 首 · 机器可读版 [`provenance.json`](provenance.json)
 >
 > 本文件回答一个问题：**来源页上写的那个「原始地址」，凭什么说它是我们真正取得数据的地方？**
 > 每个来源都给出：地址、取得方式、本地证据文件、整包校验值（有则附上游官方值）、许可档位与核验日期。
@@ -22,10 +22,10 @@
 | cyberhymnal | C1 | 10,945 | `https://www.hymntime.com/tch/` |
 | chinafolk | C3 | 10,473 | `https://github.com/m-july/Anthology-of-Chinese-Folk-Songs` |
 | essen | C1 | 10,373 | `https://www.esac-data.org/` |
-| giantmidi | C1 | 10,112 | `https://github.com/bytedance/GiantMIDI-Piano` |
-| lakh | C3 | 9,640 | `https://colinraffel.com/projects/lmd/` |
+| giantmidi | C1 | 10,110 | `https://github.com/bytedance/GiantMIDI-Piano` |
+| lakh | C3 | 9,109 | `https://colinraffel.com/projects/lmd/` |
 | norbeck | C1 | 3,439 | `https://norbeck.nu/abc/` |
-| m21 | C1 | 3,029 | `https://github.com/cuthbertLab/music21` |
+| m21 | C1 | 3,028 | `https://github.com/cuthbertLab/music21` |
 | mutopia | C1 | 1,860 | `https://www.mutopiaproject.org/` |
 | abcmisc | C1 | 1,487 | `http://trillian.mit.edu/~jc/music/abc/` |
 | openscore | C1 | 1,438 | `https://github.com/OpenScore/Lieder` |
@@ -34,9 +34,11 @@
 | emopia | C2 | 1,071 | `https://zenodo.org/records/5257995` |
 | nottingham | C1 | 1,033 | `https://ifdo.ca/~seymour/nottingham/` |
 | wikifonia | C1 | 445 | `http://www.synthzone.com/files/Wikifonia/Wikifonia.zip` |
-| oga | C1 | 340 | `https://opengameart.org/` |
+| oga | C1 | 339 | `https://opengameart.org/` |
 | musicnet | C1 | 297 | `https://zenodo.org/records/5120004` |
-| **合计** | | **124,179** | |
+| atepp | C1 | 7,130 | `https://github.com/tangjjbetsy/ATEPP` |
+| pdmx | C1 | 2,893 | `https://github.com/pnlong/PDMX` |
+| **合计** | | **133,667** | |
 
 ## 三、逐源明细
 
@@ -257,6 +259,28 @@
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/musicnet）
 - **复核时间线**：核验于 2026-09-21；下次复核不晚于 2027-03-20
 
+### atepp
+
+- **原始地址**：`https://github.com/tangjjbetsy/ATEPP`
+- **取得方式**：用户协助下载官方 ATEPP-1.2.zip（Google Drive，213 MB，11,824 个 MIDI）后本地入库；另有 HuggingFace 镜像 anusfoil/atepp-midi 作为早期来源。筛选链：官方 metadata 匹配 → 有元数据 9,528 演奏 → 官方 quality 标记过滤（排除 2,397）→ 入库 7,131；构建期同源 MD5 去重再剔 1 首 → **发布 7,130**
+- **入库脚本**：`tools/ingest_atepp.py`
+- **本地证据**：`sources/atepp/ATEPP-metadata-1.2.csv`（含 `track`）；`sources/atepp/ATEPP-metadata-1.2.csv`
+- **本地规模**：`sources/atepp` 11,834 文件 / 520.5MB
+- **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— 数据集声明 CC BY 4.0（可商用、可再分发）。同一作品含多位钢琴家的演奏版本，逐曲以 version_type=performance 标记；演奏录音版权归各演奏者及其唱片方。
+- **取得时点**：2026-09-22（依据：用户协助下载（Google Drive 不通，经 HF 镜像 anusfoil/atepp-midi 获取） · sources/atepp/ATEPP-1.2.zip）
+- **复核时间线**：核验于 2026-09-22；下次复核不晚于 2027-03-21
+
+### pdmx
+
+- **原始地址**：`https://github.com/pnlong/PDMX`
+- **取得方式**：Zenodo mid.tar.gz（254,035 个渲染 MIDI，用户协助下载）+ PDMX v2 CSV 254,077 行（含 license_conflict）+ HF 镜像 JSON/metadata；筛选链：rated_deduplicated → no_license_conflict → 有作曲家 → genre 白名单（classical/folk/world/religious，排除现代类自标 CC0 不可信样本）
+- **入库脚本**：`tools/ingest_pdmx.py`
+- **本地证据**：`sources/pdmx/PDMX-v2.csv`；`sources/pdmx/PDMX.csv`
+- **本地规模**：`sources/pdmx` 7,604 文件 / 2625.7MB
+- **许可**：CC0 / Public Domain（catalog 标识 `CC0-1.0`）—— 上游为 CC0 1.0 与公有领域混合；本库仅收录可确证公有领域的乐谱型子集，逐曲以 version_type=score 标记。
+- **取得时点**：2026-09-23（依据：用户协助下载（Zenodo 403，经用户放至本地） · sources/pdmx/mid.tar.gz）
+- **复核时间线**：核验于 2026-09-23；下次复核不晚于 2027-03-22
+
 ## 四、如何自行复核
 
 ```bash
@@ -290,7 +314,7 @@ python tools/provenance.py --online   # 追加各地址当前可达性
 
 ## English (summary)
 
-Provenance ledger, verified 2026-09-21. 19 sources, 124,179 tracks. Each source records a **single** address — the place we actually obtained the data from — together with how it was obtained, a local evidence file (self-statement or acquisition ledger), package checksums where available (upstream-published values preferred), the licence tier, and the verification date.
+Provenance ledger, verified 2026-09-21. 21 sources, 133,667 tracks. Each source records a **single** address — the place we actually obtained the data from — together with how it was obtained, a local evidence file (self-statement or acquisition ledger), package checksums where available (upstream-published values preferred), the licence tier, and the verification date.
 
 Three rules: (1) one true address per source, never a generic homepage or a guessed official site; (2) the tier (C1 commercial / C2 non-commercial / C3 study-only) must match the per-track `z` field in the published catalog; (3) every address must be backed by evidence. Re-verify with `python tools/provenance.py [--hash] [--online]`.
 

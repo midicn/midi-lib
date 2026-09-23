@@ -30,10 +30,18 @@ ROOT = Path(__file__).resolve().parents[1]
 TRACKS = ROOT / "midi_db" / "tracks"
 OUT = ROOT / "docs" / "AUDIT-REPORT.md"
 
+# 全量字段（v1.23：经 tools/_scan_fields.py 对 135,437 条实测，20 个字段 100% 出现）
 FIELDS = ["id", "source", "src_path", "title", "composer_slug", "composer_name",
           "opus", "no", "genre", "form", "key", "period", "region", "instrument",
-          "license", "zone", "midi", "fingerprint", "extra"]
-OPTIONAL_FIELDS = {"duplicate_of", "verify_flag"}
+          "license", "zone", "midi", "fingerprint", "extra", "pitch_range"]
+# 可选字段（按来源/批次出现，缺失不算异常）
+OPTIONAL_FIELDS = {
+    "duplicate_of", "verify_flag",
+    # v1.23 元数据增强新增
+    "instrument_gm", "instruments_gm", "key_src", "birth", "death", "cn_zh",
+    "yr", "country", "region_src", "has_lyrics", "version_type",
+    "diff", "difficulty", "performer", "album", "lyrics_incomplete",
+}
 ZONES = {"main", "piano-special", "research", "pending", "hold", "study", "internal-research", "internal-private"}
 PERIODS = {"medieval", "renaissance", "baroque", "classical", "romantic",
            "impressionist", "modern", "contemporary", "traditional"}
@@ -71,15 +79,20 @@ def main() -> int:
             ps = per_source[src]
             ps["n"] += 1
             ps["zones"][r["zone"]] += 1
-            p = ROOT / r["midi"]["file"]
-            if p.exists():
+            # 新源（ATEPP / PDMX）midi.file 为空 → 回退 src_path
+            mf = (r.get("midi") or {}).get("file")
+            if not mf:
+                sp = (r.get("src_path") or "").replace("\\", "/")
+                mf = sp if sp else None
+            p = (ROOT / mf) if mf else None
+            if p and p.exists():
                 ps["exists"] += 1
             else:
-                issues.append(f"{r['id']} 文件缺失: {r['midi']['file']}")
-            if r["midi"]["file"] in ps["paths"]:
+                issues.append(f"{r['id']} 文件缺失: {mf}")
+            if mf in ps["paths"]:
                 ps["dup_paths"] += 1
                 issues.append(f"{r['id']} 同源路径重复")
-            ps["paths"].add(r["midi"]["file"])
+            ps["paths"].add(mf)
             if (set(r.keys()) - OPTIONAL_FIELDS) != set(FIELDS):
                 field_bad += 1
                 issues.append(f"{r['id']} 字段结构异常: 缺{sorted(set(FIELDS)-set(r.keys()))} 多{sorted(set(r.keys())-set(FIELDS)-OPTIONAL_FIELDS)}")

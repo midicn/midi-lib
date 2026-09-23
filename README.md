@@ -1,6 +1,6 @@
 # midicn-lib · 开放 MIDI 音乐库（二次整理版）
 
-> **124,179** 首曲目 · **19** 个公开来源 · **14** 个分类 · 逐首标注许可档位 · 全程可溯源
+> **133,667** 首曲目 · **21** 个公开来源 · **14** 个分类 · 逐首标注许可档位 · 全程可溯源
 >
 > 门户与在线试听：<https://lib.midicn.com> · 数据下载页：<https://lib.midicn.com/download.html>
 > 来源台账（每个地址的取得方式与校验值）：<https://lib.midicn.com/provenance.html>
@@ -12,25 +12,25 @@
 
 | 目录 | 含义 | 档位 | 曲目数 | 下载 |
 |---|---|---|---:|---|
-| `main/` | 许可允许商业使用 | **C1 可商用** | 69,197 | `midicn-lib-<VER>-main.zip` |
+| `main/` | 许可允许商业使用 | **C1 可商用** | 79,216 | `midicn-lib-<VER>-main.zip` |
 | `piano-special/` | 仅限非商业用途 | **C2 非商用** | 34,869 | `midicn-lib-<VER>-piano-special.zip` |
-| `study/` | 仅限学习与研究 | **C3 学习研究** | 20,113 | `midicn-lib-<VER>-study.zip` |
+| `study/` | 仅限学习与研究 | **C3 学习研究** | 19,582 | `midicn-lib-<VER>-study.zip` |
 | `meta/` | 目录 / 索引 / 字段说明 / 文档 | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
-| **合计** | | | **124,179** | 另附 19 个**按来源**分包（`-source-<id>.zip`） |
+| **合计** | | | **133,667** | 另附 **400+ 个维度包**（zip.midicn.com：按来源/风格/时期/乐器/授权/曲式/地域/作曲家） |
 
 > 各版本资产见 [Releases](https://github.com/midicn/midi-lib/releases)。当前版本与下载页一致（以
 > <https://lib.midicn.com/download.html> 为准）。
 
 ## 🗂️ 分类明细（14 个分类）
 
-**`main/`（C1 · 69,197 首）**
+**`main/`（C1 · 79,216 首）**
 
 | 分类 | 曲目 | 来源 |
 |---|---:|---|
 | `folk-ireland/` | 26,689 | thesession 23,250 · norbeck 3,439 |
 | `hymn/` | 10,945 | cyberhymnal |
 | `folk-world/` | 10,818 | essen |
-| `piano-performance/` | 10,112 | giantmidi |
+| `piano-performance/` | 10,110 | giantmidi |
 | `classical-open/` | 6,624 | mutopia 1,860 · openscore 1,438 · m21 3,029 · musicnet 297 |
 | `klezmer-balkan/` | 1,487 | abcmisc |
 | `maestro/` | 1,276 | maestro |
@@ -47,12 +47,12 @@
 | `maestro/` | 1,276 | maestro |
 | `emopia/` | 1,071 | emopia |
 
-**`study/`（C3 · 20,113 首）**
+**`study/`（C3 · 19,582 首）**
 
 | 分类 | 曲目 | 来源 |
 |---|---:|---|
 | `folk-china/` | 10,473 | chinafolk（中国民间歌曲集成 · OMR） |
-| `classical-traditional/` | 9,640 | lakh（已过滤子集） |
+| `classical-traditional/` | 9,630 | lakh（已过滤子集） |
 
 ## 🚀 快速使用
 
@@ -97,7 +97,7 @@ piano = [r for r in cat['tracks'] if r['z'] == 'piano-special']
   author    = {midicn project},
   year      = {2026},
   url       = {https://lib.midicn.com},
-  note      = {124,179 tracks aggregated from 19 public datasets, unified catalogue,
+  note      = {133,667 tracks aggregated from 21 public datasets, unified catalogue,
                per-track licence tiers. Access version: see the Releases page.}
 }
 ```
@@ -116,8 +116,8 @@ piano = [r for r in cat['tracks'] if r['z'] == 'piano-special']
 | The Cyber Hymnal | 10,945 | C1 | hymntime.com/tch |
 | 中国民间歌曲集成（OMR） | 10,473 | C3 | github.com/m-july/Anthology-of-Chinese-Folk-Songs |
 | ESAC 欧洲民歌档案 | 10,373 | C1 | esac-data.org |
-| GiantMIDI-Piano | 10,112 | C1 | github.com/bytedance/GiantMIDI-Piano |
-| Lakh MIDI Dataset（过滤） | 9,640 | C3 | colinraffel.com/projects/lmd/ |
+| GiantMIDI-Piano | 10,110 | C1 | github.com/bytedance/GiantMIDI-Piano |
+| Lakh MIDI Dataset（过滤） | 9,630 | C3 | colinraffel.com/projects/lmd/ |
 | Norbeck ABC 曲集 | 3,439 | C1 | norbeck.nu/abc/ |
 | music21 CoreCorpus | 3,029 | C1 | github.com/cuthbertLab/music21 |
 | Mutopia Project | 1,860 | C1 | mutopiaproject.org |
@@ -151,3 +151,18 @@ piano = [r for r in cat['tracks'] if r['z'] == 'piano-special']
 
 **English**: see [README.en.md](README.en.md) · Dataset card: [DATASET-CARD.md](DATASET-CARD.md) ·
 Provenance ledger: [PROVENANCE.md](PROVENANCE.md) · Licence: [LICENSE.md](LICENSE.md)
+
+---
+
+## v1.23 数据增强（2026-09-23）
+
+本轮新增 **2 个来源**（ATEPP 7,131 首演奏版 + PDMX 2,895 首乐谱型）与 **15 个字段**；
+完整字段语义、覆盖率与标注规范见 `FIELD-DICTIONARY.md`。
+
+**新增字段**：`difficulty` 演奏难度 · `cn_zh` 作曲家中文名 · `birth`/`death` 生卒年 ·
+`instrument_gm` GM 标准乐器 · `velocity_avg`/`velocity_range` 演奏力度 · `notes_per_sec` 音符密度 ·
+`pitch_range` 音域 · `midi.tempo` 速度 · `midi.timesig` 拍号 · `version_type` 版本类型（score/performance）·
+`performer`/`album`（演奏版）· `topic`/`topics_zh` 题材 · 歌词库（10,035 首中国民歌，独立分片）
+
+**标注规范**：算法推断字段一律带 `*_src`（如 `key_src="inferred"`，附 `extra.key_corr` 置信度），可筛选；
+未知留空不猜（拍号推断因验证准确率 26.8% 已弃用）。

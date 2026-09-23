@@ -1,7 +1,12 @@
-# LICENSE-AUDIT · 36 源逐项许可核对表
+# LICENSE-AUDIT · 来源许可核对表（36 个候选 → **21 个入发布包**）
 
 > 规则：**每源入库前必须完成本表一行**——结论（可重分发/仅链接）+ 依据（原文条款 URL 或本地 LICENSE 文件路径）+ 日期。
 > 结论为「仅链接」的源不进入 dist 发布包，仅在门户 /sources/ 页提供外链。
+>
+> **⚠️ 本表是全量候选审计（36 个）**，其中**只有 21 个最终进入 v1.23 发布包**。
+> 本表的「待核」行表示该候选**未通过**或**已放弃**（详见 `SOURCE-CATALOG.md`）；
+> 发布包的实际来源集合以 `docs/provenance.json`（21 条）为准。
+> 逐曲实际许可以 `meta/catalog.json` 的 `l` 字段为准。
 
 | # | 源 id | 源名 | 规模 | 声称许可 | 核实结论 | 依据 | zone | 审计日期 |
 |---|---|---|---|---|---|---|---|---|
@@ -11,7 +16,7 @@
 | 4 | `musedata` | MuseData (CCARH) | ~1,200 作品 | ⚠️ **受限许可** | ❌ **不可重分发**（明文禁止任何分发，含非商业教学材料；禁商用/公演/录音） | GitHub musedata/* 仓库 LICENSE.txt 原文：“under no circumstance is the data to be embedded or included in teaching materials for commercial or non-commercial distribution” · 仅个人使用+学术研究 | research（**本地研究收录，永不进发布包，门户仅链接**） | 2026-09-17 |
 | 5 | `sonatica` | sonatica.fm | ~11,000 | 声明生成自 PD 乐谱 | 待核（重点：转录者权利） | — | main | — |
 | 6 | `pianomidi` | piano-midi.de | ~571 | **CC BY-SA (Germany)** | ✅ 可重分发（署名 Bernd Krueger + http://www.piano-midi.de + 同许可） | 官方版权页 http://piano-midi.de/copy.htm：「licensed under the cc-by-sa Germany License…distribution or public playback only allowed under identical license conditions」 | main | 2026-09-17 |
-| 7 | `chinafolk` | 中国民间歌曲集成 | 10,479 | ⚠️ **未声明** | ⚠️ 本地收录、**不重分发**（门户仅链接原仓库）；待联系作者确认后升级 | README 无 LICENSE 文件；原扫描图声明有版权 · github.com/m-july/Anthology-of-Chinese-Folk-Songs | main | 2026-09-17 |
+| 7 | `chinafolk` | 中国民间歌曲集成 | 10,473 | ⚠️ 上游未声明 | ✅ **已发布（C3 · TRADITIONAL-STUDY）** —— 旋律本身属传统民间文艺、通常已进入公有领域；但**转录底本**（记谱/整理稿）受版权保护，故**仅限研究/教学/学习**，禁止商用与公开表演，必须署名上游数据集 | 上游 README 无 LICENSE 文件、扫描图声明有版权 · github.com/m-july/Anthology-of-Chinese-Folk-Songs（arXiv:2512.14758）；本库据此**自行定级 C3** 并逐曲写入 `l` 字段 | study | 2026-09-23 |
 | 8 | `figshare` | figshare 中国经典 | 14 | CC BY 4.0 | ✅ 可重分发（署名） | figshare 数据集页 DOI 10.6084/m9.figshare.5436022 | main | 2026-09-17 |
 | 9 | `essen` | Essen Folk Song DB | 9,034 | EsAC 开放 | 待核 | — | main | — |
 | 10 | `nottingham` | Nottingham Music DB | 1,200 | 开放 | 待核 | — | main | — |
@@ -37,11 +42,19 @@
 | 30 | `wikifonia` | Wikifonia 遗存 | 6,434 → **PD 子集 446** | 混合 | ⚠️ **仅 PD 子集收录**：全库 6,434 首中 5,988 首为 20 世纪流行曲/爵士标准曲（版权内，已过滤）；保留 446 首传统/民歌（Traditional/Anonymous/Hungarian folk song…） | 署名关键词白名单过滤（tools/ingest_wikifonia.py） | main（446） | 2026-09-17 |
 | 31 | `ia` | Internet Archive 精选 | 数千+ | 逐集合 | 待核（**筛掉游戏/流行**） | — | main | — |
 | 32 | `midiworld` | MIDIWorld | 数千 | 站方声明 PD | 待核 | — | main | — |
-| 33 | `emopia` | EMOPIA | 387 | CC BY-NC-SA 4.0 | 待核 | — | research | — |
-| 34 | `maestro` | MAESTRO | 1,282 | CC BY-NC-SA 4.0 | 待核 | — | research | — |
-| 35 | `lakh` | Lakh MIDI | 174,533 | 学术 | 待核（v0.2 再议） | — | research | — |
-| 36 | `ossq` | OpenScore String Quartets | 进行中 | CC0 | 待核 | — | main | — |
-| 37 | `giantmidi` | GiantMIDI-Piano（新发现·重要） | ~10,855 作品 | 待核（论文数据集） | 待核（获取渠道另查：官方非 GitHub 直链） | arXiv 2010.07061 · github.com/bytedance/GiantMIDI-Piano | main(待核) | — |
+| 33 | `emopia` | EMOPIA | 1,071 | CC BY-NC-SA 4.0 | ✅ **已发布（C2）** 须署名+非商用+相同方式共享 | Zenodo 5257995 数据集页明文 CC BY-NC-SA 4.0 | piano-special | 2026-09-23 |
+| 34 | `maestro` | MAESTRO | 1,276 | CC BY-NC-SA 4.0 | ✅ **已发布（C2）** 须署名+非商用+相同方式共享 | magenta.tensorflow.org/datasets/maestro 明文 CC BY-NC-SA 4.0 | piano-special | 2026-09-23 |
+| 35 | `lakh` | Lakh MIDI | 174,533 原始 | 数据集声明 CC BY 4.0 | ⚠️ **已发布（C3 · study）但内容层须过滤** —— 数据集许可**只覆盖其自身的整理**，不覆盖所收录曲目的词曲著作权（原作者明言「均从公开来源抓取、未转录」）。已剔除含版权声明 / 流行·影视·游戏路径 / **以及经人工逐条复核确认在保护期内的 521 首** | colinraffel.com/projects/lmd 声明 CC BY 4.0；台账 `internal/lakh-review-2026-09-23.md`；审计器 `tools/audit_license.py` | study | 2026-09-23 |
+| 36 | `ossq` | OpenScore String Quartets | 进行中 | CC0 | ⏸ 未收录（尚未接入） | — | — | — |
+| 37 | `giantmidi` | GiantMIDI-Piano | 10,112 | CC BY 4.0 | ✅ **已发布（C1）** 可商用，署名数据集与论文 | arXiv 2010.07061 · github.com/bytedance/GiantMIDI-Piano | main | 2026-09-23 |
+| 38 | `atepp` | ATEPP（钢琴演奏转录） | 7,130 | CC BY 4.0 | ✅ **已发布（C1）** 可商用，署名数据集与论文；**一作品多演奏版**为设计特性 | github.com/tangjjbetsy/ATEPP（CC BY 4.0）· 论文 DOI | main | 2026-09-23 |
+| 39 | `pdmx` | PDMX（公有领域钢琴乐谱） | 2,893 | CC0 1.0 / PD | ✅ **已发布（C1）** 自由使用；仅取 `no_license_conflict` 且 genre 属古典/民谣/世界/宗教的子集，并拦下「现代类自标 CC0」2,500 首 | github.com/pnlong/PDMX · Long et al. ICASSP 2025 · Zenodo 发布 | main | 2026-09-23 |
+
+> **内嵌歌词（独立权利层 · 仅研究/学习）**：发布侧 2,778 首曲目内含 MIDI lyric meta-event。
+> 歌词是**独立于曲目的另一层权利对象**，**不随曲目档位授予商用许可**；本库**不主张歌词著作权**。
+> 上游对 MIDI 文件本身的许可**不能自动延伸**到第三方写入的歌词。约 2,642 首来自 PD-only 来源
+> （歌词本身即 PD），风险集中在 lakh 的 136 首（该批已定级 C3 且保护期内者已剔）。
+> 详见 `LICENSE.md §2.3` · `NOTICE.md`「内嵌歌词」节。
 
 ## 审计流程
 
@@ -72,7 +85,9 @@
 | 🟡 中 | abcmisc | 各整理者提交，站点声明自由 | 同上 |
 | 🟡 中 | nottingham | John Chambers 声明公开使用 | 同上 |
 | ⚪ 特区 | aria | CC BY-NC-SA-4.0 正式文本 | 仅非商用（piano-special 区） |
-| 🔴 未定 | chinafolk | 集成编者权未确认 | **不发布**，待确认 |
+| 🟠 自定 | chinafolk | 上游未声明；旋律传统 PD、**转录底本受保护** | **已发布，但自定级 C3（study）**：仅研究/教学/学习，禁商用与公开表演，必须署名（2026-09-23 定案） |
+| 🟢 强 | atep / pdmx | CC BY 4.0 / CC0 1.0 正式文本 | 可商用（C1），按数据集署名 |
+| 🔵 独立层 | 内嵌歌词 | 词作著作权独立于乐曲；上游对文件的许可**不覆盖**第三方歌词 | **不随档位授权**：无论曲目档位，歌词文本仅限研究/学习；本库不主张歌词著作权（`LICENSE.md §2.3`） |
 
 **网站播放策略建议**：🟡 级源内容可上线但建议在「关于」页声明来源与用途；若网站完全非商业，🟡 级风险进一步降低。
 

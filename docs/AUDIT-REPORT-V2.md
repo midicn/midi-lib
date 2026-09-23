@@ -1,5 +1,5 @@
 # midicn-lib 深度终审 v2
-> ⏳ **历史快照**：本文件为过程文档，其中的数字反映撰写当时的状态。现行数据（**124,179 首 / 19 源**）以 `DATASET-CARD.md`、`meta/catalog.json` 与 `PROVENANCE.md` 为准。
+> ⏳ **历史快照**：本文件为过程文档，其中的数字反映撰写当时的状态。现行数据（**133,667 首 / 21 源**）以 `DATASET-CARD.md`、`meta/catalog.json` 与 `PROVENANCE.md` 为准。
 
 
 > 生成：2026-09-17T19:52:05 · 记录 94,740 · 维度 12+

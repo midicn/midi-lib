@@ -1,5 +1,5 @@
 # QUALITY-GATES · midicn-lib 质量门清单
-> ⏳ **历史快照**：本文件为过程文档，其中的数字反映撰写当时的状态。现行数据（**124,179 首 / 19 源**）以 `DATASET-CARD.md`、`meta/catalog.json` 与 `PROVENANCE.md` 为准。
+> ⏳ **历史快照**：本文件为过程文档，其中的数字反映撰写当时的状态。现行数据（**133,667 首 / 21 源**）以 `DATASET-CARD.md`、`meta/catalog.json` 与 `PROVENANCE.md` 为准。
 
 
 > 原则：**质量高于一切**。每个数据变更必须过对应质量门；发布前必须全部门通过。

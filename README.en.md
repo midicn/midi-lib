@@ -1,6 +1,6 @@
 # midicn-lib · Open MIDI Library (Curated Edition)
 
-> **124,179** tracks · **19** public sources · **14** categories · per-track licence tier · full provenance
+> **133,667** tracks · **21** public sources · **14** categories · per-track licence tier · full provenance
 >
 > Portal & player: <https://lib.midicn.com> · Downloads: <https://lib.midicn.com/download.html>
 > Provenance ledger (how each address was obtained, with checksums): <https://lib.midicn.com/provenance.html>
@@ -13,24 +13,24 @@ documentation, licence audit and the curation tool chain. The site source lives 
 
 | Directory | Meaning | Tier | Tracks | Download |
 |---|---|---|---:|---|
-| `main/` | licences permit commercial use | **C1** | 69,197 | `midicn-lib-<VER>-main.zip` |
+| `main/` | licences permit commercial use | **C1** | 79,216 | `midicn-lib-<VER>-main.zip` |
 | `piano-special/` | non-commercial only | **C2** | 34,869 | `midicn-lib-<VER>-piano-special.zip` |
-| `study/` | study / research only | **C3** | 20,113 | `midicn-lib-<VER>-study.zip` |
+| `study/` | study / research only | **C3** | 19,582 | `midicn-lib-<VER>-study.zip` |
 | `meta/` | catalogue / indexes / field docs / documents | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
-| **Total** | | | **124,179** | plus 19 per-source packages (`-source-<id>.zip`) |
+| **Total** | | | **133,667** | plus **400+ dimension packs** (zip.midicn.com) |
 
 > Assets per release: [Releases](https://github.com/midicn/midi-lib/releases). The current version always
 > matches <https://lib.midicn.com/download.html>.
 
 ## 🗂️ Categories (14)
 
-**`main/` (C1 · 69,197)** — `folk-ireland/` 26,689 · `hymn/` 10,945 · `folk-world/` 10,818 ·
-`piano-performance/` 10,112 · `classical-open/` 6,624 · `klezmer-balkan/` 1,487 · `maestro/` 1,276 ·
+**`main/` (C1 · 79,216)** — `folk-ireland/` 26,689 · `hymn/` 10,945 · `folk-world/` 10,818 ·
+`piano-performance/` 10,110 · `classical-open/` 6,624 · `klezmer-balkan/` 1,487 · `maestro/` 1,276 ·
 `drum/` 1,149 · `emopia/` 1,071 · `folk-british/` 1,033 · `game/` 340
 
 **`piano-special/` (C2 · 34,869)** — `piano/` 32,522 · `maestro/` 1,276 · `emopia/` 1,071
 
-**`study/` (C3 · 20,113)** — `folk-china/` 10,473 · `classical-traditional/` 9,640
+**`study/` (C3 · 19,582)** — `folk-china/` 10,473 · `classical-traditional/` 9,630
 
 ## 🚀 Quick start
 
@@ -77,7 +77,7 @@ and minefield exclusion — each verified programmatically and backed by audit r
   author = {midicn project},
   year   = {2026},
   url    = {https://lib.midicn.com},
-  note   = {124,179 tracks aggregated from 19 public datasets, unified catalogue,
+  note   = {133,667 tracks aggregated from 21 public datasets, unified catalogue,
             per-track licence tiers. Access version: see the Releases page.}
 }
 ```
@@ -97,8 +97,8 @@ Using `piano-special/` requires additionally citing the Aria-MIDI paper
 | The Cyber Hymnal | 10,945 | C1 | hymntime.com/tch |
 | Anthology of Chinese Folk Songs (OMR) | 10,473 | C3 | github.com/m-july/Anthology-of-Chinese-Folk-Songs |
 | ESAC folk-song archive | 10,373 | C1 | esac-data.org |
-| GiantMIDI-Piano | 10,112 | C1 | github.com/bytedance/GiantMIDI-Piano |
-| Lakh MIDI Dataset (filtered) | 9,640 | C3 | colinraffel.com/projects/lmd/ |
+| GiantMIDI-Piano | 10,110 | C1 | github.com/bytedance/GiantMIDI-Piano |
+| Lakh MIDI Dataset (filtered) | 9,630 | C3 | colinraffel.com/projects/lmd/ |
 | Norbeck ABC collections | 3,439 | C1 | norbeck.nu/abc/ |
 | music21 CoreCorpus | 3,029 | C1 | github.com/cuthbertLab/music21 |
 | Mutopia Project | 1,860 | C1 | mutopiaproject.org |
@@ -126,3 +126,17 @@ Sources examined but **not included** (redistribution not permitted, etc.): [SOU
 
 **中文**：见 [README.md](README.md) · Dataset card: [DATASET-CARD.md](DATASET-CARD.md) ·
 Provenance: [PROVENANCE.md](PROVENANCE.md) · Licence: [LICENSE.md](LICENSE.md)
+
+---
+
+## v1.23 Data Enhancement (2026-09-23)
+
+Two new sources (ATEPP: 7,131 performance MIDIs; PDMX: 2,895 score-derived MIDIs) and 15 new fields.
+See `FIELD-DICTIONARY.md` for full field semantics, coverage and provenance-marking conventions.
+
+**New fields**: `difficulty` · `cn_zh` (Chinese composer names) · `birth`/`death` · `instrument_gm` (GM names) ·
+`velocity_avg`/`velocity_range` · `notes_per_sec` · `pitch_range` · `midi.tempo` · `midi.timesig` ·
+`version_type` (score/performance) · `performer`/`album` · `topic` · lyrics library (10,035 Chinese folk songs).
+
+**Marking policy**: all algorithmically inferred fields carry a `*_src` marker (e.g. `key_src="inferred"`
+with `extra.key_corr` confidence); unknown values are left empty rather than guessed.

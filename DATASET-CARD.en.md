@@ -18,7 +18,7 @@ configs:
 
 # DATASET CARD · midicn-lib
 
-> **124,179** tracks · **19** public sources · **14** categories · per-track source and licence tier ·
+> **133,667** tracks · **21** public sources · **14** categories · per-track source and licence tier ·
 > full provenance
 >
 > This card describes the **contents, sources, fields, quality and practical usage restrictions** of the dataset.
@@ -29,7 +29,7 @@ configs:
 
 ## 1. Overview
 
-midicn-lib is a systematic re-curation of **19 public MIDI / notation datasets** into one open
+midicn-lib is a systematic re-curation of **21 public MIDI / notation datasets** into one open
 collection with a **unified catalogue, unified fields and per-track licence tagging**:
 
 - **Unified catalogue** — every track is renamed `{source}-{index}.mid` and packaged by **usage tier** (see §2)
@@ -47,11 +47,11 @@ Splits are by **usage tier**, not by genre — download only the tier you need:
 
 | Split | Meaning | Tier | Tracks | Package |
 |---|---|---|---:|---|
-| `main` | licences permit commercial use | **C1** | 69,197 | `midicn-lib-<VER>-main.zip` |
+| `main` | licences permit commercial use | **C1** | 79,216 | `midicn-lib-<VER>-main.zip` |
 | `piano-special` | non-commercial only | **C2** | 34,869 | `midicn-lib-<VER>-piano-special.zip` |
-| `study` | study / research only | **C3** | 20,113 | `midicn-lib-<VER>-study.zip` |
+| `study` | study / research only | **C3** | 19,582 | `midicn-lib-<VER>-study.zip` |
 | `meta` | catalogue / indexes / field docs / documents | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
-| **Total** | | | **124,179** | plus 19 per-source packages |
+| **Total** | | | **133,667** | plus **400+ dimension packs** (zip.midicn.com) |
 
 Licence distribution (by track):
 
@@ -59,7 +59,7 @@ Licence distribution (by track):
 |---|---:|---|
 | `CC-BY-NC-SA-4.0` | 34,869 | aria 32,522 · maestro 1,276 · emopia 1,071 |
 | `CC-BY-SA-4.0` | 23,289 | thesession 23,250 · oga 39 |
-| `CC-BY-4.0` | 21,212 | giantmidi 10,112 · lakh 9,640 · groove 1,149 · musicnet 297 · oga 14 |
+| `CC-BY-4.0` | 21,200 | giantmidi 10,110 · lakh 9,630 · groove 1,149 · musicnet 297 · oga 14 |
 | `OPEN` (site open declaration) | 16,332 | essen 10,373 · norbeck 3,439 · abcmisc 1,487 · nottingham 1,033 |
 | `PD` (public domain) | 14,419 | cyberhymnal 10,945 · m21 3,029 · wikifonia 445 |
 | `TRADITIONAL-STUDY` | 10,473 | chinafolk 10,473 (C3) |
@@ -79,8 +79,8 @@ Addresses are the **places we actually obtained the data from**; method and chec
 | `cyberhymnal` | The Cyber Hymnal | 10,945 | C1 | hymntime.com/tch |
 | `chinafolk` | Anthology of Chinese Folk Songs (OMR) | 10,473 | C3 | github.com/m-july/Anthology-of-Chinese-Folk-Songs |
 | `essen` | ESAC European folk-song archive | 10,373 | C1 | esac-data.org |
-| `giantmidi` | GiantMIDI-Piano | 10,112 | C1 | github.com/bytedance/GiantMIDI-Piano |
-| `lakh` | Lakh MIDI Dataset (filtered) | 9,640 | C3 | colinraffel.com/projects/lmd/ |
+| `giantmidi` | GiantMIDI-Piano | 10,110 | C1 | github.com/bytedance/GiantMIDI-Piano |
+| `lakh` | Lakh MIDI Dataset (filtered) | 9,630 | C3 | colinraffel.com/projects/lmd/ |
 | `norbeck` | Norbeck ABC collections | 3,439 | C1 | norbeck.nu/abc/ |
 | `m21` | music21 CoreCorpus | 3,029 | C1 | github.com/cuthbertLab/music21 |
 | `mutopia` | Mutopia Project | 1,860 | C1 | mutopiaproject.org |
@@ -93,15 +93,15 @@ Addresses are the **places we actually obtained the data from**; method and chec
 | `wikifonia` | Wikifonia (PD subset) | 445 | C1 | synthzone.com/files/Wikifonia/Wikifonia.zip |
 | `oga` | OpenGameArt | 340 | C1 | opengameart.org |
 | `musicnet` | MusicNet | 297 | C1 | zenodo.org/records/5120004 |
-| **Total** | | **124,179** | | |
+| **Total** | | **133,667** | | |
 
 > Sources examined but **not included** (redistribution not permitted, etc.) and the reasons are in `SOURCE-CATALOG.md`.
 
 ## 4. Fields (`meta/catalog.json`, 20 fields)
 
 `id` · `t` title (90.0%) · `c`/`cn` composer slug / display name (100%) · `g` genre (95.4%) ·
-`i` instrument (95.4%) · `p` period (88.1%) · `form` (46.0%) · `opus`/`no` (26.0% / 26.4%) ·
-`yr` year (11.7%) · `r`/`ctry` region / country (25.4% / 17.4%) · `du` duration (100%) ·
+`i` instrument (95.4%) · `p` period (88.4%) · `form` (46.8%) · `opus`/`no` (30.2% / 29.7%) ·
+`yr` year (16.0%) · `r` region (72.1%) · `du` duration (100%) ·
 `nn` note count (100%) · `z` tier (100%) · `l` licence (100%) · `v` quality flag (100%) ·
 `f` relative path (100%) · `diff` difficulty (partial).
 
@@ -156,8 +156,22 @@ See `CITATION.bib`. Using the `piano-special` package requires additionally citi
 
 ## 中文摘要
 
-midicn-lib 是对 **19 个公开 MIDI / 记谱数据集**的系统性二次整理，共 **124,179 首**，
-统一为一份目录、20 个字段，并**逐首标注许可档位**。分包按**使用方式**（`main` 可商用 69,197 ·
-`piano-special` 非商用 34,869 · `study` 学习研究 20,113 · `meta` 目录文档 CC0-1.0），
+midicn-lib 是对 **21 个公开 MIDI / 记谱数据集**的系统性二次整理，共 **133,667 首**，
+统一为一份目录、20 个字段，并**逐首标注许可档位**。分包按**使用方式**（`main` 可商用 79,216 ·
+`piano-special` 非商用 34,869 · `study` 学习研究 19,582 · `meta` 目录文档 CC0-1.0），
 另附 19 个按来源分包。每个来源的**实际采集地址、取得方式与校验值**见 `PROVENANCE.md`。
 特别注意 **TheSession** 数据在 CC BY-SA 4.0 之外附加了**禁止用于大语言模型**的条款。
+
+---
+
+## v1.23 Data Enhancement (2026-09-23)
+
+Two new sources (ATEPP: 7,131 performance MIDIs; PDMX: 2,895 score-derived MIDIs) and 15 new fields.
+See `FIELD-DICTIONARY.md` for full field semantics, coverage and provenance-marking conventions.
+
+**New fields**: `difficulty` · `cn_zh` (Chinese composer names) · `birth`/`death` · `instrument_gm` (GM names) ·
+`velocity_avg`/`velocity_range` · `notes_per_sec` · `pitch_range` · `midi.tempo` · `midi.timesig` ·
+`version_type` (score/performance) · `performer`/`album` · `topic` · lyrics library (10,035 Chinese folk songs).
+
+**Marking policy**: all algorithmically inferred fields carry a `*_src` marker (e.g. `key_src="inferred"`
+with `extra.key_corr` confidence); unknown values are left empty rather than guessed.

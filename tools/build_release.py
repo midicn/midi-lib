@@ -26,13 +26,14 @@ import re
 import shutil
 import sys
 import time
+import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACKS = ROOT / "midi_db" / "tracks"
-REL = ROOT / "release" / "midicn-lib-v1.18"
-VERSION = "1.18"
+REL = ROOT / "release" / "midicn-lib-v1.23"
+VERSION = "1.23"
 
 CATEGORY = {
     "thesession": ("main", "folk-ireland"),
@@ -54,6 +55,8 @@ CATEGORY = {
     "chinafolk": ("study", "folk-china"),
     "giantmidi": ("main", "piano-performance"),
     "cyberhymnal": ("main", "hymn"),
+    "atepp": ("main", "piano-performance"),
+    "pdmx": ("main", "classical-open"),
 }
 
 # 许可标识规范化：上游各源的写法不统一（空格 / 简写），发布前统一为规范标识。
@@ -108,8 +111,46 @@ SKIP_SOURCES = {"musedata"}
 
 # 按来源覆盖许可标识：上游未声明时，用我们核定的标识（并在 docs / 站点逐条说明依据）
 SOURCE_LICENSE = {"chinafolk": "TRADITIONAL-STUDY"}
-# 按来源覆盖分区：chinafolk 在 midi_db 里仍标 pending，发布时归入 study（C3 研究/学习）
-SOURCE_ZONE = {"chinafolk": "study"}
+# 按来源覆盖分区：chinafolk 在 midi_db 里仍标 pending，发布时归入 study（C3 研究/学习）；
+# ATEPP 数据源声明 CC BY 4.0（可商用），jsonl 里的 piano-special 会被误判为 C2 非商用 → 覆盖为 main
+SOURCE_ZONE = {"chinafolk": "study", "atepp": "main"}
+
+
+def norm_key(s: str) -> str:
+    """归组键规范化：折叠变音符号 → 只留各语种字母数字 → 小写。
+
+    ⚠️ **不能用 `[^0-9a-z]` 白名单**——那会把中文/西里尔等全部删掉，
+    导致上万首中国民歌的标题规范化后变成空串、被并进同一个 wk 组
+    （实测 `traditional|` 分组吃进 10,444 首）。
+    改用 `str.isalnum()`（按 Unicode 判定，保留 CJK 等），只剔除标点与空白。
+
+    ATEPP 同一作品的标题还会因变音符号写法不同而分裂，例如
+      「12 Études, Op. 8: No. 10 in D-Flat Major」 vs 「12 Etudes, Op. 8: No. 10 in D-Flat Major」
+    故先做 NFKD 折叠。
+    """
+    s = unicodedata.normalize("NFKD", s or "")
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return "".join(c for c in s if c.isalnum()).lower()
+
+
+def work_key(r: dict) -> str:
+    """作品归组键 `wk`（N1）：`composer_slug | opus | no | 规范化标题`。
+
+    用途：详情页「本曲其他演奏版」区块按 `wk` 聚合，ATEPP 的同一作品多演奏版
+    因此得以互相发现。
+
+    纳入 `opus`/`no` 是为了**避免泛标题过度合并**——只按「作曲家+标题」时，
+    aria 里 111 首不同的「Piano Sonata」会被并成一组；带上作品号后可分开。
+    标题缺失或规范化后为空时（如 aria 的纯转录曲目）**用 id 兜底**，
+    否则所有无标题曲目会被错误地并成一个大组。
+    """
+    c = (r.get("composer_slug") or "unknown").strip().lower()
+    k = norm_key(r.get("title"))
+    if not k:
+        return f"{c}|#{r.get('id')}"
+    o = norm_key(str(r.get("opus"))) if r.get("opus") is not None else ""
+    n = norm_key(str(r.get("no"))) if r.get("no") is not None else ""
+    return f"{c}|{o}|{n}|{k}"
 
 
 def build(args) -> int:
@@ -137,7 +178,16 @@ def build(args) -> int:
                 continue
             pack, cat = CATEGORY.get(src, ("main", "misc"))
             rel = f"{pack}/{cat}/{r['id']}.mid"
-            srcf = ROOT / r["midi"]["file"]
+            # 新源（ATEPP / PDMX）未规范化到 data/midi，midi.file 为空 → 回退 src_path
+            mf = (r.get("midi") or {}).get("file")
+            if not mf:
+                sp = (r.get("src_path") or "").replace("\\", "/")
+                if sp and (ROOT / sp).exists():
+                    mf = sp
+            if not mf:
+                skipped += 1
+                continue
+            srcf = ROOT / mf
             if not srcf.exists():
                 skipped += 1
                 continue
@@ -160,6 +210,12 @@ def build(args) -> int:
                 "yr": r.get("yr") or (r.get("extra") or {}).get("tune_year") or (r.get("extra") or {}).get("death") or (r.get("extra") or {}).get("birth"),
                 "du": (r.get("midi") or {}).get("duration_sec"),
                 "nn": (r.get("midi") or {}).get("note_count"),
+                # ── v1.23 新增（gen_shards.py 的 KEEP 已同步扩这 5 个键）────────
+                "cnzh": r.get("cn_zh"),              # 作曲家中文名（全量 28%）
+                "vt": r.get("version_type"),         # score / performance（ATEPP·PDMX）
+                "perf": r.get("performer"),          # 演奏者（ATEPP）
+                "alb": r.get("album"),               # 专辑/录音出处（ATEPP）
+                "wk": work_key(r),                   # 作品归组键（N1，详情页「其他演奏版」）
             })
             by_comp[r.get("composer_slug") or "unknown"].append(r["id"])
             if r.get("region"):
@@ -191,6 +247,9 @@ def build(args) -> int:
                 json.dumps({k: sorted(v) for k, v in sorted(idx.items())},
                            ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         (meta / "MD5SUMS.txt").write_text("\n".join(md5_lines), encoding="utf-8")
+        verjson = ROOT.parent / "midi-lib-repo" / "meta" / "version.json"
+        if verjson.exists():
+            (meta / "version.json").write_text(verjson.read_text(encoding="utf-8"), encoding="utf-8")
 
     print(f"[build] 复制 {copied:,} · 跳过 {skipped:,} · 分类 {dict(stats.most_common())}")
     print(f"[build] 耗时 {time.time()-t0:.0f}s · 输出 {REL}")
