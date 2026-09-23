@@ -140,7 +140,7 @@
    "ingest": "tools/ingest_chinafolk.py",
    "evidence": [
     {
-     "path": "docs/internal/licence-draft-chinafolk.md",
+     "path": "（内部台账，不随包分发）",
      "contains": "github.com/m-july/Anthology-of-Chinese-Folk-Songs"
     },
     {
@@ -667,7 +667,7 @@
    "ingest": "tools/ingest_wikifonia.py",
    "evidence": [
     {
-     "path": "docs/internal/acquisition-ledger.md",
+     "path": "项目内部来源查证台账（不随发布包分发）",
      "contains": "synthzone.com/files/Wikifonia/Wikifonia.zip"
     }
    ],

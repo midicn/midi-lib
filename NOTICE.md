@@ -24,7 +24,7 @@
 | music21 CoreCorpus | MIT Music21 项目 | PD | 自由使用 |
 | MAESTRO v3 | Google Magenta 团队 | CC BY-NC-SA 4.0 | 署名 + 非商用 + 相同方式共享 |
 | EMOPIA v2.2 | EMOPIA 团队 | CC BY-NC-SA 4.0 | 署名 + 非商用 + 相同方式共享 |
-| Lakh MIDI（已过滤子集） | Colin Raffel 等 | CC BY 4.0 | 署名；本库按其声明归入研究/学习用途。**已剔除 521 首在保护期内的现代商业作品**（圣诞流行曲、影视/流行歌等），见 `internal/lakh-review-2026-09-23.md` |
+| Lakh MIDI（已过滤子集） | Colin Raffel 等 | CC BY 4.0 | 署名；本库按其声明归入研究/学习用途。**已剔除 521 首在保护期内的现代商业作品**（圣诞流行曲、影视/流行歌等），逐首处置记录留存于项目内部台账（不随包分发）。见 `internal/lakh-review-2026-09-23.md` |
 | **GiantMIDI-Piano v1.2** | Kong, Q. 等（字节跳动）；github.com/bytedance/GiantMIDI-Piano（论文 arXiv:2010.07061） | **CC BY 4.0** | 署名数据集与论文；可商用 |
 | **中国民间歌曲集成（OMR 数据集）** | **《中国民间歌曲集成》各省卷；数据集由 m-july 制作并公开于 github.com/m-july/Anthology-of-Chinese-Folk-Songs（论文 arXiv:2512.14758）** | **TRADITIONAL-STUDY** | **必须署名上述数据集与底本；仅限研究/教学/学习；禁止商用与公开表演** |
 

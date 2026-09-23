@@ -81,7 +81,7 @@
 - **原始地址**：`https://github.com/m-july/Anthology-of-Chinese-Folk-Songs`
 - **取得方式**：GitHub 公开的《中国民间歌曲集成》OMR 数字化项目整包（14 卷 MIDI，按省份分目录；本地 china-folk.zip 844,201,672 B）
 - **入库脚本**：`tools/ingest_chinafolk.py`
-- **本地证据**：`docs/internal/licence-draft-chinafolk.md`（含 `github.com/m-july/Anthology-of-Chinese-Folk-Songs`）；`sources/china-folk/lyrics-included/beijing`
+- **本地证据**：`（内部台账，不随包分发）`（含 `github.com/m-july/Anthology-of-Chinese-Folk-Songs`）；`sources/china-folk/lyrics-included/beijing`
 - **本地规模**：`sources/china-folk` 20,960 文件 / 306.3MB
 - **许可**：传统音乐 · 学习研究（catalog 标识 `TRADITIONAL-STUDY`）—— 上游未声明许可 → 定为 TRADITIONAL-STUDY，C3 仅学习研究
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/china-folk）
@@ -229,7 +229,7 @@
 - **原始地址**：`http://www.synthzone.com/files/Wikifonia/Wikifonia.zip`
 - **取得方式**：公开发布的 Wikifonia 整包 Wikifonia.zip（原站 wikifonia.org 已下线）
 - **入库脚本**：`tools/ingest_wikifonia.py`
-- **本地证据**：`docs/internal/acquisition-ledger.md`（含 `synthzone.com/files/Wikifonia/Wikifonia.zip`）
+- **本地证据**：`项目内部来源查证台账（不随发布包分发）`（含 `synthzone.com/files/Wikifonia/Wikifonia.zip`）
 - **本地规模**：`sources/wikifonia` 1 文件 / 35.7MB
 - **整包校验**：`Wikifonia.zip` 35,727,800 字节 · MD5 `d26e22562e67eb7d37535e96cc5eebba`（本地快照值，用于完整性复核）
 - **上游官方口径**：md5:Wikifonia.zip = `d26e22562e67eb7d37535e96cc5eebba` —— 来源：muspy 数据集注册表 muspy.datasets.wikifonia
