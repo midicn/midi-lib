@@ -69,7 +69,8 @@ def check_workflows() -> bool:
     cands = []
     # 本仓（lib 站的 site-repo 在 release/ 下）+ 全部姊妹站仓（mid / zip …）
     cands += list(ROOT.glob('**/.github/workflows/*.y*ml'))
-    for pat in ('*/site-repo/.github/workflows/*.y*ml', '*/.github/workflows/*.y*ml'):
+    for pat in ('lib/site/.github/workflows/*.y*ml', 'mid/site/.github/workflows/*.y*ml',
+                'zip/site/.github/workflows/*.y*ml', '*/.github/workflows/*.y*ml'):
         cands += list(ROOT.parent.glob(pat))
     seen = set()
     for wf in sorted(set(cands)):
@@ -98,6 +99,102 @@ def check_workflows() -> bool:
     return not bad
 
 
+def check_meta_versions() -> bool:
+    """`meta/` 三件套版本号一致性（**发版强制检查**）。
+
+    为什么需要：2026-09-24 发现 `meta/catalog.json` 落后了 **5 个版本**
+    （停在 v1.18 / 124,179 条，而 `version.json` 已是 v1.23 / 133,667 条）——
+    根因是发版流程只更新了 `version.json` 与 `packs-manifest.json`，**漏了 catalog**。
+
+    检查：`version.json` · `packs-manifest.json` · `catalog.json`（数据仓 + 站点侧各一份）
+    全部归一化后必须等于 `build_release.py` 的 VERSION（唯一真源）。
+    注意：三个文件的版本写法不同（有的 `"v1.23"`、有的 `"1.23"`），故**归一化后再比**。
+    """
+    import json as _json
+    import re as _re
+
+    def _norm(v) -> str:
+        return _re.sub(r"^v", "", str(v or "").strip())
+
+    src = (ROOT / "tools" / "build_release.py").read_text(encoding="utf-8")
+    m = _re.search(r'^VERSION\s*=\s*"([^"]+)"', src, _re.M)
+    if not m:
+        print("  ✗ build_release.py 里找不到 VERSION")
+        return False
+    want = _norm(m.group(1))
+
+    targets = [
+        ("数据仓 version.json", Path("..") / "library" / "meta" / "version.json"),
+        ("数据仓 packs-manifest.json", Path("..") / "library" / "meta" / "packs-manifest.json"),
+        ("数据仓 catalog.json", Path("..") / "library" / "meta" / "catalog.json"),
+        ("站点侧 catalog.json", Path("..") / "site" / "meta" / "catalog.json"),
+    ]
+    bad = []
+    print(f"  真源 VERSION = {want}（build_release.py）")
+    for label, rel in targets:
+        f = (ROOT / rel).resolve()
+        if not f.exists():
+            print(f"    -- {label:28} 不存在（跳过）")
+            continue
+        try:
+            got = _norm(_json.loads(f.read_text(encoding="utf-8")).get("version"))
+        except Exception as e:                                     # noqa: BLE001
+            bad.append(label); print(f"    ✗ {label:28} 解析失败：{e}"); continue
+        ok = got == want
+        if not ok:
+            bad.append(label)
+        print(f"    {'✓' if ok else '✗'} {label:28} {got!r}")
+    if bad:
+        print(f"  ✗ {len(bad)} 个文件的版本号与真源不一致：{' · '.join(bad)}")
+        return False
+    print("  ✓ meta/ 三件套版本一致")
+    return True
+
+
+def check_file_sizes() -> bool:
+    """单文件体积哨兵（**给 Git 的 100 MiB 硬限留安全边际**）。
+
+    背景：GitHub 对 git 里的文件 —— **>50 MiB 只警告，>100 MiB 直接拒绝推送**；
+    Release 资产另算（单文件 2 GB）。`catalog.json` 目前约 53 MiB，
+    随曲目增加会缓慢增长，需要在**撞墙之前**得到提醒而不是事后报错。
+
+    阈值：硬限 100 MiB → 提醒线 72 MiB（80%）、拦截线 90 MiB。
+    到提醒线时应开始考虑：① 转列式（可省约 37% —— 重复键名开销）
+    ② 拆成 `catalog/part-NNN.json` + 索引；**Git LFS 不可行**
+    （raw.githubusercontent 会返回指针文件，站点与脚本会全断）。
+    """
+    LIMIT = 90 * 1024 * 1024          # 拦截线
+    WARN = int(72 * 1024 * 1024)      # 提醒线
+    watch = [Path("..") / "library" / "meta", Path("..") / "site" / "meta"]
+    over, warn, scan = [], [], 0
+    for d in watch:
+        if not d.exists():
+            continue
+        for f in sorted(d.iterdir()):
+            if not f.is_file() or f.suffix not in (".json", ".txt"):
+                continue
+            scan += 1
+            sz = f.stat().st_size
+            tag = f"{d.parent.name}/{d.name}/{f.name}"
+            if sz > LIMIT:
+                over.append((tag, sz))
+            elif sz > WARN:
+                warn.append((tag, sz))
+    print(f"  扫描 {scan} 个 meta 文件（提醒线 72 MiB · 拦截线 90 MiB）")
+    for tag, sz in warn:
+        print(f"    ⚠ {sz/2**20:6.2f} MiB  {tag}")
+    for tag, sz in over:
+        print(f"    ✗ {sz/2**20:6.2f} MiB  {tag}")
+    if over:
+        print("  ✗ 有文件逼近 Git 的 100 MiB 硬限，需先拆分/转列式再发版")
+        return False
+    if warn:
+        print("  · 有文件已过提醒线（未超限，暂不阻断）—— 建议开始规划拆分方案")
+    else:
+        print("  ✓ 所有 meta 文件均在安全线内")
+    return True
+
+
 def main(argv) -> int:
     ap = argparse.ArgumentParser(description='发布前置检查')
     ap.add_argument('--hash', action='store_true', help='追加整包校验值复核')
@@ -113,6 +210,18 @@ def main(argv) -> int:
 
     # ①b workflow YAML 方言自检（不依赖 pyyaml）
     results.append(('workflow YAML 自检', check_workflows()))
+
+    # ①c meta/ 三件套版本一致性（发版强制：catalog 曾落后 5 个版本）
+    print('=' * 88)
+    print('【1c/4 meta 版本一致性】')
+    print('-' * 88)
+    results.append(('meta 版本一致性（version / packs / catalog）', check_meta_versions()))
+
+    # ①d 单文件体积哨兵（Git 100 MiB 硬限的安全边际）
+    print('=' * 88)
+    print('【1d/4 单文件体积】')
+    print('-' * 88)
+    results.append(('单文件体积（Git 100 MiB 硬限边际）', check_file_sizes()))
 
     # ② 来源台账复核
     cmd = [PY, 'tools/provenance.py']
@@ -144,7 +253,7 @@ def main(argv) -> int:
         env = dict(os.environ)
         env['NODE_PATH'] = NODE_MODULES
         ok, _ = run('4/4 站点回归（本地）',
-                    [NODE, E2E, str(ROOT / 'release/site-repo/index.html')], ROOT, env=env, keep=8)
+                    [NODE, E2E, str(ROOT.parent / 'site' / 'index.html')], ROOT.parent / 'site', env=env, keep=8)
         results.append(('站点回归（本地）', ok))
 
     print('=' * 88)

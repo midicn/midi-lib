@@ -31,7 +31,7 @@ SRC = ROOT / "sources" / "giantmidi" / "extracted" / "GiantMIDI-PIano" / "midis"
 META = ROOT / "sources" / "giantmidi" / "extracted" / "GiantMIDI-PIano" / "metadata" / \
     "full_music_pieces_youtube_similarity_pianosoloprob_split.csv"
 OUT_JSONL = ROOT / "midi_db" / "tracks" / "giantmidi.jsonl"
-DST = ROOT / "data" / "midi" / "giantmidi"
+DST = ROOT.parent / "data" / "midi" / "giantmidi"
 
 SOURCE_ID = "giantmidi"
 LICENSE = "CC-BY-4.0"

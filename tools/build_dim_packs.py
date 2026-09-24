@@ -65,8 +65,8 @@ def _version() -> str:
 
 
 VERSION = _version()
-REL = ROOT / "release" / f"midicn-lib-{VERSION}"
-OUT = ROOT / "release" / "packs"
+REL = ROOT.parent / "output" / f"midicn-lib-{VERSION}"
+OUT = ROOT.parent / "output" / "packs"
 BLOB = OUT / "_blob.bin"
 BLOB_IDX = OUT / "_blob.json"
 TODAY = date.today().isoformat()
@@ -164,7 +164,7 @@ def build_blob(tracks: list[dict], force: bool) -> dict:
         print("[blob] 缓存与当前曲目数不符，重建")
 
     top = f"midicn-lib-{VERSION}"
-    zips = [ROOT / "release" / f"midicn-lib-{VERSION}-{p}.zip"
+    zips = [ROOT.parent / "output" / f"midicn-lib-{VERSION}-{p}.zip"
             for p in ("main", "piano-special", "study")]
     zips = [z for z in zips if z.exists()]
 

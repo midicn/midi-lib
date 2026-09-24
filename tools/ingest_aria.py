@@ -28,7 +28,7 @@ META_PATH = SRC / "metadata.json"
 DATA_DIR = SRC / "data"
 OUT_JSONL = ROOT / "midi_db" / "tracks" / "aria.jsonl"
 OUT_REPORT = ROOT / "midi_db" / "stats" / "aria-ingest-report.md"
-DST_DIR = ROOT / "data" / "midi" / "aria"
+DST_DIR = ROOT.parent / "data" / "midi" / "aria"
 
 SOURCE_ID = "aria"
 LICENSE = "CC-BY-NC-SA-4.0"

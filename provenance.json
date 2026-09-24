@@ -275,7 +275,7 @@
    "ingest": "tools/ingest_lakh.py",
    "evidence": [
     {
-     "path": "tools/dl_lakh_multipart.py",
+     "path": "work/tools/dl_lakh_multipart.py",
      "contains": "hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz"
     }
    ],
@@ -352,7 +352,7 @@
    "ingest": "tools/ingest_music21.py",
    "evidence": [
     {
-     "path": "tools/ingest_music21.py",
+     "path": "work/tools/ingest_music21.py",
      "contains": "music21"
     }
    ],
@@ -387,7 +387,7 @@
    "ingest": "tools/ingest_mutopia.py",
    "evidence": [
     {
-     "path": "tools/fetch_mutopia.py",
+     "path": "work/tools/fetch_mutopia.py",
      "contains": "www.mutopiaproject.org/ftp/"
     }
    ],
@@ -499,7 +499,7 @@
    "ingest": "tools/ingest_mididir.py",
    "evidence": [
     {
-     "path": "tools/ingest_mididir.py",
+     "path": "work/tools/ingest_mididir.py",
      "contains": "MAESTRO v3.0.0"
     },
     {
@@ -538,7 +538,7 @@
    "ingest": "tools/ingest_groove.py",
    "evidence": [
     {
-     "path": "tools/ingest_groove.py",
+     "path": "work/tools/ingest_groove.py",
      "contains": "Groove MIDI Dataset"
     },
     {
@@ -577,7 +577,7 @@
    "ingest": "tools/ingest_mididir.py",
    "evidence": [
     {
-     "path": "tools/ingest_mididir.py",
+     "path": "work/tools/ingest_mididir.py",
      "contains": "EMOPIA_2.2"
     },
     {
@@ -699,7 +699,7 @@
    "ingest": "tools/ingest_oga.py",
    "evidence": [
     {
-     "path": "tools/fetch_oga.py",
+     "path": "work/tools/fetch_oga.py",
      "contains": "opengameart.org"
     },
     {
@@ -738,7 +738,7 @@
    "ingest": "tools/ingest_mididir.py",
    "evidence": [
     {
-     "path": "tools/ingest_mididir.py",
+     "path": "work/tools/ingest_mididir.py",
      "contains": "sources/musicnet"
     },
     {

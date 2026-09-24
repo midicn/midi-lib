@@ -193,7 +193,7 @@ def cmd_adopt(cfg: dict) -> int:
 
 def cmd_release(cfg: dict, ver: str) -> int:
     """把文档装配进 release/midicn-lib-<ver>/（root = public 组；docs/ = 其余对外组）"""
-    dest = ROOT / 'release' / f'midicn-lib-{ver}'
+    dest = ROOT.parent / 'output' / f'midicn-lib-{ver}'
     if not dest.exists():
         print(f'发布目录不存在：{dest}', file=sys.stderr)
         return 2

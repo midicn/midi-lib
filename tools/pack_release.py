@@ -14,7 +14,7 @@ import argparse, hashlib, sys, zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REL = ROOT / "release"
+REL = ROOT.parent / "output"
 PACKS = ("meta", "main", "piano-special", "study")
 
 

@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "sources" / "cyberhymnal" / "mid"
 IDX = ROOT / "sources" / "cyberhymnal" / "idx" / "tch-idx.txt"
 OUT_JSONL = ROOT / "midi_db" / "tracks" / "cyberhymnal.jsonl"
-DST = ROOT / "data" / "midi" / "cyberhymnal"
+DST = ROOT.parent / "data" / "midi" / "cyberhymnal"
 
 SOURCE_ID = "cyberhymnal"
 LICENSE = "PD"

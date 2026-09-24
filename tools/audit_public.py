@@ -16,8 +16,10 @@
 
 检查对象
 --------
-① 三站页面与脚本：`*/site-repo/**` 的 html / js / css / txt / xml / json（排除数据分片与 `_` 前缀件）
-② 公开文档：`tools/docs_manifest.json` 里 `public` 与 `public_docs` 两组指向的文件
+① 三站页面与脚本：`lib/site` · `mid/site` · `zip/site` 下的 html / js / css / txt / xml
+   （排除 `_` 前缀件与生成的数据分片）
+② 公开文档：`docs_manifest.json` 的 `public` / `public_docs` 两组
+  ③ 公开工具：`lib/work/tools/*.py`（非 `_` 前缀；`sync_docs` 会全部同步到公开仓）
    （这两组正是会被同步到公开仓、并装配进 Release 的那批）
 
 规则
@@ -39,7 +41,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MIDI = ROOT.parent
+MIDI = ROOT.parent.parent        # 工作区根（ROOT 现在是 lib/work）
 
 # ── BLOCK 规则：这些出现在公开内容里就是缺陷 ──────────────────────────────
 BLOCK = [
@@ -81,8 +83,8 @@ ALLOW = re.compile(
 
 def public_files() -> list[Path]:
     out: list[Path] = []
-    for site in ("lib.midicn.com/release/site-repo", "mid.midicn.com/site-repo",
-                 "zip.midicn.com/site-repo"):
+    for site in ("lib/site", "mid/site",
+                 "zip/site"):
         base = MIDI / site
         if not base.exists():
             continue

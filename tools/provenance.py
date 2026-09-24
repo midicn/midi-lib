@@ -14,7 +14,7 @@
   3. 证据可查：每条地址都指向本地证据文件（并校验其中的关键串）
   4. 校验值优先上游：有上游官方 md5/大小就用它，否则记本地快照值仅作完整性基线
 
-需要能访问数据工作副本（含 sources/ 与 release/site-repo/）。
+需要能访问数据工作副本（含 `lib/sources/` 与 `lib/site/`）。
 未找到时脚本会自动降级为「记录自检」模式（仍可校验注册表内部一致性与地址可达性）。
 """
 from __future__ import annotations
@@ -46,9 +46,9 @@ def find_root(explicit: str | None) -> Path | None:
         cands.append(Path(os.environ['MIDICN_ROOT']))
     here = Path(__file__).resolve()
     for up in list(here.parents)[:4]:
-        cands += [up, up / 'lib.midicn.com']
+        cands += [up, up / 'lib']
     for c in cands:
-        if (c / 'release/site-repo/assets/archive.js').exists():
+        if (c / 'site/assets/archive.js').exists():
             return c
     return None
 
@@ -119,10 +119,12 @@ def verify(reg: dict, root: Path | None, do_hash: bool, do_online: bool, reg_pat
     print(f'来源台账复核 · 核验日期 {reg.get("verified_on")} · 工作副本 {root or "（未找到，降级为记录自检）"}')
     print('=' * 96)
 
-    site = read_site(root / 'release/site-repo/assets/archive.js') if root else {}
+    site = read_site(ROOT_DIR.parent / 'site/assets/archive.js') if root else {}
     rows = cnt = zone = lic = None
     if root:
-        rows, cnt, zone, lic = read_catalog(root / 'release/site-repo/meta/catalog.json')
+        rows, cnt, zone, lic = read_catalog(next((c for c in (ROOT_DIR.parent / 'site/meta/catalog.json',
+                                        ROOT_DIR.parent / 'library/meta/catalog.json') if c.exists()),
+                        ROOT_DIR.parent / 'site/meta/catalog.json'))
         print(f'站点 SOURCES {len(site)} 条 · 发布 catalog {len(rows):,} 首')
 
     ids_reg = [s['id'] for s in reg['sources']]
@@ -486,7 +488,7 @@ def render_text(reg: dict) -> str:
     L.append('')
     L.append('- **改任何来源地址前**：先按本台账的办法取得证据（文件自述 / 采集台账 / 上游官方口径），')
     L.append('  再改 `assets/archive.js` 与本文件，并更新核验日期。**拿不到证据就不要改，也不要写。**')
-    L.append('- **改许可档位前**：必须用发布 catalog（`release/site-repo/meta/catalog.json`）重新统计，')
+    L.append('- **改许可档位前**：必须用发布 catalog（`lib/site/meta/catalog.json`）重新统计，')
     L.append('  档位与数据不一致会直接影响使用者的合规判断（历史上 lakh 与 emopia 曾各错标一次，已修）。')
     L.append('- 回归：`tools/e2e-test.js` 的【11】段已把 19 个地址、档位与「禁止错误地址复现」写进断言。')
     L.append('')
@@ -515,21 +517,21 @@ def render(reg: dict, out_md: Path) -> None:
 
 def main(argv):
     ap = argparse.ArgumentParser(description='来源台账复核 / 文档生成')
-    ap.add_argument('--root', help='数据工作副本（含 sources/ 与 release/site-repo/）')
-    ap.add_argument('--registry', help='台账 JSON 路径（默认 <root>/docs/provenance.json）')
+    ap.add_argument('--root', help='数据侧根（含 sources/ 与 site/，默认自动探测 lib/）')
+    ap.add_argument('--registry', help='台账 JSON 路径（默认 lib/work/docs/provenance.json）')
     ap.add_argument('--hash', action='store_true', help='复核整包 MD5 与字节数')
     ap.add_argument('--online', action='store_true', help='探测各地址当前可达性')
     ap.add_argument('--render', action='store_true', help='生成 docs/PROVENANCE.md')
     ap.add_argument('--mirror', help='--render 时同时写入的另一目录（如数据仓 docs/）')
-    ap.add_argument('--page', help='生成站内台账页（如 release/site-repo/provenance.html）')
+    ap.add_argument('--page', help='生成站内台账页（如 lib/site/provenance.html）')
     # ⚠️ 顺序约束：`render_page()` 会用本文件的模板**整页重写**目标文件，
     #    因此**必须**在它之后再跑 tools/_apply_site_shell.py（页头/页脚/SEO 注入），
     #    否则统一外壳会被冲掉（本地 e2e【12】会拦下，别忽略）。
     args = ap.parse_args(argv[1:])
 
     root = find_root(args.root)
-    reg_path = Path(args.registry) if args.registry else (
-        (root / 'docs/provenance.json') if root else Path('docs/provenance.json'))
+    # 台账在 `lib/work/docs/`（ROOT_DIR 即 lib/work），而 root 指向 `lib/`（sources/ 与 site/ 所在）
+    reg_path = Path(args.registry) if args.registry else (ROOT_DIR / 'docs' / 'provenance.json')
     if not reg_path.exists():
         print(f'找不到台账文件：{reg_path}', file=sys.stderr)
         return 2

@@ -29,7 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LYRICS = ROOT / "midi_db" / "lyrics" / "chinafolk.jsonl"
 TRACKS = ROOT / "midi_db" / "tracks" / "chinafolk.jsonl"
-OUT = ROOT / "release" / "site-repo" / "data" / "lyrics"
+OUT = ROOT.parent / "site" / "data" / "lyrics"
 SHARD_SIZE = 500
 
 

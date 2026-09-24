@@ -118,7 +118,7 @@
 - **原始地址**：`https://colinraffel.com/projects/lmd/`
 - **取得方式**：官方下载主机 hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz（1,768,163,879 B）分卷下载后合并；入库前剔除含版权声明的曲目与流行/影视路径
 - **入库脚本**：`tools/ingest_lakh.py`
-- **本地证据**：`tools/dl_lakh_multipart.py`（含 `hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz`）
+- **本地证据**：`work/tools/dl_lakh_multipart.py`（含 `hog.ee.columbia.edu/craffel/lmd/lmd_full.tar.gz`）
 - **本地规模**：`sources/lakh` 11 文件 / 3562.6MB
 - **整包校验**：`lmd_full.tar.gz` 1,768,163,879 字节 · MD5 `2536ce3fd2cede53ddaa264f731859ab`（本地快照值，用于完整性复核）
 - **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— 数据集 CC BY 4.0，但内容层过滤后定为 C3 学习研究（study）
@@ -141,7 +141,7 @@
 - **原始地址**：`https://github.com/cuthbertLab/music21`
 - **取得方式**：随 music21 工具包分发的 CoreCorpus（site-packages/music21/corpus，3,219 文件 / 60.6MB），含 kern 与 MusicXML，由 ingest_music21.py 导出 MIDI
 - **入库脚本**：`tools/ingest_music21.py`
-- **本地证据**：`tools/ingest_music21.py`（含 `music21`）
+- **本地证据**：`work/tools/ingest_music21.py`（含 `music21`）
 - **本地规模**：`(pip) /music21/corpus` 3,219 文件 / 60.6MB
 - **许可**：Public Domain（catalog 标识 `PD`）—— 语料内作品多为 PD → C1
 - **核验日期**：2026-09-21
@@ -151,7 +151,7 @@
 - **原始地址**：`https://www.mutopiaproject.org/`
 - **取得方式**：fetch_mutopia.py 从 www.mutopiaproject.org/ftp/ 抓取 .ly 源码并转换
 - **入库脚本**：`tools/ingest_mutopia.py`
-- **本地证据**：`tools/fetch_mutopia.py`（含 `www.mutopiaproject.org/ftp/`）
+- **本地证据**：`work/tools/fetch_mutopia.py`（含 `www.mutopiaproject.org/ftp/`）
 - **本地规模**：`sources/mutopia` 3,070 文件 / 30.0MB
 - **许可**：Public Domain / CC（逐曲）（catalog 标识 `MUTOPIA-MIXED`）—— 逐曲 PD/CC → C1
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/mutopia）
@@ -185,7 +185,7 @@
 - **原始地址**：`https://magenta.tensorflow.org/datasets/maestro`
 - **取得方式**：官方页面发布的 maestro-v3.0.0（MIDI 分卷 + CSV 元数据），本地 1,278 文件 / 84.5MB
 - **入库脚本**：`tools/ingest_mididir.py`
-- **本地证据**：`tools/ingest_mididir.py`（含 `MAESTRO v3.0.0`）；`sources/maestro/maestro-v3.0.0`
+- **本地证据**：`work/tools/ingest_mididir.py`（含 `MAESTRO v3.0.0`）；`sources/maestro/maestro-v3.0.0`
 - **本地规模**：`sources/maestro` 1,278 文件 / 84.5MB
 - **许可**：CC BY-NC-SA 4.0（catalog 标识 `CC-BY-NC-SA-4.0`）—— CC BY-NC-SA 4.0 → C2 非商用
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/maestro）
@@ -196,7 +196,7 @@
 - **原始地址**：`https://magenta.tensorflow.org/datasets/groove`
 - **取得方式**：官方页面发布的 Groove MIDI Dataset（含 info.csv 元数据），本地 1,150 文件
 - **入库脚本**：`tools/ingest_groove.py`
-- **本地证据**：`tools/ingest_groove.py`（含 `Groove MIDI Dataset`）；`sources/groove/groove`
+- **本地证据**：`work/tools/ingest_groove.py`（含 `Groove MIDI Dataset`）；`sources/groove/groove`
 - **本地规模**：`sources/groove` 1,150 文件 / 5.3MB
 - **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— CC BY 4.0 → C1
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/groove）
@@ -207,7 +207,7 @@
 - **原始地址**：`https://zenodo.org/records/5257995`
 - **取得方式**：Zenodo 记录 5257995（版本 2.2）发布的 EMOPIA_2.2 数据包；本地目录名即版本名
 - **入库脚本**：`tools/ingest_mididir.py`
-- **本地证据**：`tools/ingest_mididir.py`（含 `EMOPIA_2.2`）；`sources/emopia/EMOPIA_2.2`
+- **本地证据**：`work/tools/ingest_mididir.py`（含 `EMOPIA_2.2`）；`sources/emopia/EMOPIA_2.2`
 - **本地规模**：`sources/emopia` 1,084 文件 / 2.1MB
 - **许可**：CC BY-NC-SA 4.0（catalog 标识 `CC-BY-NC-SA-4.0`）—— CC BY-NC-SA 4.0 → C2 非商用（原站上曾误标 CC BY 4.0 / main，v11.4 已改正）
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/emopia）
@@ -242,7 +242,7 @@
 - **原始地址**：`https://opengameart.org/`
 - **取得方式**：fetch_oga.py 逐素材抓取 opengameart.org（逐 asset 许可记录在 tools/state/oga-progress.json）
 - **入库脚本**：`tools/ingest_oga.py`
-- **本地证据**：`tools/fetch_oga.py`（含 `opengameart.org`）；`sources/oga`
+- **本地证据**：`work/tools/fetch_oga.py`（含 `opengameart.org`）；`sources/oga`
 - **本地规模**：`sources/oga` 342 文件 / 4.2MB
 - **许可**：逐曲混合（CC0 / CC BY / CC BY-SA / GPL）（catalog 标识 `GPL-3.0`）—— 逐曲混合（CC0 / CC BY / CC BY-SA / GPL）→ C1，须逐素材署名
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/oga）
@@ -253,7 +253,7 @@
 - **原始地址**：`https://zenodo.org/records/5120004`
 - **取得方式**：Zenodo 记录 5120004 的 musicnet_midis.tar.gz + musicnet_metadata.csv，本地 331 文件
 - **入库脚本**：`tools/ingest_mididir.py`
-- **本地证据**：`tools/ingest_mididir.py`（含 `sources/musicnet`）；`sources/musicnet/musicnet_metadata.csv`
+- **本地证据**：`work/tools/ingest_mididir.py`（含 `sources/musicnet`）；`sources/musicnet/musicnet_metadata.csv`
 - **本地规模**：`sources/musicnet` 331 文件 / 10.2MB
 - **许可**：CC BY 4.0（catalog 标识 `CC-BY-4.0`）—— CC BY 4.0 → C1
 - **取得时点**：2026-09-17（依据：earliest file mtime · sources/musicnet）
@@ -305,7 +305,7 @@ python tools/provenance.py --online   # 追加各地址当前可达性
 
 - **改任何来源地址前**：先按本台账的办法取得证据（文件自述 / 采集台账 / 上游官方口径），
   再改 `assets/archive.js` 与本文件，并更新核验日期。**拿不到证据就不要改，也不要写。**
-- **改许可档位前**：必须用发布 catalog（`release/site-repo/meta/catalog.json`）重新统计，
+- **改许可档位前**：必须用发布 catalog（`lib/site/meta/catalog.json`）重新统计，
   档位与数据不一致会直接影响使用者的合规判断（历史上 lakh 与 emopia 曾各错标一次，已修）。
 - 回归：`tools/e2e-test.js` 的【11】段已把 19 个地址、档位与「禁止错误地址复现」写进断言。
 

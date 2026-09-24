@@ -24,7 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "sources" / "china-folk" / "lyrics-included"
 OUT_JSONL = ROOT / "midi_db" / "tracks" / "chinafolk.jsonl"
-DST = ROOT / "data" / "midi" / "chinafolk"
+DST = ROOT.parent / "data" / "midi" / "chinafolk"
 
 SOURCE_ID = "chinafolk"
 LICENSE = "UNSPECIFIED"          # 源未声明，待作者确认

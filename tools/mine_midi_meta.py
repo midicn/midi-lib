@@ -24,7 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TRACKS = ROOT / "midi_db" / "tracks"
 BACKUP = ROOT / "midi_db" / "tracks_backup"
-DATA = ROOT / "data" / "midi"
+DATA = ROOT.parent / "data" / "midi"
 HEAD = 65536          # 只读前 64KB（meta 通常在最前面的轨道）
 
 COPY_RE = re.compile(r"(©|\(c\)|copyright|all rights|public domain|pd\b)", re.I)
