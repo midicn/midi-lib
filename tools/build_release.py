@@ -247,7 +247,7 @@ def build(args) -> int:
                 json.dumps({k: sorted(v) for k, v in sorted(idx.items())},
                            ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
         (meta / "MD5SUMS.txt").write_text("\n".join(md5_lines), encoding="utf-8")
-        verjson = ROOT.parent / "midi-lib-repo" / "meta" / "version.json"
+        verjson = ROOT.parent / "lib/library" / "meta" / "version.json"
         if verjson.exists():
             (meta / "version.json").write_text(verjson.read_text(encoding="utf-8"), encoding="utf-8")
 

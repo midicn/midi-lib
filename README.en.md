@@ -7,7 +7,7 @@
 
 This repository is the **data release repository** of midicn-lib: catalogue, indexes, field
 documentation, licence audit and the curation tool chain. The site source lives in
-[midicn/midi-lib-site](https://github.com/midicn/midi-lib-site).
+[midicn/lib](https://github.com/midicn/lib).
 
 ## 📦 Packages (split by usage tier, not by genre)
 
@@ -19,7 +19,7 @@ documentation, licence audit and the curation tool chain. The site source lives 
 | `meta/` | catalogue / indexes / field docs / documents | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
 | **Total** | | | **133,667** | plus **400+ dimension packs** (zip.midicn.com) |
 
-> Assets per release: [Releases](https://github.com/midicn/midi-lib/releases). The current version always
+> Assets per release: [Releases](https://github.com/midicn/midi-library/releases). The current version always
 > matches <https://lib.midicn.com/download.html>.
 
 ## 🗂️ Categories (14)

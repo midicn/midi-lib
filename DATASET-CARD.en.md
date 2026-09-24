@@ -25,7 +25,7 @@ configs:
 > Each source's acquisition address, method and checksums are in [`PROVENANCE.md`](PROVENANCE.md)
 > (with a re-runnable verification script).
 >
-> Portal: <https://lib.midicn.com> · Code repository: <https://github.com/midicn/midi-lib-site>
+> Portal: <https://lib.midicn.com> · Code repository: <https://github.com/midicn/lib>
 
 ## 1. Overview
 

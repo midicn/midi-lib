@@ -23,7 +23,7 @@ configs:
 > 本卡描述数据集的**内容、来源、字段、质量与实际使用限制**。
 > 每个来源地址的取得方式与校验值见 [`PROVENANCE.md`](PROVENANCE.md)（含可执行复核脚本）。
 >
-> 门户：<https://lib.midicn.com> · 代码仓库：<https://github.com/midicn/midi-lib-site>
+> 门户：<https://lib.midicn.com> · 代码仓库：<https://github.com/midicn/lib>
 
 ## 一、数据集概述
 

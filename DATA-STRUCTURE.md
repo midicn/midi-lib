@@ -81,5 +81,5 @@ https://lib.midicn.com/meta/index-by-composer.json
 2. 触发 `midi-lib-site` 仓库的部署流水线（自动从 Release 下载并组装）
 3. lib.midicn.com 全站刷新（约 5–10 分钟）
 
-网站仓库（[midi-lib-site](https://github.com/midicn/midi-lib-site)）因此只包含播放器页面与部署脚本——
+网站仓库（[midi-lib-site](https://github.com/midicn/lib)）因此只包含播放器页面与部署脚本——
 这是设计，不是缺失。

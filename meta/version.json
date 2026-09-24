@@ -2,7 +2,7 @@
  "version": "v1.23",
  "published": "2026-09-23",
  "assets": 31,
- "source": "github.com/midicn/midi-lib releases",
+ "source": "github.com/midicn/midi-library releases",
  "note": "全站版本单源：lib/mid/zip 站部署工作流读取本文件决定 RELEASE_TAG；发版脚本在每次发版时更新本文件（v1.20 起纳入 meta 包）",
  "releases": [
    "v1.23 —— 4 用途包（main / piano-special / study / meta）",

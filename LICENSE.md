@@ -34,7 +34,7 @@ midicn-lib 是 **21 个来源数据集**的系统性二次整理。我们**不�
 | CC0 / 公有领域 | 建议 | — | — | 自由使用 |
 | 开放声明 | 建议注明来源 | — | 视声明而定 | 见 LICENSE-AUDIT.md 各源说明 |
 
-**署名的最低要求**：在显著位置注明「来源：midicn-lib（github.com/midicn/midi-lib）」及对应原始数据集名称。对于网站播放场景，请在页面或「关于」页集中署名。
+**署名的最低要求**：在显著位置注明「来源：midicn-lib（github.com/midicn/midi-library）」及对应原始数据集名称。对于网站播放场景，请在页面或「关于」页集中署名。
 
 ### 2.1 TRADITIONAL-STUDY（传统民歌 · 仅研究/学习）
 
@@ -133,7 +133,7 @@ ariamidi · TheSession.org · The Cyber Hymnal · 中国民间歌曲集成（OMR
 
 如你认为本数据集中的任何内容侵犯了你的权利（包括但不限于著作权、改编权）：
 
-1. 通过 GitHub Issues（github.com/midicn/midi-lib/issues）提交通知，注明：涉嫌侵权的曲目 id（`catalog.json` 中可查）、你的权利依据、联系方式；
+1. 通过 GitHub Issues（github.com/midicn/midi-library/issues）提交通知，注明：涉嫌侵权的曲目 id（`catalog.json` 中可查）、你的权利依据、联系方式；
 2. 我们将在收到有效通知后**及时**核实并采取必要措施（移除或隔离相关内容），并在后续版本中同步更新；
    > 我们依通知所涉内容的具体情形判断处置的紧迫性；
 3. 恶意或虚假的侵权通知由通知方自行承担法律责任。
@@ -180,7 +180,7 @@ license annotated in field `l`:
 | CC0 / Public domain | Appreciated | — | — | Free to use |
 | Open declaration | Source appreciated | — | Varies | See per-source notes in LICENSE-AUDIT.md |
 
-**Minimum attribution**: prominently display "Source: midicn-lib (github.com/midicn/midi-lib)"
+**Minimum attribution**: prominently display "Source: midicn-lib (github.com/midicn/midi-library)"
 plus the corresponding source dataset name. For websites, a consolidated credit on the page or
 an "About" page is acceptable.
 
@@ -319,7 +319,7 @@ When using tracks from a source, also comply with that source dataset's attribut
 If you believe any content in this dataset infringes your rights (including copyright and adaptation
 rights):
 
-1. File a notice via GitHub Issues (github.com/midicn/midi-lib/issues) including: the track id(s)
+1. File a notice via GitHub Issues (github.com/midicn/midi-library/issues) including: the track id(s)
    (searchable in `catalog.json`), the basis of your claim, and your contact information;
 2. We will **promptly** verify and take the necessary measures (remove or quarantine the content) after receiving a valid notice
 (self-consistent with the commitment published on the website);

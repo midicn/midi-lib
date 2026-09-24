@@ -270,7 +270,7 @@ PAGE_TPL = """<!DOCTYPE html>
   <h1 data-zh="来源台账" data-en="Provenance ledger">来源台账</h1>
   <p class="lede" data-zh="本页回答一个问题：来源页上写的那个「原始地址」，凭什么说它是我们真正取得数据的地方？每个来源都给出地址、取得方式、本地证据文件、整包校验值与核验日期。"
      data-en="This page answers one question: what makes the address shown on the Sources page the place we actually obtained the data from? For every source: the address, how it was obtained, the local evidence file, package checksums and the verification date.">本页回答一个问题：来源页上写的那个「原始地址」，凭什么说它是我们真正取得数据的地方？每个来源都给出地址、取得方式、本地证据文件、整包校验值与核验日期。</p>
-  <p class="meta"><span data-zh="机器可读版 provenance.json · 复核脚本 tools/provenance.py · " data-en="Machine-readable provenance.json · verifier tools/provenance.py · ">机器可读版 provenance.json · 复核脚本 tools/provenance.py · </span><a href="https://github.com/midicn/midi-lib/blob/main/docs/PROVENANCE.md" target="_blank" rel="noopener">GitHub · PROVENANCE.md</a></p>
+  <p class="meta"><span data-zh="机器可读版 provenance.json · 复核脚本 tools/provenance.py · " data-en="Machine-readable provenance.json · verifier tools/provenance.py · ">机器可读版 provenance.json · 复核脚本 tools/provenance.py · </span><a href="https://github.com/midicn/midi-library/blob/main/docs/PROVENANCE.md" target="_blank" rel="noopener">GitHub · PROVENANCE.md</a></p>
 
   __RULES__
 
@@ -295,7 +295,7 @@ PAGE_TPL = """<!DOCTYPE html>
       <a href="provenance.html" data-zh="来源台账" data-en="Provenance">来源台账</a>
       <a href="lyrics.html" data-zh="歌词检索" data-en="Lyrics">歌词检索</a>
       <a href="licenses.html" data-zh="许可与法律" data-en="Licence">许可与法律</a>
-      <a href="https://github.com/midicn/midi-lib" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/midicn/midi-library" target="_blank" rel="noopener">GitHub</a>
     </nav>
     <span class="flic">__FNAME__</span>
   </div>

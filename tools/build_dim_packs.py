@@ -241,7 +241,7 @@ def write_pack_members(z: zipfile.ZipFile, top: str, items: list[dict], tidx: di
         f"  C1 main          可商用（CC BY / CC BY-SA / CC0 / 公有领域）\n"
         f"  C2 piano-special 仅非商用（CC BY-NC-SA 4.0）\n"
         f"  C3 study         仅研究/学习（TRADITIONAL-STUDY · Lakh 过滤子集）\n"
-        f"署名：midicn-lib（github.com/midicn/midi-lib）+ 对应上游来源。\n"
+        f"署名：midicn-lib（github.com/midicn/midi-library）+ 对应上游来源。\n"
         f"条款全文见包内 LICENSE.md 与 https://lib.midicn.com/licenses.html\n"))
 
     ordered = []
@@ -343,7 +343,7 @@ def main(argv: list[str]) -> int:
     manifest = {
         "version": VERSION, "generated": TODAY, "total_tracks": len(tracks),
         "release_tag": f"{VERSION}-packs",
-        "base_url": f"https://github.com/midicn/midi-lib/releases/download/{VERSION}-packs/",
+        "base_url": f"https://github.com/midicn/midi-library/releases/download/{VERSION}-packs/",
         "packs": manifest_packs,
     }
     mf = OUT / "packs-manifest.json"

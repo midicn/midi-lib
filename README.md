@@ -6,7 +6,7 @@
 > 来源台账（每个地址的取得方式与校验值）：<https://lib.midicn.com/provenance.html>
 
 本仓库是 midicn-lib 的**数据发布仓**：目录、索引、字段说明、许可审计与整理工具链。
-站点源码在 [midicn/midi-lib-site](https://github.com/midicn/midi-lib-site)。
+站点源码在 [midicn/lib](https://github.com/midicn/lib)。
 
 ## 📦 包结构（按「使用方式」分包，而不是按风格）
 
@@ -18,7 +18,7 @@
 | `meta/` | 目录 / 索引 / 字段说明 / 文档 | **CC0-1.0** | — | `midicn-lib-<VER>-meta.zip` |
 | **合计** | | | **133,667** | 另附 **400+ 个维度包**（zip.midicn.com：按来源/风格/时期/乐器/授权/曲式/地域/作曲家） |
 
-> 各版本资产见 [Releases](https://github.com/midicn/midi-lib/releases)。当前版本与下载页一致（以
+> 各版本资产见 [Releases](https://github.com/midicn/midi-library/releases)。当前版本与下载页一致（以
 > <https://lib.midicn.com/download.html> 为准）。
 
 ## 🗂️ 分类明细（14 个分类）
