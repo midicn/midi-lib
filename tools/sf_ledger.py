@@ -47,6 +47,7 @@ RAW_MS = INTERNAL / "sf-musescore.json"
 RAW_FS = INTERNAL / "sf-fluidsynth.json"
 RAW_GH = INTERNAL / "sf-github.json"
 RAW_IA = INTERNAL / "sf-archive.json"
+RAW_PP = INTERNAL / "sf-polyphone.json"
 
 OUT_MD = DOCS / "SOUNDFONT-CATALOG.md"
 OUT_JSON = DOCS / "soundfonts.json"
@@ -236,6 +237,7 @@ def build():
     fs = load_json(RAW_FS) or []
     gh = load_json(RAW_GH) or []
     ia = load_json(RAW_IA) or []
+    pp = load_json(RAW_PP) or []
 
     import sf_crawl as C
     rows = []
@@ -246,6 +248,7 @@ def build():
     rows += unify(fs, "fluidsynth")
     rows += unify(gh, "github")
     rows += unify(ia, "archive")
+    rows += unify(pp, "polyphone")
 
     # 去重：同一 uid 只留一条（理论上不会出现，落个保险）
     seen, ded = set(), []
@@ -293,6 +296,11 @@ def build_json(rows: list[dict]) -> dict:
                  how="搜索 API 取仓 + git/trees 列文件（许可取仓 LICENSE 的 SPDX）",
                  fetched="2026-09-25",
                  count=sum(1 for r in rows if r["source"] == "github")),
+            dict(id="polyphone", name="Polyphone Soundfont Collection",
+                 url="https://www.polyphone-soundfonts.com/en/soundfonts",
+                 how="列表页内嵌 data_soundfonts + 逐条详情页（许可键取自 /en/licenses）",
+                 fetched="2026-09-26",
+                 count=sum(1 for r in rows if r["source"] == "polyphone")),
             dict(id="archive", name="archive.org", url="https://archive.org/search?query=soundfont",
                  how="搜索 API + 逐条目 metadata（许可 licenseurl 机器可读、文件体积可查）",
                  fetched="2026-09-25",
@@ -462,6 +470,9 @@ def build_md(rows: list[dict], doc: dict) -> str:
             "github": "长尾与新品；**许可取自仓库 LICENSE（机器可读）**，且 `git/trees` **自带文件体积**",
             "archive": "历史归档（含公有领域素材）；**licenseurl 与文件体积都可查**；"
                        "⚠️ 本机直连不通，需经转发/代理",
+            "polyphone": "社区上传站（**会员制**：下载需注册 → 我们只给来源页）；"
+                         "许可用站点自带的 7 种键（`public-domain` / `give-credit*` / "
+                         "`modifications-forbidden` / `personal-use*`），逐条读自详情页",
         }.get(s["id"], "")
         A("| %s | %s | %s |" % (s["name"], s["how"], why))
     A("")

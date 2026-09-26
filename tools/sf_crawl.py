@@ -53,6 +53,7 @@ import time
 import urllib.error
 import urllib.request
 from collections import Counter
+import concurrent.futures as cf
 from pathlib import Path
 
 # ── 通用 ───────────────────────────────────────────────────────────────
@@ -68,6 +69,7 @@ OUT_MS = INTERNAL / "sf-musescore.json"
 OUT_FS = INTERNAL / "sf-fluidsynth.json"
 OUT_GH = INTERNAL / "sf-github.json"
 OUT_IA = INTERNAL / "sf-archive.json"
+OUT_POLY = INTERNAL / "sf-polyphone.json"
 
 # GitHub API：带上 PAT 可把限额从 60/时 提到 5000/时（169 个仓要取 tree，必须带）
 GH_TOKEN = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
@@ -85,6 +87,7 @@ SOURCE_NAMES = {
     "fluidsynth": "FluidSynth 官方 wiki 清单",
     "github": "GitHub topic:soundfont",
     "archive": "archive.org soundfont 归档",
+    "polyphone": "Polyphone Soundfont Collection",
 }
 SOURCE_URLS = {
     "": "",
@@ -95,6 +98,7 @@ SOURCE_URLS = {
     "fluidsynth": "https://www.fluidsynth.org/wiki/SoundFont/",
     "github": "https://github.com/topics/soundfont",
     "archive": "https://archive.org/search?query=soundfont",
+    "polyphone": "https://www.polyphone-soundfonts.com/en/soundfonts",
 }
 
 # musical-artifacts 的许可短码 → (可读名, 是否允许再分发)
@@ -981,6 +985,19 @@ def crawl_github(pages: int = 3) -> list[dict]:
         if i % 25 == 0:
             print("  %d/%d · 含音色的仓 %d · 条目 %d" % (i, len(repos), withsf, len(out)))
         time.sleep(0.15)
+    # ⚠️ **防降级保护**：没带凭据时 GitHub 限额只有 60/时，大量 `git/trees` 会失败 ——
+    #    结果「扫了 170 个仓，却只认出 19 个含音色」（正常是 54 个）。
+    #    这种**静默缩水**会把上一轮的好数据覆盖掉，所以结果明显变少时拒绝写入。
+    if OUT_GH.exists():
+        try:
+            prev = json.loads(OUT_GH.read_text(encoding="utf-8"))
+        except Exception:
+            prev = []
+        if len(prev) > 20 and len(out) < len(prev) * 0.8:
+            print("  ! 本次仅 %d 条，明显少于上一份 %d 条（多半是未带 GITHUB_TOKEN 被限流）"
+                  % (len(out), len(prev)), file=sys.stderr)
+            print("  ! **保留上一份，不覆盖** —— 带 GITHUB_TOKEN 后重跑", file=sys.stderr)
+            return prev
     write_json(OUT_GH, out)
     print("  扫过 %d 个仓 · 其中有音色的 %d 个 · 合计 %d 个文件 → %s" % (
         len(repos), withsf, len(out), OUT_GH))
@@ -1119,6 +1136,177 @@ def crawl_archive(max_items: int = 400, enrich_max: int = 80) -> list[dict]:
     return out
 
 
+# ══════════════════════════════════════════════════════════════════════
+# 来源 ⑧：Polyphone Soundfont Collection（社区上传站 · 下载需注册登录）
+# ══════════════════════════════════════════════════════════════════════
+# 抓法与众不同，值得记下来（试了四轮才通）：
+#   · 列表页**看似纯客户端**（分类页 847 KB 外壳、条目靠 JS 渲染、引用的
+#     `/includes/en_soundfonts_list-*.min.js` 直取 **404** —— hcdn 防盗链，
+#     脚本其实挂在另一个域名 `www.polyphone.io/includes/` 上）。
+#   · 但**整份目录以 `data_soundfonts = [...]` 内嵌在页面的内联脚本里** ——
+#     **一次请求**就拿到全部条目（标题 / slug / 作者 / 下载数 / 属性 id / 外链）。
+#   · 详情页**服务端渲染**，且 URL 里的分类段是**装饰性**的（填错分类照样 200）
+#     → 只用 `id-slug` 就能取到；许可、分类、文件名、发布日期都在详情页里。
+#   · **下载需注册**（页面明写 Members only）→ 拿不到直链，只给来源页 ——
+#     这与本站「非 F1 一律不直链」的纪律本来就一致，不是妥协。
+POLY_BASE = "https://www.polyphone-soundfonts.com/en/soundfonts"
+POLY_DETAIL = "https://www.polyphone-soundfonts.com/en/soundfonts/%s/%d-%s"
+# 站点自己的许可键 → 我们的归一码。依据是 /en/licenses 的原文（逐条读过）：
+#   public-domain   作者放弃全部权利，可改作、可商用、可忽略署名（**零义务**）
+#   give-credit*    个人+商用+衍生可分发，**唯一条件是署名**
+#   modification*   可商用但**禁止分发衍生作品**（ND）→ 不可分发
+#   personal-use*   只允许非商用/个人使用（NC / NC-ND）→ 不可分发
+POLY_LIC = {
+    "public-domain": "pd",
+    "give-credit": "by",
+    "give-credit-no-more-restrictions": "by",
+    "modifications-forbidden": "by-nd",
+    "personal-use-only": "by-nc-nd",
+    "personal-use-and-share": "by-nc",
+    "personal-use-and-share-no-more-restrictions": "by-nc",
+}
+POLY_LIC_NAME = {
+    "public-domain": "公有领域（作者放弃权利）",
+    "give-credit": "署名后可分发（Give credit）",
+    "give-credit-no-more-restrictions": "署名后可分发 · 不得附加更多限制",
+    "modifications-forbidden": "禁止分发衍生作品（ND）",
+    "personal-use-only": "仅个人使用 · 禁止商与衍生（NC-ND）",
+    "personal-use-and-share": "仅个人使用（NC）",
+    "personal-use-and-share-no-more-restrictions": "仅个人使用 · 不得附加更多限制（NC）",
+}
+
+
+def _poly_inline(name: str, html_text: str):
+    """从列表页的内联脚本里取一个 `name = [...]` 变量（整份目录就藏在这里）。"""
+    i = html_text.find(name)
+    if i < 0:
+        return None
+    k = html_text.find("[", html_text.find("=", i))
+    try:
+        v, _ = json.JSONDecoder().raw_decode(html_text, k)
+        return v
+    except Exception:
+        return None
+
+
+def _poly_catalog():
+    """列表页**一次**拿到：目录 + 属性表（分类 slug / 标签）。"""
+    html_text, _ = get(POLY_BASE, tries=4, timeout=60)
+    if not html_text:
+        return [], {}, {}
+    arr = _poly_inline("data_soundfonts", html_text) or []
+    attrs = _poly_inline("data_attributes", html_text) or []
+    trans = _poly_inline("data_translations", html_text) or {}
+    return arr, attrs, trans
+
+
+def crawl_polyphone(limit: int = 0, delay: float = 0.6) -> list[dict]:
+    cat, attrs, trans = _poly_catalog()
+    print("  Polyphone 目录（列表页内嵌 data_soundfonts）：%d 条 · 属性 %d 个"
+          % (len(cat), len(attrs)))
+    # ⚠️ 详情页 URL 里那段分类**必须是有效分类**：填个未知值（如 `x`）不会报错，
+    #    而是**静默回落到列表页**（847 KB 的「All soundfonts」）—— 于是解析出空许可、
+    #    空文件名 —— 表面"抓到了"，实为无效数据（整批缓存会一起作废）。
+    #    所以按 attribute_type_id==1（category）把每个条目的分类算出来，绝不猜分类段。
+    cat_of = {a["attribute_id"]: a["slug"] for a in attrs if a.get("attribute_type_id") == 1}
+    label_of = {a["attribute_id"]: a["slug"] for a in attrs}
+    FALLBACK_CAT = "unclassifiable"
+
+    def detail_url(e):
+        for aid in e.get("attribute_ids") or []:
+            if aid in cat_of:
+                return POLY_DETAIL % (cat_of[aid], e["soundfont_id"], e["soundfont_slug"])
+        return POLY_DETAIL % (FALLBACK_CAT, e["soundfont_id"], e["soundfont_slug"])
+    if not cat:
+        if OUT_POLY.exists():                      # 破坏性保护：抓不到就别覆盖
+            old = json.loads(OUT_POLY.read_text(encoding="utf-8"))
+            print("  ! 本次没取到目录 → 保留上一份 %d 条，未覆盖" % len(old), file=sys.stderr)
+            return old
+        return []
+    if limit:
+        cat = cat[:limit]
+    cache = INTERNAL / "_cache"
+    cache.mkdir(parents=True, exist_ok=True)
+
+    # ⚠️ 每个详情页要 5–6 秒（hcdn 慢），串行跑 1,569 条 = **2.5 小时**（实测 16 分钟才 169 条）。
+    #    所以改成**小并发 + 磁盘缓存**：缓存命中直接读盘（重跑几乎零成本），
+    #    未命中的用 4 个线程抓（对社区站不算失礼，且带了退避重试）。
+    def fetch_one(item):
+        sid_, sl_ = item.get("soundfont_id"), (item.get("soundfont_slug") or "").strip()
+        if not sid_ or not sl_:
+            return sid_, ""
+        cf = cache / ("poly-%d.html" % sid_)
+        if cf.exists() and cf.stat().st_size > 500:
+            return sid_, cf.read_text(encoding="utf-8")
+        h, _ = get(detail_url(item), tries=3, timeout=50)
+        if h:
+            cf.write_text(h, encoding="utf-8")
+        time.sleep(delay)
+        return sid_, h
+
+    pages: dict = {}
+    with cf.ThreadPoolExecutor(max_workers=6) as ex:
+        for i, (sid_, h) in enumerate(ex.map(fetch_one, cat), 1):
+            pages[sid_] = h
+            if i % 200 == 0:
+                print("  取回 %d/%d" % (i, len(cat)), flush=True)
+
+    out: list[dict] = []
+    for n, e in enumerate(cat, 1):
+        sid, sl = e.get("soundfont_id"), (e.get("soundfont_slug") or "").strip()
+        if not sid or not sl:
+            continue
+        url = detail_url(e)
+        h = pages.get(sid) or ""
+        if not h:
+            continue
+        m = re.search(r'/en/licenses#([a-z0-9\-]+)"', h)
+        key = m.group(1) if m else ""
+        files = sorted(set(re.findall(r'title="Download the file [^"]*?&ldquo;([^"]+?)&rdquo;"', h)))
+        cats = []
+        mc = re.search(r'>\s*Category\s*</td>\s*<td[^>]*>(.*?)</td>', h, re.S)
+        if mc:
+            cats = [html.unescape(x).replace("\xa0", " ").strip()
+                    for x in re.findall(r'>([^<>]{2,40})</a>', mc.group(1))]
+        md = re.search(r"Publication date\s*</td>\s*<td[^>]*>\s*<time[^>]*datetime='([^']+)'", h)
+        members = "Members only" in h               # 下载需注册
+        formats = sorted({f.rsplit(".", 1)[-1].lower() for f in files if "." in f})
+        out.append(norm_item(
+            uid="pp-%d-%s" % (sid, re.sub(r'[^a-z0-9]+', '-', sl.lower()).strip('-'))[:80],
+            source="polyphone",
+            name=(e.get("soundfont_title") or sl).strip(),
+            author=(e.get("author_name") or "").strip(),
+            url=url,
+            license_raw=POLY_LIC_NAME.get(key, key),
+            license_code=POLY_LIC.get(key),        # 站点自带许可键 → 直接给归一码
+            tags=cats + [label_of[a] for a in (e.get("attribute_ids") or [])
+                          if a in label_of and a not in cat_of][:6],
+            formats=formats,
+            size_mb=None,                          # 详情页不给体积（下载要登录）
+            dl_url="",                             # 会员制 → 不给直链，只给来源页
+            downloads=e.get("download_count"),
+            note="Polyphone 社区上传（%s）%s" % (
+                ", ".join(files)[:80] or "—",
+                "；下载需注册登录" if members else ""),
+            extra={"poly_id": sid, "poly_slug": sl, "poly_lic": key,
+                   "poly_date": (md.group(1)[:10] if md else ""),
+                   "poly_cats": cats},
+        ))
+        if n % 50 == 0:
+            write_json(OUT_POLY, out)
+            print("  %d/%d · 已写 %d 条" % (n, len(cat), len(out)), flush=True)
+    if not out:
+        if OUT_POLY.exists():
+            old = json.loads(OUT_POLY.read_text(encoding="utf-8"))
+            print("  ! 一条都没抓到 → 保留上一份 %d 条，未覆盖" % len(old), file=sys.stderr)
+            return old
+        return []
+    write_json(OUT_POLY, out)
+    print("  合计 %d 条（其中 %d 条可分发） → %s" % (
+        len(out), sum(1 for x in out if x["redistributable"]), OUT_POLY))
+    return out
+
+
 def _first(v):
     """archive.org 的 creator 可能是 list。"""
     if isinstance(v, list):
@@ -1218,7 +1406,7 @@ def main(argv) -> int:
     ap = argparse.ArgumentParser(description="抓取音色库来源（四个来源）")
     ap.add_argument("--source", default="all",
                     choices=["all", "ma", "freepats", "sfz", "musescore", "fluidsynth",
-                             "github", "archive"])
+                             "github", "archive", "polyphone"])
     ap.add_argument("--pages", type=int, default=3, help="GitHub 搜索页数（每页 100 仓）")
     ap.add_argument("--tag", default="soundfont", help="musical-artifacts 的标签")
     ap.add_argument("--sizes", action="store_true",
@@ -1273,6 +1461,10 @@ def main(argv) -> int:
     if a.source in ("all", "archive"):
         print("\n══ 来源 archive · archive.org 归档 ══")
         crawl_archive()
+
+    if a.source in ("all", "polyphone"):
+        print("\n══ 来源 polyphone · Polyphone Soundfont Collection ══")
+        crawl_polyphone()
 
     if a.source == "all":
         print("\n" + "═" * 70)
